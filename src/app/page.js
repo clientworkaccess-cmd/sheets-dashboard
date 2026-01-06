@@ -16,8 +16,11 @@ import HoustonChecklist from '@/components/dashboard/HoustonChecklist';
 import HoustonSalesChart from '@/components/dashboard/HoustonSalesChart';
 import PerformanceRadar from '@/components/dashboard/PerformanceRadar';
 import MajorNews from '@/components/dashboard/MajorNews';
+import { useDashboard } from '@/context/DashboardContext';
 
 export default function Home() {
+  const { isLoading } = useDashboard();
+
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -34,6 +37,14 @@ export default function Home() {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#f1f5f9] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-[#f1f5f9] p-4 md:p-8 font-sans transition-colors duration-500">

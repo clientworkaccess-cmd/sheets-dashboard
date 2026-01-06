@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useDashboard } from '@/context/DashboardContext';
+import _ from 'lodash';
 import {
     BarChart,
     Bar,
@@ -20,14 +21,14 @@ const MoveInChart = () => {
     const chartData = data.moveInChart.data;
 
     const handleUpdate = (idx, field, value) => {
-        const newData = { ...data };
+        const newData = _.cloneDeep(data);
         const numVal = parseInt(value, 10);
         newData.moveInChart.data[idx][field] = isNaN(numVal) ? 0 : numVal;
         updateData(newData);
     };
 
     const handleTitleUpdate = (value) => {
-        const newData = { ...data };
+        const newData = _.cloneDeep(data);
         newData.moveInChart.title = value;
         updateData(newData);
     };
@@ -64,33 +65,6 @@ const MoveInChart = () => {
                     </ComposedChart>
                 </ResponsiveContainer>
             </div>
-
-            {isEditMode && (
-                <div className="mt-4 p-4 bg-gray-50 rounded-2xl border border-gray-100 max-h-[150px] overflow-y-auto">
-                    <table className="w-full text-[10px] text-gray-400 font-bold uppercase">
-                        <thead>
-                            <tr>
-                                <th className="text-left py-2">Point</th>
-                                <th className="text-right py-2">Move In</th>
-                                <th className="text-right py-2">Move Out</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {chartData.map((d, i) => (
-                                <tr key={i} className="border-t border-gray-200">
-                                    <td className="py-2">{d.name}</td>
-                                    <td className="text-right py-2">
-                                        <EditableText value={String(d.moveIn)} onSave={(val) => handleUpdate(i, 'moveIn', val)} />
-                                    </td>
-                                    <td className="text-right py-2">
-                                        <EditableText value={String(d.moveOut)} onSave={(val) => handleUpdate(i, 'moveOut', val)} />
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
         </div>
     );
 };

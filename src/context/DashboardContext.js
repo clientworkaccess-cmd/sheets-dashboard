@@ -233,17 +233,46 @@ const INITIAL_DATA = {
     }
 };
 
+import { supabase } from '@/lib/supabase';
+
+import _ from 'lodash';
+
 export const DashboardProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const [data, setData] = useState(INITIAL_DATA);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const savedLogin = localStorage.getItem('isLoggedIn') === 'true';
-        const savedData = localStorage.getItem('dashboardData');
         if (savedLogin) setIsLoggedIn(true);
-        if (savedData) setData(JSON.parse(savedData));
+        fetchDashboardData();
     }, []);
+
+    const fetchDashboardData = async () => {
+        try {
+            setIsLoading(true);
+            const { data: dbData, error } = await supabase
+                .from('dashboards')
+                .select('content')
+                .eq('id', 'main-dashboard')
+                .single();
+
+            if (error) {
+                console.error('Error fetching from Supabase:', error);
+                const savedData = localStorage.getItem('dashboardData');
+                if (savedData) {
+                    setData(_.merge({}, INITIAL_DATA, JSON.parse(savedData)));
+                }
+            } else if (dbData && dbData.content) {
+                setData(_.merge({}, INITIAL_DATA, dbData.content));
+            }
+        } catch (err) {
+            console.error('Failed to fetch data:', err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const login = (email, password) => {
         if (email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
@@ -264,9 +293,20 @@ export const DashboardProvider = ({ children }) => {
         setIsEditMode(!isEditMode);
     };
 
-    const updateData = (newData) => {
+    const updateData = async (newData) => {
         setData(newData);
         localStorage.setItem('dashboardData', JSON.stringify(newData));
+
+        // Sync with Supabase
+        try {
+            const { error } = await supabase
+                .from('dashboards')
+                .upsert({ id: 'main-dashboard', content: newData, updated_at: new Date().toISOString() });
+
+            if (error) console.error('Supabase sync error:', error);
+        } catch (err) {
+            console.error('Failed to sync with Supabase:', err);
+        }
     };
 
     return (
@@ -274,6 +314,7 @@ export const DashboardProvider = ({ children }) => {
             isLoggedIn,
             isEditMode,
             data,
+            isLoading,
             login,
             logout,
             toggleEditMode,

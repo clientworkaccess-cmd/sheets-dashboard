@@ -4,20 +4,21 @@ import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
 import { useDashboard } from '@/context/DashboardContext';
 import EditableText from './EditableText';
+import _ from 'lodash';
 
 const PerformanceRadar = () => {
     const { data, updateData, isEditMode } = useDashboard();
     const radar = data.performanceRadar;
 
     const handleDataUpdate = (idx, field, value) => {
-        const newData = { ...data };
+        const newData = _.cloneDeep(data);
         const numVal = parseInt(value, 10);
         newData.performanceRadar.data[idx][field] = isNaN(numVal) ? 0 : numVal;
         updateData(newData);
     };
 
     const handleTitleUpdate = (value) => {
-        const newData = { ...data };
+        const newData = _.cloneDeep(data);
         newData.performanceRadar.title = value;
         updateData(newData);
     };

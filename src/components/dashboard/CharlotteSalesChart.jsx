@@ -3,6 +3,7 @@
 import React from 'react';
 import { useDashboard } from '@/context/DashboardContext';
 import EditableText from './EditableText';
+import _ from 'lodash';
 import {
     BarChart,
     Bar,
@@ -21,14 +22,14 @@ const CharlotteSalesChart = () => {
     const chartData = data.charlotteSales.data;
 
     const handleUpdate = (idx, field, value) => {
-        const newData = { ...data };
+        const newData = _.cloneDeep(data);
         const numVal = parseFloat(value.replace(/[^0-9.-]+/g, ""));
         newData.charlotteSales.data[idx][field] = isNaN(numVal) ? 0 : numVal;
         updateData(newData);
     };
 
     const handleTitleUpdate = (value) => {
-        const newData = { ...data };
+        const newData = _.cloneDeep(data);
         newData.charlotteSales.title = value;
         updateData(newData);
     };

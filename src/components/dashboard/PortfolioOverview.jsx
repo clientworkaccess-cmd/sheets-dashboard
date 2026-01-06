@@ -3,6 +3,7 @@
 import React from 'react';
 import { useDashboard } from '@/context/DashboardContext';
 import EditableText from './EditableText';
+import _ from 'lodash';
 import {
     Table,
     TableBody,
@@ -17,7 +18,7 @@ const PortfolioOverview = () => {
     const portfolio = data.portfolio;
 
     const handleUpdate = (idx, field, value) => {
-        const newData = { ...data };
+        const newData = _.cloneDeep(data);
         newData.portfolio[idx][field] = value;
         updateData(newData);
     };
@@ -51,7 +52,7 @@ const PortfolioOverview = () => {
                         {portfolio.map((row, idx) => (
                             <TableRow key={idx} className="border-b border-gray-50 hover:bg-gray-50/50">
                                 <TableCell className="px-4 py-4 text-xs font-medium text-gray-700 min-w-50">
-                                    <EditableText value={row.fund} onSave={(val) => handleUpdate(idx, 'fund', val)} className='w-full'/>
+                                    <EditableText value={row.fund} onSave={(val) => handleUpdate(idx, 'fund', val)} className='w-full' />
                                 </TableCell>
                                 <TableCell className="px-4 py-4 text-xs text-gray-600">
                                     <EditableText value={row.property} onSave={(val) => handleUpdate(idx, 'property', val)} />
@@ -75,7 +76,7 @@ const PortfolioOverview = () => {
                                     <EditableText value={row.capitalInvestment} onSave={(val) => handleUpdate(idx, 'capitalInvestment', val)} />
                                 </TableCell>
                                 <TableCell className="px-4 py-4 text-xs text-gray-400 italic font-medium">
-                                    <EditableText value={row.loanAmount} onSave={(val) => handleUpdate(idx, 'loanAmount', val)} disabled/>
+                                    <EditableText value={row.loanAmount} onSave={(val) => handleUpdate(idx, 'loanAmount', val)} />
                                 </TableCell>
                                 <TableCell className="px-4 py-4 text-xs text-gray-600">
                                     <EditableText value={row.debtType} onSave={(val) => handleUpdate(idx, 'debtType', val)} />

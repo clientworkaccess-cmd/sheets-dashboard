@@ -3,6 +3,7 @@
 import React from 'react';
 import { useDashboard } from '@/context/DashboardContext';
 import EditableText from './EditableText';
+import _ from 'lodash';
 
 const backgroundImage = '/hero-bg.png';
 
@@ -11,13 +12,8 @@ const HeroSection = () => {
     const hero = data.hero;
 
     const handleUpdate = (path, value) => {
-        const newData = { ...data };
-        const keys = path.split('.');
-        let current = newData;
-        for (let i = 0; i < keys.length - 1; i++) {
-            current = current[keys[i]];
-        }
-        current[keys[keys.length - 1]] = value;
+        const newData = _.cloneDeep(data);
+        _.set(newData, path, value);
         updateData(newData);
     };
 
