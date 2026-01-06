@@ -85,6 +85,15 @@ export default function Home() {
             </motion.div>
           </div>
 
+          {/* KPI and Move In/Out Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+            <motion.div variants={itemVariants} className="lg:col-span-5">
+              <KPISection />
+            </motion.div>
+            <motion.div variants={itemVariants} className="lg:col-span-7">
+              <MoveInChart />
+            </motion.div>
+          </div>
           {/* Bottom Section: Houston Specifics */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8 ">
             <motion.div variants={itemVariants} className="lg:col-span-6">
@@ -96,7 +105,7 @@ export default function Home() {
           </div>
 
           {/* KPI and Move In/Out Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 ">
             <motion.div variants={itemVariants} className="lg:col-span-5">
               <KPISection />
             </motion.div>

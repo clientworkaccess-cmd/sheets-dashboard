@@ -209,6 +209,27 @@ const INITIAL_DATA = {
         charlotteExpectation: "Charlotte: We will complete all 180 self storage units - completing 2025 business plan.",
         houstonExpectation: "Houston: September, we completed our 2025 construction business plan. . Now increasing rates and we will focus on marketing our non-climate controlled inventory.",
         revenueExpectation: "We expect revenue to be at $45,000-$46,000 next month."
+    },
+    majorNews: {
+        title: "MAJOR NEWS 🗞️",
+        items: [
+            "Completed construction on second floor units",
+            "Construction plan finished for 2025",
+            "Revenue trending upwards with rate increases"
+        ]
+    },
+    performanceRadar: {
+        title: "Portfolio Performance Analysis",
+        data: [
+            { subject: 'Acquisition', A: 120, B: 110, fullMark: 150 },
+            { subject: 'Client Acquisition Cost', A: 98, B: 130, fullMark: 150 },
+            { subject: 'Customer Lifetime Value', A: 86, B: 130, fullMark: 150 },
+            { subject: 'Expansion', A: 99, B: 100, fullMark: 150 },
+            { subject: '# of Occupied Units', A: 85, B: 90, fullMark: 150 },
+            { subject: 'Five Star Reviews', A: 65, B: 85, fullMark: 150 },
+            { subject: 'Retention', A: 110, B: 90, fullMark: 150 },
+            { subject: 'Move in-Move out Ratio', A: 110, B: 90, fullMark: 150 },
+        ]
     }
 };
 
