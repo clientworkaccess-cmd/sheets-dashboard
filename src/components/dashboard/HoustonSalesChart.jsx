@@ -1,0 +1,134 @@
+"use client";
+
+import React from 'react';
+import { useDashboard } from '@/context/DashboardContext';
+import EditableText from './EditableText';
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+    Line,
+    ComposedChart,
+} from 'recharts';
+
+const HoustonSalesChart = () => {
+    const { data, updateData } = useDashboard();
+    const chartData = data.houstonSales.data;
+
+    const handleUpdate = (idx, field, value) => {
+        const newData = { ...data };
+        const numVal = parseFloat(value.replace(/[^0-9.-]+/g, ""));
+        newData.houstonSales.data[idx][field] = isNaN(numVal) ? 0 : numVal;
+        updateData(newData);
+    };
+
+    const handleTitleUpdate = (value) => {
+        const newData = { ...data };
+        newData.houstonSales.title = value;
+        updateData(newData);
+    };
+
+    const formatCurrency = (val) => `$${val.toLocaleString()}`;
+
+    return (
+        <div className="bg-white rounded-3xl p-8 border shadow-sm h-full flex flex-col">
+            <div className="flex justify-center mb-6">
+                <h2 className="text-[10px] font-bold text-gray-800 uppercase tracking-widest text-center">
+                    <EditableText value={data.houstonSales.title} onSave={handleTitleUpdate} />
+                </h2>
+            </div>
+
+            <div className="bg-black rounded-2xl p-6 flex-grow overflow-hidden">
+                <div className="h-[250px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <ComposedChart data={chartData}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" />
+                            <XAxis
+                                dataKey="name"
+                                stroke="#94a3b8"
+                                fontSize={10}
+                                tickLine={false}
+                                axisLine={false}
+                                angle={-45}
+                                textAnchor="end"
+                                interval={0}
+                            />
+                            <YAxis
+                                stroke="#94a3b8"
+                                fontSize={10}
+                                tickLine={false}
+                                axisLine={false}
+                                tickFormatter={(value) => `$${value / 1000}k`}
+                            />
+                            <Tooltip
+                                contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
+                                itemStyle={{ color: '#fff' }}
+                            />
+                            <Bar dataKey="Actuals" fill="#3b82f6" radius={[2, 2, 0, 0]} barSize={12} />
+                            <Line type="monotone" dataKey="Forecast" stroke="#64748b" strokeWidth={2} dot={false} strokeDasharray="5 5" />
+                            <Legend
+                                verticalAlign="bottom"
+                                align="center"
+                                iconType="rect"
+                                wrapperStyle={{ paddingTop: "20px" }}
+                                formatter={(value) => <span className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">{value}</span>}
+                            />
+                        </ComposedChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
+
+            <div className="mt-8">
+                <div className="flex items-center gap-2 mb-4">
+                    <div className="w-1 h-4 bg-blue-500 rounded-full" />
+                    <h3 className="text-[10px] font-bold text-gray-800 uppercase tracking-widest">houston Monthly</h3>
+                </div>
+                <table className="w-full text-[10px] text-gray-500 uppercase font-bold">
+                    <thead>
+                        <tr className="border-b border-gray-100">
+                            <th className="text-left py-2">Metric</th>
+                            {chartData.slice(-6).map((d, i) => (
+                                <th key={i} className="text-right py-2">{d.name}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody className="text-gray-700">
+                        <tr className="border-b border-gray-50 hover:bg-gray-50/50">
+                            <td className="py-2 flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-blue-500" /> Actual
+                            </td>
+                            {chartData.slice(-6).map((d, i) => (
+                                <td key={i} className="text-right py-2">
+                                    <EditableText
+                                        value={formatCurrency(d.Actuals)}
+                                        onSave={(val) => handleUpdate(chartData.length - 6 + i, 'Actuals', val)}
+                                    />
+                                </td>
+                            ))}
+                        </tr>
+                        <tr className="hover:bg-gray-50/50">
+                            <td className="py-2 flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-slate-400" /> Forecast
+                            </td>
+                            {chartData.slice(-6).map((d, i) => (
+                                <td key={i} className="text-right py-2">
+                                    <EditableText
+                                        value={formatCurrency(d.Forecast)}
+                                        onSave={(val) => handleUpdate(chartData.length - 6 + i, 'Forecast', val)}
+                                    />
+                                </td>
+                            ))}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
+};
+
+export default HoustonSalesChart;

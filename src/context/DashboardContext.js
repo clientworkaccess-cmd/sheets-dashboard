@@ -1,0 +1,266 @@
+"use client";
+
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+const DashboardContext = createContext();
+
+const INITIAL_DATA = {
+    hero: {
+        title: "Gamma Income",
+        subtitle: "Rethink Self Storage Fund",
+        date: "Dec 2025",
+        businessPlanLabel: "Original Business Plan",
+        charlotte: {
+            title: "Charlotte",
+            description: "$2.70M • 65,000 sq ft on 6 acres, Seller financing note for 5 years at 6% interest only. Phase 1: 120 relocatable units and 220 first floor units build out ($750K). Lease up to 90% in 1.5 years. Phase 2: Second floor build out 220 units for $400K. Lease up to 90% occupancy by year 4 ~ 524 units."
+        },
+        houston: {
+            title: "Houston",
+            description: "$1.50M • 30,000 sq ft on 4 acres. 30,000 sq ft on 4 acres. Bank financing note for 2 years interest only- 46% occupancy. Phase 1: Lease up climate controlled units up to 90% occupancy. Phase 2: Build new non-climate controlled units with RV and boat parking. Lease up ~ 345 units."
+        },
+        metrics: [
+            { label: "Targeted Hold", value: "~ 5 Years" },
+            { label: "Targeted Rate of Return", value: "15-25% IRR (Equity Shareclasses)" }
+        ]
+    },
+    portfolio: [
+        {
+            fund: "Rethink Self Storage Fund",
+            property: "24365 TX-124, Hamshire, TX",
+            assetType: "Self Storage",
+            units: 204,
+            market: "Houston, TX",
+            closingDate: "12/22/2023",
+            purchasePrice: "$1,500,000",
+            capitalInvestment: "$300,000",
+            loanAmount: "$1,465,000",
+            debtType: "Principal and Interest",
+            interestRate: "8.25%",
+            maturityDate: "1/2030",
+        },
+        {
+            fund: "Rethink Self Storage Fund",
+            property: "108 Rush St, Mount Holly, NC",
+            assetType: "Self Storage",
+            units: 502,
+            market: "Charlotte, NC",
+            closingDate: "01/04/2024",
+            purchasePrice: "$2,100,000",
+            capitalInvestment: "$915,000",
+            loanAmount: "$2,500,000",
+            debtType: "Interest Only",
+            interestRate: "7%",
+            maturityDate: "1/2029",
+        }
+    ],
+    highlights: {
+        title: "Fund Highlights ☀️",
+        items: [
+            "1 YEAR, 11 MONTHS!",
+            "29 NEW CUSTOMERS IN CHARLOTTE AND HOUSTON!",
+            "$44,897 in total revenue vs business plan at $54,222 was generated this month across both facilities:",
+            "Charlotte contributed $28,212",
+            "Houston contributed $16,885",
+            "In Charlotte, we started construction on the 2nd floor, completing 49/180 2nd floor self storage units. We reached 227 occupied units vs 164 units 12 months ago. This month, we have 20 move ins and 14 move outs.",
+            "In Houston, we had a total of 144 occupied units vs 117 units 12 months ago. November, we saw 9 move-ins and 8 move-outs. Second highest sales month ever! 🔥 🔥 🔥",
+            "*** ~250 new units at our sites. Great value add for our property values, but we need revenue to reflect our new inventory ***"
+        ]
+    },
+    mainSales: {
+        title: "Rethink - Monthly Sales vs Forecast",
+        data: [
+            { name: "Jan'24", Charlotte: 8000, Houston: 5000, Forecast: 15000 },
+            { name: "Feb'24", Charlotte: 9000, Houston: 5500, Forecast: 16000 },
+            { name: "Mar'24", Charlotte: 10000, Houston: 6000, Forecast: 18000 },
+            { name: "Apr'24", Charlotte: 12000, Houston: 6500, Forecast: 20000 },
+            { name: "May'24", Charlotte: 13000, Houston: 7000, Forecast: 22000 },
+            { name: "Jun'24", Charlotte: 15000, Houston: 7500, Forecast: 25000 },
+            { name: "Jul'24", Charlotte: 17000, Houston: 8000, Forecast: 28000 },
+            { name: "Aug'24", Charlotte: 19000, Houston: 8500, Forecast: 30000 },
+            { name: "Sep'24", Charlotte: 21000, Houston: 9000, Forecast: 32000 },
+            { name: "Oct'24", Charlotte: 23000, Houston: 9500, Forecast: 35000 },
+            { name: "Nov'24", Charlotte: 25000, Houston: 10000, Forecast: 38000 },
+            { name: "Dec'24", Charlotte: 20000, Houston: 8000, Forecast: 40000 },
+            { name: "Jan'25", Charlotte: 26000, Houston: 10500, Forecast: 42000 },
+            { name: "Feb'25", Charlotte: 28000, Houston: 11000, Forecast: 45000 },
+            { name: "Mar'25", Charlotte: 30000, Houston: 11500, Forecast: 47000 },
+            { name: "Apr'25", Charlotte: 32000, Houston: 12000, Forecast: 50000 },
+            { name: "May'25", Charlotte: 31000, Houston: 11500, Forecast: 52000 },
+            { name: "Jun'25", Charlotte: 33000, Houston: 12000, Forecast: 54000 },
+            { name: "Jul'25", Charlotte: 31112, Houston: 15254, Forecast: 48522 },
+            { name: "Aug'25", Charlotte: 33095, Houston: 16075, Forecast: 50322 },
+            { name: "Sep'25", Charlotte: 25431, Houston: 15478, Forecast: 51622 },
+            { name: "Oct'25", Charlotte: 31395, Houston: 16030, Forecast: 52922 },
+            { name: "Nov'25", Charlotte: 28212, Houston: 16685, Forecast: 54222 },
+            { name: "Dec'25", Charlotte: 0, Houston: 0, Forecast: 55522 },
+        ]
+    },
+    charlotteChecklist: {
+        title: "Charlotte 🏢",
+        items: [
+            { text: "BUILDING 180 MORE UNITS : We received our order of 176 Boxwell units for the 2nd floor expansion on November 2nd. The first section of 49 units were completed on November 20th. The 2nd section of 80 units are 75% complete today. We will complete the total project in December. 🏗️" },
+            { text: "WE SAVED MONEY 🤝 : Steel manufacturer quoted installation at $43,500. Our construction crew we have worked with before said that they will complete this between $21,000-$23,000, saving us more than $20,000. 💰" },
+            { text: "FINISHING AHEAD OF SCHEDULE : First 49 self storage units are 100% complete, 4 days ahead of schedule. 🏃‍♂️ 💨" },
+            { text: "VERTICAL LIFT TIMELINE ADJUSTED : Management postponed installation to negotiate improved pricing and terms." },
+            { text: "WAREHOUSE RE-LEASING STILL IN PROGRESS : We are actively pushing with brokers, LoopNet/Crexi, FB Marketplace to find the right warehousing partner." },
+            { text: "NEXT MONTH : Revenue projected in the $28,000-$29,000 range." }
+        ]
+    },
+    houstonChecklist: {
+        title: "Houston 🏢",
+        items: [
+            { text: "BUILDING 180 MORE UNITS : We received our order of 176 Boxwell units for the 2nd floor expansion on November 2nd. The first section of 49 units were completed on November 20th. The 2nd section of 80 units are 75% complete today. We will complete the total project in December. 🏗️" },
+            { text: "WE SAVED MONEY 🤝 : Steel manufacturer quoted installation at $43,500. Our construction crew we have worked with before said that they will complete this between $21,000-$23,000, saving us more than $20,000. 💰" },
+            { text: "FINISHING AHEAD OF SCHEDULE : First 49 self storage units are 100% complete, 4 days ahead of schedule. 🏃‍♂️ 💨" },
+            { text: "VERTICAL LIFT TIMELINE ADJUSTED : Management postponed installation to negotiate improved pricing and terms." },
+            { text: "WAREHOUSE RE-LEASING STILL IN PROGRESS : We are actively pushing with brokers, LoopNet/Crexi, FB Marketplace to find the right warehousing partner." },
+            { text: "NEXT MONTH : Revenue projected in the $28,000-$29,000 range." }
+        ]
+    },
+    charlotteKPI: {
+        revenue: "$27,897",
+        units: "221/305",
+        rentSqft: "$0.89",
+        rating: "4.9/5"
+    },
+    houstonKPI: {
+        revenue: "$27,897",
+        units: "221/305",
+        rentSqft: "$0.89",
+        rating: "4.9/5"
+    },
+    charlotteSales: {
+        title: "2025 Charlotte - Monthly Sales vs Forecast",
+        data: [
+            { name: "Jan'24", Actuals: 5000, Forecast: 8000 },
+            { name: "Feb'24", Actuals: 6000, Forecast: 9000 },
+            { name: "Mar'24", Actuals: 7000, Forecast: 10000 },
+            { name: "Apr'24", Actuals: 9000, Forecast: 12000 },
+            { name: "May'24", Actuals: 11000, Forecast: 13000 },
+            { name: "Jun'24", Actuals: 14000, Forecast: 15000 },
+            { name: "Jul'24", Actuals: 16000, Forecast: 17000 },
+            { name: "Aug'24", Actuals: 18000, Forecast: 19000 },
+            { name: "Sep'24", Actuals: 20000, Forecast: 21000 },
+            { name: "Oct'24", Actuals: 22000, Forecast: 23000 },
+            { name: "Nov'24", Actuals: 24000, Forecast: 25000 },
+            { name: "Dec'24", Actuals: 21000, Forecast: 20000 },
+            { name: "Jan'25", Actuals: 25000, Forecast: 26000 },
+            { name: "Feb'25", Actuals: 27000, Forecast: 28000 },
+            { name: "Mar'25", Actuals: 29000, Forecast: 30000 },
+            { name: "Apr'25", Actuals: 31000, Forecast: 32000 },
+            { name: "May'25", Actuals: 30000, Forecast: 31000 },
+            { name: "Jun'25", Actuals: 32000, Forecast: 33000 },
+            { name: "Jul'25", Actuals: 31112, Forecast: 29740 },
+            { name: "Aug'25", Actuals: 33095, Forecast: 31540 },
+            { name: "Sep'25", Actuals: 25431, Forecast: 32840 },
+            { name: "Oct'25", Actuals: 31395, Forecast: 34140 },
+            { name: "Nov'25", Actuals: 28212, Forecast: 35440 },
+            { name: "Dec'25", Actuals: 0, Forecast: 36740 },
+        ]
+    },
+    houstonSales: {
+        title: "2025 Houston - Monthly Sales vs Forecast",
+        data: [
+            { name: "Jan'24", Actuals: 5000, Forecast: 8000 },
+            { name: "Feb'24", Actuals: 6000, Forecast: 9000 },
+            { name: "Mar'24", Actuals: 7000, Forecast: 10000 },
+            { name: "Apr'24", Actuals: 9000, Forecast: 12000 },
+            { name: "May'24", Actuals: 11000, Forecast: 13000 },
+            { name: "Jun'24", Actuals: 14000, Forecast: 15000 },
+            { name: "Jul'24", Actuals: 16000, Forecast: 17000 },
+            { name: "Aug'24", Actuals: 18000, Forecast: 19000 },
+            { name: "Sep'24", Actuals: 20000, Forecast: 21000 },
+            { name: "Oct'24", Actuals: 22000, Forecast: 23000 },
+            { name: "Nov'24", Actuals: 24000, Forecast: 25000 },
+            { name: "Dec'24", Actuals: 21000, Forecast: 20000 },
+            { name: "Jan'25", Actuals: 25000, Forecast: 26000 },
+            { name: "Feb'25", Actuals: 27000, Forecast: 28000 },
+            { name: "Mar'25", Actuals: 29000, Forecast: 30000 },
+            { name: "Apr'25", Actuals: 31000, Forecast: 32000 },
+            { name: "May'25", Actuals: 30000, Forecast: 31000 },
+            { name: "Jun'25", Actuals: 32000, Forecast: 33000 },
+            { name: "Jul'25", Actuals: 31112, Forecast: 29740 },
+            { name: "Aug'25", Actuals: 33095, Forecast: 31540 },
+            { name: "Sep'25", Actuals: 25431, Forecast: 32840 },
+            { name: "Oct'25", Actuals: 31395, Forecast: 34140 },
+            { name: "Nov'25", Actuals: 28212, Forecast: 35440 },
+            { name: "Dec'25", Actuals: 0, Forecast: 36740 },
+        ]
+    },
+    moveInChart: {
+        title: "MOVE IN (Bar) vs MOVE OUT (Line)",
+        data: [
+            { name: '1', moveIn: 15, moveOut: 12 },
+            { name: '2', moveIn: 12, moveOut: 14 },
+            { name: '3', moveIn: 18, moveOut: 10 },
+            { name: '4', moveIn: 9, moveOut: 13 },
+            { name: '5', moveIn: 22, moveOut: 11 },
+            { name: '6', moveIn: 14, moveOut: 15 },
+            { name: '7', moveIn: 16, moveOut: 9 },
+            { name: '8', moveIn: 25, moveOut: 16 },
+            { name: '9', moveIn: 12, moveOut: 10 },
+            { name: '10', moveIn: 18, moveOut: 14 },
+            { name: '11', moveIn: 15, moveOut: 12 },
+        ]
+    },
+    footer: {
+        forecastText: "Next Month Forecast: Charlotte $24,000 | Houston $16,000",
+        expectationHeading: "Next month, we expect:",
+        charlotteExpectation: "Charlotte: We will complete all 180 self storage units - completing 2025 business plan.",
+        houstonExpectation: "Houston: September, we completed our 2025 construction business plan. . Now increasing rates and we will focus on marketing our non-climate controlled inventory.",
+        revenueExpectation: "We expect revenue to be at $45,000-$46,000 next month."
+    }
+};
+
+export const DashboardProvider = ({ children }) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [data, setData] = useState(INITIAL_DATA);
+
+    useEffect(() => {
+        const savedLogin = localStorage.getItem('isLoggedIn') === 'true';
+        const savedData = localStorage.getItem('dashboardData');
+        if (savedLogin) setIsLoggedIn(true);
+        if (savedData) setData(JSON.parse(savedData));
+    }, []);
+
+    const login = (email, password) => {
+        if (email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+            setIsLoggedIn(true);
+            localStorage.setItem('isLoggedIn', 'true');
+            return true;
+        }
+        return false;
+    };
+
+    const logout = () => {
+        setIsLoggedIn(false);
+        setIsEditMode(false);
+        localStorage.removeItem('isLoggedIn');
+    };
+
+    const toggleEditMode = () => {
+        setIsEditMode(!isEditMode);
+    };
+
+    const updateData = (newData) => {
+        setData(newData);
+        localStorage.setItem('dashboardData', JSON.stringify(newData));
+    };
+
+    return (
+        <DashboardContext.Provider value={{
+            isLoggedIn,
+            isEditMode,
+            data,
+            login,
+            logout,
+            toggleEditMode,
+            updateData
+        }}>
+            {children}
+        </DashboardContext.Provider>
+    );
+};
+
+export const useDashboard = () => useContext(DashboardContext);
