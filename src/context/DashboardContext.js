@@ -344,14 +344,14 @@ export const DashboardProvider = ({ children }) => {
                 if (houstonSalesData.length > 0) newData.houstonSales.data = houstonSalesData;
 
                 // 4. Process Move In Chart Data (Last 11 months for example)
-                const charlotteMoveInData = charlotteDataRaw.slice(-11).map(cRow => ({
+                const charlotteMoveInData = charlotteDataRaw.map(cRow => ({
                     name: cRow.month,
                     moveIn: parseInt(cRow.move_ins) || 0,
                     moveOut: parseInt(cRow.move_outs) || 0
                 }));
                 if (charlotteMoveInData.length > 0) newData.charlotteMoveIn.data = charlotteMoveInData;
 
-                const houstonMoveInData = houstonDataRaw.slice(-11).map(hRow => ({
+                const houstonMoveInData = houstonDataRaw.map(hRow => ({
                     name: hRow.month,
                     moveIn: parseInt(hRow.move_ins) || 0,
                     moveOut: parseInt(hRow.move_outs) || 0

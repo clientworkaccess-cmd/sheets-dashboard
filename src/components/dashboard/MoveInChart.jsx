@@ -43,6 +43,13 @@ const MoveInChart = ({ type = 'charlotte' }) => {
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                         <XAxis
                             dataKey="name"
+                            stroke="#616a77ff"
+                            fontSize={8}
+                            tickLine={false}
+                            axisLine={false}
+                            angle={-45}
+                            textAnchor="end"
+                            interval={0}
                         />
                         <YAxis
                             stroke="#94a3b8"
