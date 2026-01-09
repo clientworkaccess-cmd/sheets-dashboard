@@ -16,7 +16,7 @@ const ForecastFooter = () => {
     };
 
     return (
-        <div className="bg-[#0f172a] rounded-[32px] p-8 text-white shadow-2xl">
+        <div className="bg-[#0f172a] rounded-[32px] p-8 text-white">
             <div className="flex items-center gap-3 mb-6">
                 <Rocket className="w-5 h-5 text-pink-400 fill-pink-400/20" />
                 <h2 className="text-sm font-bold text-blue-400">

@@ -128,20 +128,20 @@ export default function Home() {
 
           {/* Forecast Footer */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-8">
-          <motion.div variants={itemVariants} className="lg:col-span-7 ">
-            <ForecastFooter />
-          </motion.div>
-          <motion.div variants={itemVariants} className="lg:col-span-5">
-            <MajorNews />
-          </motion.div>
+            <motion.div variants={itemVariants} className="lg:col-span-7 ">
+              <ForecastFooter />
+            </motion.div>
+            <motion.div variants={itemVariants} className="lg:col-span-5">
+              <MajorNews />
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
+            <motion.div variants={itemVariants} className="lg:col-span-12">
+              <PerformanceRadar />
+            </motion.div>
           </div>
         </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <motion.div variants={itemVariants} className="lg:col-span-12">
-            <PerformanceRadar />
-          </motion.div>
-        </div>
         {/* Bottom Credits / Copyright */}
         <div className="flex justify-center pb-8">
           <p className="text-gray-400 text-xs font-medium uppercase tracking-widest">
