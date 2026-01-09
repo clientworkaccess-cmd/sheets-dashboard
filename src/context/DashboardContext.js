@@ -282,11 +282,11 @@ export const DashboardProvider = ({ children }) => {
 
                     result.reviews_data.forEach(item => {
                         if (item.location === "Mount Holly") {
-                            newData.charlotteKPI.rating = `${item.Rating}/5`;
-                            newData.charlotteKPI.reviewsCount = item.reviewsCount;
+                            newData.charlotteKPI.rating = `${item.rating}/5`;
+                            newData.charlotteKPI.reviewsCount = item.review_count;
                         } else if (item.location === "Hampshire") {
-                            newData.houstonKPI.rating = `${item.Rating}/5`;
-                            newData.houstonKPI.reviewsCount = item.reviewsCount;
+                            newData.houstonKPI.rating = `${item.rating}/5`;
+                            newData.houstonKPI.reviewsCount = item.review_count;
                         }
                     });
 
