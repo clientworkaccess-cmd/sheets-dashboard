@@ -34,18 +34,18 @@ const PortfolioOverview = () => {
                 <Table>
                     <TableHeader>
                         <TableRow className="border-b border-gray-100 hover:bg-transparent uppercase tracking-tighter text-[11px]">
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Fund</TableHead>
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Property</TableHead>
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Asset Type</TableHead>
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Units</TableHead>
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Market</TableHead>
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Closing Date</TableHead>
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Purchase Price</TableHead>
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Capital Investment</TableHead>
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Loan Amount</TableHead>
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Debt Type</TableHead>
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Interest Rate</TableHead>
-                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground">Maturity Date</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Fund</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Property</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Asset Type</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Units</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Market</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Closing Date</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Purchase Price</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Capital Investment</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Loan Amount</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Debt Type</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Interest Rate</TableHead>
+                            <TableHead className="px-4 py-3 font-extrabold text-secondary-foreground min-w-[150px]">Maturity Date</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>

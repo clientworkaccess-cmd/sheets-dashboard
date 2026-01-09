@@ -294,6 +294,88 @@ export const DashboardProvider = ({ children }) => {
         }
     };
 
+    const fetchRealTableData = async () => {
+        try {
+            // Fetch from all 4 new tables
+            const [h24, h25, ho24, ho25] = await Promise.all([
+                supabase.from('holly_2024').select('*').order('id', { ascending: true }),
+                supabase.from('holly_2025').select('*').order('id', { ascending: true }),
+                supabase.from('houston_2024').select('*').order('id', { ascending: true }),
+                supabase.from('2025-houston').select('*').order('id', { ascending: true })
+            ]);
+
+            const charlotteDataRaw = [...(h24.data || []), ...(h25.data || [])];
+            const houstonDataRaw = [...(ho24.data || []), ...(ho25.data || [])];
+
+            setData(prevData => {
+                const newData = _.cloneDeep(prevData);
+
+                // 1. Process Main Sales Chart Data
+                // We assume both arrays have matching months or we just zip them
+                const mainSalesData = charlotteDataRaw.map((cRow, idx) => {
+                    const hRow = houstonDataRaw[idx] || {};
+                    return {
+                        name: cRow.month,
+                        Charlotte: parseFloat(cRow.total_revenue) || 0,
+                        Houston: parseFloat(hRow.total_revenue) || 0,
+                        Forecast: prevData.mainSales.data[idx]?.Forecast || 0 // Keep forecast from dashboards table for now
+                    };
+                });
+                if (mainSalesData.length > 0) newData.mainSales.data = mainSalesData;
+
+                // 2. Process Charlotte Sales Chart Data
+                const charlotteSalesData = charlotteDataRaw.map((cRow, idx) => ({
+                    name: cRow.month,
+                    Actuals: parseFloat(cRow.total_revenue) || 0,
+                    Forecast: prevData.charlotteSales.data[idx]?.Forecast || 0
+                }));
+                if (charlotteSalesData.length > 0) newData.charlotteSales.data = charlotteSalesData;
+
+                // 3. Process Houston Sales Chart Data
+                const houstonSalesData = houstonDataRaw.map((hRow, idx) => ({
+                    name: hRow.month,
+                    Actuals: parseFloat(hRow.total_revenue) || 0,
+                    Forecast: prevData.houstonSales.data[idx]?.Forecast || 0
+                }));
+                if (houstonSalesData.length > 0) newData.houstonSales.data = houstonSalesData;
+
+                // 4. Process Move In Chart Data (Last 11 months for example)
+                const charlotteMoveInData = charlotteDataRaw.slice(-11).map(cRow => ({
+                    name: cRow.month,
+                    moveIn: parseInt(cRow.move_ins) || 0,
+                    moveOut: parseInt(cRow.move_outs) || 0
+                }));
+                if (charlotteMoveInData.length > 0) newData.charlotteMoveIn.data = charlotteMoveInData;
+
+                const houstonMoveInData = houstonDataRaw.slice(-11).map(hRow => ({
+                    name: hRow.month,
+                    moveIn: parseInt(hRow.move_ins) || 0,
+                    moveOut: parseInt(hRow.move_outs) || 0
+                }));
+                if (houstonMoveInData.length > 0) newData.houstonMoveIn.data = houstonMoveInData;
+
+                // 5. Update KPI Cards with latest month info
+                const latestCharlotte = charlotteDataRaw[charlotteDataRaw.length - 1];
+                if (latestCharlotte) {
+                    newData.charlotteKPI.revenue = `$${parseFloat(latestCharlotte.total_revenue).toLocaleString()}`;
+                    newData.charlotteKPI.units = `${latestCharlotte.total_units_rented}/${latestCharlotte.total_units_available}`;
+                    newData.charlotteKPI.rentSqft = `$${latestCharlotte.rent_per_sq_ft}`;
+                }
+
+                const latestHouston = houstonDataRaw[houstonDataRaw.length - 1];
+                if (latestHouston) {
+                    newData.houstonKPI.revenue = `$${parseFloat(latestHouston.total_revenue).toLocaleString()}`;
+                    newData.houstonKPI.units = `${latestHouston.total_units_rented}/${latestHouston.total_units_available}`;
+                    newData.houstonKPI.rentSqft = `$${latestHouston.rent_per_sq_ft}`;
+                }
+
+                return newData;
+            });
+        } catch (error) {
+            console.error('Error fetching real table data:', error);
+        }
+    };
+
     const fetchDashboardData = async () => {
         try {
             setIsLoading(true);
@@ -313,8 +395,11 @@ export const DashboardProvider = ({ children }) => {
                 setData(_.merge({}, INITIAL_DATA, dbData.content));
             }
 
-            // After loading base data, fetch live reviews to override
-            await fetchLiveReviews();
+            // Fetch live reviews and real table data to override static content
+            await Promise.all([
+                fetchLiveReviews(),
+                fetchRealTableData()
+            ]);
         } catch (err) {
             console.error('Failed to fetch data:', err);
         } finally {
