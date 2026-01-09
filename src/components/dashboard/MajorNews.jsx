@@ -20,7 +20,6 @@ const MajorNews = () => {
         newData.majorNews.title = value;
         updateData(newData);
     };
-
     return (
         <section className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 h-full">
             <div className="flex items-center gap-2 mb-6 border-b border-gray-100 pb-4">
