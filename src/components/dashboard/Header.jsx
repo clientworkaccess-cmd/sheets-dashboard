@@ -16,7 +16,16 @@ import { useState } from "react";
 import { handleExport } from "@/lib/exportHandler";
 
 const DashboardHeader = () => {
-    const { isLoggedIn, isEditMode, toggleEditMode, logout } = useDashboard();
+    const {
+        isLoggedIn,
+        isEditMode,
+        toggleEditMode,
+        logout,
+        selectedMonth,
+        setSelectedMonth,
+        selectedYear,
+        setSelectedYear
+    } = useDashboard();
     const [isLoginOpen, setIsLoginOpen] = useState(false);
 
     return (
@@ -28,7 +37,7 @@ const DashboardHeader = () => {
             <div className="flex items-center gap-4 mt-4 md:mt-0">
                 <div className="flex flex-col">
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Year</span>
-                    <Select defaultValue="2025">
+                    <Select value={selectedYear} onValueChange={setSelectedYear}>
                         <SelectTrigger className="rounded-xl bg-gray-50 border-gray-100">
                             <SelectValue placeholder="Year" />
                         </SelectTrigger>
@@ -42,13 +51,13 @@ const DashboardHeader = () => {
 
                 <div className="flex flex-col">
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Month</span>
-                    <Select defaultValue="December">
+                    <Select value={selectedMonth} onValueChange={setSelectedMonth}>
                         <SelectTrigger className="rounded-xl bg-gray-50 border-gray-100">
                             <SelectValue placeholder="Month" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="January">January</SelectItem>
-                            <SelectItem value="Feburary">Feburary</SelectItem>
+                            <SelectItem value="February">February</SelectItem>
                             <SelectItem value="March">March</SelectItem>
                             <SelectItem value="April">April</SelectItem>
                             <SelectItem value="May">May</SelectItem>

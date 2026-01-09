@@ -8,7 +8,7 @@ import _ from 'lodash';
 const backgroundImage = '/hero-bg.png';
 
 const HeroSection = () => {
-    const { data, updateData } = useDashboard();
+    const { data, updateData , selectedMonth , selectedYear } = useDashboard();
     const hero = data.hero;
 
     const handleUpdate = (path, value) => {
@@ -56,10 +56,7 @@ const HeroSection = () => {
                             <div className="flex items-center gap-2 mt-1">
                                 <div className="w-2 h-2 rounded-full bg-blue-400" />
                                 <span className="text-xs text-gray-400 font-medium">
-                                    <EditableText
-                                        value={hero.date}
-                                        onSave={(val) => handleUpdate('hero.date', val)}
-                                    />
+                                    {selectedMonth} {selectedYear}
                                 </span>
                             </div>
                         </div>

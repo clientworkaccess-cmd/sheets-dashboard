@@ -259,6 +259,8 @@ export const DashboardProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const [data, setData] = useState(INITIAL_DATA);
+    const [selectedMonth, setSelectedMonth] = useState('December'); 
+    const [selectedYear, setSelectedYear] = useState('2025');
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -446,6 +448,10 @@ export const DashboardProvider = ({ children }) => {
         <DashboardContext.Provider value={{
             isLoggedIn,
             isEditMode,
+            selectedMonth,
+            selectedYear,
+            setSelectedMonth,
+            setSelectedYear,
             data,
             isLoading,
             login,
