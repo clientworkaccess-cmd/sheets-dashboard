@@ -118,16 +118,50 @@ const INITIAL_DATA = {
         ]
     },
     charlotteKPI: {
-        revenue: "$27,897",
-        units: "221/305",
-        rentSqft: "$0.89",
-        rating: "4.9/5"
+        revenue: "$28,212",
+        units: "227/305",
+        rentSqft: "$0.92",
+        rating: "4.9/5",
+        reviewsCount: 121
     },
     houstonKPI: {
-        revenue: "$27,897",
-        units: "221/305",
-        rentSqft: "$0.89",
-        rating: "4.9/5"
+        revenue: "$16,685",
+        units: "144/204",
+        rentSqft: "$0.85",
+        rating: "4.6/5",
+        reviewsCount: 41
+    },
+    charlotteMoveIn: {
+        title: "Charlotte Move In vs Move Out",
+        data: [
+            { name: '1', moveIn: 20, moveOut: 14 },
+            { name: '2', moveIn: 18, moveOut: 12 },
+            { name: '3', moveIn: 22, moveOut: 15 },
+            { name: '4', moveIn: 25, moveOut: 18 },
+            { name: '5', moveIn: 19, moveOut: 13 },
+            { name: '6', moveIn: 24, moveOut: 16 },
+            { name: '7', moveIn: 21, moveOut: 14 },
+            { name: '8', moveIn: 28, moveOut: 20 },
+            { name: '9', moveIn: 23, moveOut: 17 },
+            { name: '10', moveIn: 20, moveOut: 15 },
+            { name: '11', moveIn: 20, moveOut: 14 },
+        ]
+    },
+    houstonMoveIn: {
+        title: "Houston Move In vs Move Out",
+        data: [
+            { name: '1', moveIn: 9, moveOut: 8 },
+            { name: '2', moveIn: 12, moveOut: 10 },
+            { name: '3', moveIn: 15, moveOut: 12 },
+            { name: '4', moveIn: 8, moveOut: 7 },
+            { name: '5', moveIn: 11, moveOut: 9 },
+            { name: '6', moveIn: 14, moveOut: 11 },
+            { name: '7', moveIn: 10, moveOut: 8 },
+            { name: '8', moveIn: 13, moveOut: 10 },
+            { name: '9', moveIn: 16, moveOut: 12 },
+            { name: '10', moveIn: 9, moveOut: 8 },
+            { name: '11', moveIn: 9, moveOut: 8 },
+        ]
     },
     charlotteSales: {
         title: "2025 Charlotte - Monthly Sales vs Forecast",
@@ -187,22 +221,6 @@ const INITIAL_DATA = {
             { name: "Dec'25", Actuals: 0, Forecast: 36740 },
         ]
     },
-    moveInChart: {
-        title: "MOVE IN (Bar) vs MOVE OUT (Line)",
-        data: [
-            { name: '1', moveIn: 15, moveOut: 12 },
-            { name: '2', moveIn: 12, moveOut: 14 },
-            { name: '3', moveIn: 18, moveOut: 10 },
-            { name: '4', moveIn: 9, moveOut: 13 },
-            { name: '5', moveIn: 22, moveOut: 11 },
-            { name: '6', moveIn: 14, moveOut: 15 },
-            { name: '7', moveIn: 16, moveOut: 9 },
-            { name: '8', moveIn: 25, moveOut: 16 },
-            { name: '9', moveIn: 12, moveOut: 10 },
-            { name: '10', moveIn: 18, moveOut: 14 },
-            { name: '11', moveIn: 15, moveOut: 12 },
-        ]
-    },
     footer: {
         forecastText: "Next Month Forecast: Charlotte $24,000 | Houston $16,000",
         expectationHeading: "Next month, we expect:",
@@ -249,6 +267,33 @@ export const DashboardProvider = ({ children }) => {
         fetchDashboardData();
     }, []);
 
+    const fetchLiveReviews = async () => {
+        try {
+            const response = await fetch('https://n8n.srv927950.hstgr.cloud/webhook/de3edd1e-cf15-459f-a488-a5601a5bb1b9');
+            const result = await response.json();
+
+            if (result.reviews_data) {
+                setData(prevData => {
+                    const newData = _.cloneDeep(prevData);
+
+                    result.reviews_data.forEach(item => {
+                        if (item.location === "Mount Holly") {
+                            newData.charlotteKPI.rating = `${item.Rating}/5`;
+                            newData.charlotteKPI.reviewsCount = item.reviewsCount;
+                        } else if (item.location === "Hampshire") {
+                            newData.houstonKPI.rating = `${item.Rating}/5`;
+                            newData.houstonKPI.reviewsCount = item.reviewsCount;
+                        }
+                    });
+
+                    return newData;
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching live reviews:', error);
+        }
+    };
+
     const fetchDashboardData = async () => {
         try {
             setIsLoading(true);
@@ -267,6 +312,9 @@ export const DashboardProvider = ({ children }) => {
             } else if (dbData && dbData.content) {
                 setData(_.merge({}, INITIAL_DATA, dbData.content));
             }
+
+            // After loading base data, fetch live reviews to override
+            await fetchLiveReviews();
         } catch (err) {
             console.error('Failed to fetch data:', err);
         } finally {

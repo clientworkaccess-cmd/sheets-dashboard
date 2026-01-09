@@ -27,8 +27,8 @@ const HeroSection = () => {
                     backgroundColor: '#000'
                 }}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" />
-            <div className="absolute inset-0 bg-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/10 to-transparent" />
+            <div className="absolute inset-0 bg-black/10" />
 
             {/* Content */}
             <div className="relative h-full z-10 p-10 flex flex-col justify-between">
@@ -64,20 +64,17 @@ const HeroSection = () => {
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="text-right">
-                        <span className="text-[10px] font-bold text-secondary uppercase tracking-[0.2em]">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-4">
+                    <div className="lg:col-span-8 flex flex-col gap-6">
+                        <div className="bg-white/5 backdrop-blur-lg p-6 rounded-3xl border border-white/10">
+                        <span className="text-[10px] font-bold text-secondary uppercase tracking-[0.2em] p-2 mb-2">
                             <EditableText
                                 value={hero.businessPlanLabel}
                                 onSave={(val) => handleUpdate('hero.businessPlanLabel', val)}
                             />
                         </span>
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-4">
-                    <div className="lg:col-span-8 flex flex-col gap-6">
-                        <div className="bg-white/5 backdrop-blur-md p-6 rounded-3xl border border-white/10">
                             <div className="flex items-center gap-2 mb-3">
                                 <div className="w-2.5 h-2.5 rounded-full bg-pink-500 shadow-[0_0_8px_rgba(236,72,153,0.5)]" />
                                 <h3 className="text-white font-bold">

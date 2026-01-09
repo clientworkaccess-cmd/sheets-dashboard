@@ -9,7 +9,6 @@ import FundHighlights from '@/components/dashboard/FundHighlights';
 import MainSalesChart from '@/components/dashboard/MainSalesChart';
 import CharlotteChecklist from '@/components/dashboard/CharlotteChecklist';
 import CharlotteSalesChart from '@/components/dashboard/CharlotteSalesChart';
-import KPISection from '@/components/dashboard/CharlotteKPICards';
 import MoveInChart from '@/components/dashboard/MoveInChart';
 import ForecastFooter from '@/components/dashboard/ForecastFooter';
 import HoustonChecklist from '@/components/dashboard/HoustonChecklist';
@@ -17,6 +16,8 @@ import HoustonSalesChart from '@/components/dashboard/HoustonSalesChart';
 import PerformanceRadar from '@/components/dashboard/PerformanceRadar';
 import MajorNews from '@/components/dashboard/MajorNews';
 import { useDashboard } from '@/context/DashboardContext';
+import CharlotteKPICards from '@/components/dashboard/CharlotteKPICards';
+import HoustonKPICards from '@/components/dashboard/HoustonKpiCards';
 
 export default function Home() {
   const { isLoading } = useDashboard();
@@ -99,10 +100,10 @@ export default function Home() {
           {/* KPI and Move In/Out Section */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
             <motion.div variants={itemVariants} className="lg:col-span-5">
-              <KPISection />
+              <CharlotteKPICards />
             </motion.div>
             <motion.div variants={itemVariants} className="lg:col-span-7">
-              <MoveInChart />
+              <MoveInChart type="charlotte" />
             </motion.div>
           </div>
           {/* Bottom Section: Houston Specifics */}
@@ -118,24 +119,26 @@ export default function Home() {
           {/* KPI and Move In/Out Section */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 ">
             <motion.div variants={itemVariants} className="lg:col-span-5">
-              <KPISection />
+              <HoustonKPICards />
             </motion.div>
             <motion.div variants={itemVariants} className="lg:col-span-7">
-              <MoveInChart />
+              <MoveInChart type="houston" />
             </motion.div>
           </div>
 
           {/* Forecast Footer */}
-          <motion.div variants={itemVariants}>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-8">
+          <motion.div variants={itemVariants} className="lg:col-span-7 ">
             <ForecastFooter />
           </motion.div>
+          <motion.div variants={itemVariants} className="lg:col-span-5">
+            <MajorNews />
+          </motion.div>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <motion.div variants={itemVariants} className="lg:col-span-6">
-            <MajorNews />
-          </motion.div>
-          <motion.div variants={itemVariants} className="lg:col-span-6">
+          <motion.div variants={itemVariants} className="lg:col-span-12">
             <PerformanceRadar />
           </motion.div>
         </div>

@@ -16,20 +16,24 @@ import {
 } from 'recharts';
 import EditableText from './EditableText';
 
-const MoveInChart = () => {
+const MoveInChart = ({ type = 'charlotte' }) => {
     const { data, updateData, isEditMode } = useDashboard();
-    const chartData = data.moveInChart.data;
+
+    // Choose data based on type
+    const chartKey = type === 'charlotte' ? 'charlotteMoveIn' : 'houstonMoveIn';
+    const chartSection = data[chartKey];
+    const chartData = chartSection.data;
 
     const handleUpdate = (idx, field, value) => {
         const newData = _.cloneDeep(data);
         const numVal = parseInt(value, 10);
-        newData.moveInChart.data[idx][field] = isNaN(numVal) ? 0 : numVal;
+        newData[chartKey].data[idx][field] = isNaN(numVal) ? 0 : numVal;
         updateData(newData);
     };
 
     const handleTitleUpdate = (value) => {
         const newData = _.cloneDeep(data);
-        newData.moveInChart.title = value;
+        newData[chartKey].title = value;
         updateData(newData);
     };
 
@@ -37,7 +41,7 @@ const MoveInChart = () => {
         <div className="bg-white rounded-3xl p-8 border shadow-sm h-full">
             <div className="flex justify-center mb-6">
                 <h2 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                    <EditableText value={data.moveInChart.title} onSave={handleTitleUpdate} />
+                    <EditableText value={chartSection.title} onSave={handleTitleUpdate} />
                 </h2>
             </div>
 
