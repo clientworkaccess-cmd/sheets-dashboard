@@ -56,7 +56,7 @@ const CharlotteKPICards = () => {
                     </div>
                 </div>
                 <a href="https://www.google.com/search?q=rethink%20self%20storage%20mt%20holly%20google%20review&sca_esv=83deed022e42a993&sxsrf=ADLYWIJT7V59ej603cNYgd98_2tOJv4hVw:1727879941596&ei=BVv9ZoKBJKGs5NoP3JDm4AU&ved=0ahUKEwjCl4ix9u-IAxUhFlkFHVyIGVwQ4dUDCA8&uact=5&oq=rethink%20self%20storage%20mt%20holly%20google%20review&gs_lp=Egxnd3Mtd2l6LXNlcnAiK3JldGhpbmsgc2VsZiBzdG9yYWdlIG10IGhvbGx5IGdvb2dsZSByZXZpZXcyChAhGKABGMMEGAoyChAhGKABGMMEGAoyChAhGKABGMMEGApI7B9QowhYwR1wAngAkAEAmAG4BaABqRmqAQczLTYuMS4xuAEDyAEA-AEBmAIDoAL9AsICDhAAGIAEGLADGIYDGIoFwgILEAAYgAQYsAMYogTCAgsQABiwAxiiBBiJBZgDAIgGAZAGBpIHBTIuMy0xoAe-Lg&sclient=gws-wiz-serp#lrd=0x8856bd8111d56e6d:0xd666f08a7a01a443,1" target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold text-gray-400 uppercase underline flex items-center gap-1 group">
-                    Write a review <span className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
+                    Help us with 5-star reviews <span className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
                 </a>
             </div>
         </div>

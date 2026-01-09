@@ -56,7 +56,7 @@ const HoustonKPICards = () => {
                     </div>
                 </div>
                 <a href="https://www.google.com/search?sca_esv=614f577eef0ac65e&rlz=1C5MACD_enUS1135US1141&sxsrf=AE3TifPU3HVfLyCEqYDznr240iBGbghHnA:1766583665996&kgmid=/g/11scjw7w1v&q=Rethink+Self+Storage&shndl=30&shem=ptotplc,shrtsdl&source=sh/x/loc/uni/m1/1&kgs=1d69a8a2fc4c8f67&utm_source=ptotplc,shrtsdl,sh/x/loc/uni/m1/1#lrd=0x863edb3009429f59:0x7e91206cfbce70f9,1" target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold text-gray-400 uppercase underline flex items-center gap-1 group">
-                    Write a review <span className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
+                    Help us with 5-star reviews <span className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">↗</span>
                 </a>
             </div>
         </div>

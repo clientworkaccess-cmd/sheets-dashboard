@@ -120,7 +120,6 @@ const INITIAL_DATA = {
     charlotteKPI: {
         revenue: "$28,212",
         units: "227/305",
-        availableUnits: "305",
         rentSqft: "$0.92",
         rating: "4.9/5",
         reviewsCount: 121
@@ -128,7 +127,6 @@ const INITIAL_DATA = {
     houstonKPI: {
         revenue: "$16,685",
         units: "144/204",
-        availableUnits: "204",
         rentSqft: "$0.85",
         rating: "4.6/5",
         reviewsCount: 41
@@ -322,7 +320,7 @@ export const DashboardProvider = ({ children }) => {
                         name: cRow.month ,
                         Charlotte: parseFloat(cRow.total_revenue) || 0,
                         Houston: parseFloat(hRow.total_revenue) || 0,
-                        Forecast: prevData.mainSales.data[idx]?.Forecast || 0 // Keep forecast from dashboards table for now
+                        Forecast: parseFloat(cRow.forecast) + parseFloat(hRow.forecast) || prevData.mainSales.data[idx]?.Forecast || 0,
                     };
                 });
                 if (mainSalesData.length > 0) newData.mainSales.data = mainSalesData;
@@ -331,7 +329,7 @@ export const DashboardProvider = ({ children }) => {
                 const charlotteSalesData = charlotteDataRaw.map((cRow, idx) => ({
                     name: cRow.month,
                     Actuals: parseFloat(cRow.total_revenue) || 0,
-                    Forecast: prevData.charlotteSales.data[idx]?.Forecast || 0
+                    Forecast: parseFloat(cRow.forecast)|| prevData.charlotteSales.data[idx]?.Forecast || 0,
                 }));
                 if (charlotteSalesData.length > 0) newData.charlotteSales.data = charlotteSalesData;
 
@@ -339,7 +337,7 @@ export const DashboardProvider = ({ children }) => {
                 const houstonSalesData = houstonDataRaw.map((hRow, idx) => ({
                     name: hRow.month,
                     Actuals: parseFloat(hRow.total_revenue) || 0,
-                    Forecast: prevData.houstonSales.data[idx]?.Forecast || 0
+                    Forecast: parseFloat(hRow.forecast)|| prevData.houstonSales.data[idx]?.Forecast || 0
                 }));
                 if (houstonSalesData.length > 0) newData.houstonSales.data = houstonSalesData;
 
