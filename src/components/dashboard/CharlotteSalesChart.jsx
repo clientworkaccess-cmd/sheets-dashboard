@@ -70,7 +70,7 @@ const CharlotteSalesChart = () => {
                                 contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
                                 itemStyle={{ color: '#fff' }}
                             />
-                            <Bar dataKey="Actuals" fill="#3b82f6" radius={[2, 2, 0, 0]} barSize={12} />
+                            <Bar dataKey="Actuals" fill="#3A8DDE" radius={[2, 2, 0, 0]} barSize={12} />
                             <Line type="monotone" dataKey="Forecast" stroke="#64748b" strokeWidth={2} dot={false} strokeDasharray="5 5" />
                             <Legend
                                 verticalAlign="bottom"
@@ -101,7 +101,7 @@ const CharlotteSalesChart = () => {
                     <tbody className="text-gray-700">
                         <tr className="border-b border-gray-50 hover:bg-gray-50/50">
                             <td className="py-2 flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-blue-500" /> Actual
+                                <div className="w-2 h-2 rounded-full bg-[#3A8DDE]" /> Actual
                             </td>
                             {chartData.slice(-6).map((d, i) => (
                                 <td key={i} className="text-right py-2">

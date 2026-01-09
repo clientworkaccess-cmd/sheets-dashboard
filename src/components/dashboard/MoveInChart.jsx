@@ -24,19 +24,11 @@ const MoveInChart = ({ type = 'charlotte' }) => {
     const chartSection = data[chartKey];
     const chartData = chartSection.data;
 
-    const handleUpdate = (idx, field, value) => {
-        const newData = _.cloneDeep(data);
-        const numVal = parseInt(value, 10);
-        newData[chartKey].data[idx][field] = isNaN(numVal) ? 0 : numVal;
-        updateData(newData);
-    };
-
     const handleTitleUpdate = (value) => {
         const newData = _.cloneDeep(data);
         newData[chartKey].title = value;
         updateData(newData);
-    };
-
+    }
     return (
         <div className="bg-white rounded-3xl p-8 border shadow-sm h-full">
             <div className="flex justify-center mb-6">
@@ -51,7 +43,6 @@ const MoveInChart = ({ type = 'charlotte' }) => {
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                         <XAxis
                             dataKey="name"
-                            hide
                         />
                         <YAxis
                             stroke="#94a3b8"
@@ -64,8 +55,8 @@ const MoveInChart = ({ type = 'charlotte' }) => {
                             cursor={{ fill: '#f8fafc' }}
                             contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                         />
-                        <Bar dataKey="moveIn" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={20} />
-                        <Line type="monotone" dataKey="moveOut" stroke="#0d9488" strokeWidth={2} dot={{ fill: '#0d9488', r: 4 }} />
+                        <Bar dataKey="moveIn" fill={chartKey === 'charlotteMoveIn' ? "#3A8DDE" : "#FFC557"} radius={[4, 4, 0, 0]} barSize={20} />
+                        <Line type="monotone" dataKey="moveOut" stroke="#BADF93" strokeWidth={2} dot={{ fill: '#0d9488', r: 4 }} />
                     </ComposedChart>
                 </ResponsiveContainer>
             </div>

@@ -71,9 +71,9 @@ const MainSalesChart = () => {
                                 contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
                                 itemStyle={{ color: '#fff' }}
                             />
-                            <Bar dataKey="Charlotte" stackId="a" fill="#3b82f6" radius={[0, 0, 0, 0]} barSize={12} />
-                            <Bar dataKey="Houston" stackId="a" fill="#eab308" radius={[2, 2, 0, 0]} barSize={12} />
-                            <Line type="monotone" dataKey="Forecast" stroke="#64748b" strokeWidth={2} dot={false} strokeDasharray="5 5" />
+                            <Bar dataKey="Charlotte" stackId="a" fill="#3A8DDE" radius={[0, 0, 0, 0]} barSize={12} />
+                            <Bar dataKey="Houston" stackId="a" fill="#FFC557" radius={[2, 2, 0, 0]} barSize={12} />
+                            <Line dataKey="Forecast" stroke="#64748b" strokeWidth={2} dot={false} strokeDasharray="5 5" />
                             <Legend
                                 verticalAlign="bottom"
                                 align="center"
@@ -99,10 +99,10 @@ const MainSalesChart = () => {
                     <tbody className="text-gray-700">
                         <tr className="border-b border-gray-50">
                             <td className="py-2 flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-blue-500" /> Charlotte
+                                <div className="w-2 h-2 rounded-full bg-[#3A8DDE]" /> Charlotte
                             </td>
                             {chartData.slice(-6).map((d, i) => (
-                                <td key={i} className={`text-right py-2 ${i === 4 ? "font-bold bg-blue-50" : ""}`}>
+                                <td key={i} className={`text-right py-2`}>
                                     <EditableText
                                         value={formatCurrency(d.Charlotte)}
                                         onSave={(val) => handleDataUpdate(chartData.length - 6 + i, 'Charlotte', val)}
@@ -112,10 +112,10 @@ const MainSalesChart = () => {
                         </tr>
                         <tr className="border-b border-gray-50">
                             <td className="py-2 flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-yellow-500" /> Houston
+                                <div className="w-2 h-2 rounded-full bg-[#FFC557]" /> Houston
                             </td>
                             {chartData.slice(-6).map((d, i) => (
-                                <td key={i} className={`text-right py-2 ${i === 4 ? "font-bold bg-yellow-50" : ""}`}>
+                                <td key={i} className={`text-right py-2`}>
                                     <EditableText
                                         value={formatCurrency(d.Houston)}
                                         onSave={(val) => handleDataUpdate(chartData.length - 6 + i, 'Houston', val)}

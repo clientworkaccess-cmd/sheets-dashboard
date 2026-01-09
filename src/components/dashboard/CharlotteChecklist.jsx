@@ -23,8 +23,8 @@ const CharlotteChecklist = () => {
 
     return (
         <div className="bg-white rounded-3xl p-8 border shadow-sm h-full font-medium">
-            <div className="flex items-center gap-2 mb-6 pb-2 border-b-2 border-blue-500 w-fit">
-                <h2 className="text-sm font-bold text-blue-600 uppercase tracking-widest">
+            <div className="flex items-center gap-2 mb-6 pb-2 border-b-2 border-[#3A8DDE] w-fit">
+                <h2 className="text-sm font-bold text-[#3A8DDE] uppercase tracking-widest">
                     <EditableText value={checklist.title} onSave={handleTitleUpdate} />
                 </h2>
             </div>

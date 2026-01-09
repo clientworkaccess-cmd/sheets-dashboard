@@ -120,6 +120,7 @@ const INITIAL_DATA = {
     charlotteKPI: {
         revenue: "$28,212",
         units: "227/305",
+        availableUnits: "305",
         rentSqft: "$0.92",
         rating: "4.9/5",
         reviewsCount: 121
@@ -127,6 +128,7 @@ const INITIAL_DATA = {
     houstonKPI: {
         revenue: "$16,685",
         units: "144/204",
+        availableUnits: "204",
         rentSqft: "$0.85",
         rating: "4.6/5",
         reviewsCount: 41
@@ -317,7 +319,7 @@ export const DashboardProvider = ({ children }) => {
                 const mainSalesData = charlotteDataRaw.map((cRow, idx) => {
                     const hRow = houstonDataRaw[idx] || {};
                     return {
-                        name: cRow.month,
+                        name: cRow.month ,
                         Charlotte: parseFloat(cRow.total_revenue) || 0,
                         Houston: parseFloat(hRow.total_revenue) || 0,
                         Forecast: prevData.mainSales.data[idx]?.Forecast || 0 // Keep forecast from dashboards table for now

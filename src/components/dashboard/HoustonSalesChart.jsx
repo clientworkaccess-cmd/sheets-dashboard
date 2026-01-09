@@ -70,7 +70,7 @@ const HoustonSalesChart = () => {
                                 contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
                                 itemStyle={{ color: '#fff' }}
                             />
-                            <Bar dataKey="Actuals" fill="#3b82f6" radius={[2, 2, 0, 0]} barSize={12} />
+                            <Bar dataKey="Actuals" fill="#FFC557" radius={[2, 2, 0, 0]} barSize={12} />
                             <Line type="monotone" dataKey="Forecast" stroke="#64748b" strokeWidth={2} dot={false} strokeDasharray="5 5" />
                             <Legend
                                 verticalAlign="bottom"
@@ -86,7 +86,7 @@ const HoustonSalesChart = () => {
 
             <div className="mt-8">
                 <div className="flex items-center gap-2 mb-4">
-                    <div className="w-1 h-4 bg-blue-500 rounded-full" />
+                    <div className="w-1 h-4 bg-[#FFC557] rounded-full" />
                     <h3 className="text-[10px] font-bold text-gray-800 uppercase tracking-widest">houston Monthly</h3>
                 </div>
                 <table className="w-full text-[10px] text-gray-500 uppercase font-bold">
@@ -101,7 +101,7 @@ const HoustonSalesChart = () => {
                     <tbody className="text-gray-700">
                         <tr className="border-b border-gray-50 hover:bg-gray-50/50">
                             <td className="py-2 flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-blue-500" /> Actual
+                                <div className="w-2 h-2 rounded-full bg-[#FFC557]" /> Actual
                             </td>
                             {chartData.slice(-6).map((d, i) => (
                                 <td key={i} className="text-right py-2">

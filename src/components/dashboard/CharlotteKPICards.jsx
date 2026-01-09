@@ -20,8 +20,8 @@ const CharlotteKPICards = () => {
         <div className="space-y-6">
             <div className="grid grid-cols-3 gap-4">
                 <div className="bg-white rounded-3xl p-6 border shadow-sm flex flex-col items-center justify-center text-center">
-                    <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-2">Revenue</span>
-                    <span className="text-2xl font-black text-blue-600">
+                    <span className="text-[10px] font-bold text-[#3A8DDE] uppercase tracking-widest mb-2">Revenue</span>
+                    <span className="text-2xl font-black text-[#3A8DDE]">
                         <EditableText value={kpi.revenue} onSave={(val) => handleUpdate('revenue', val)} />
                     </span>
                 </div>
