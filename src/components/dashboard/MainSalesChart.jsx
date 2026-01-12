@@ -134,7 +134,7 @@ const MainSalesChart = () => {
                         <tr className="border-b border-gray-100 bg-gray-50/50">
                             <td className="py-2">Total</td>
                             {tableData.map((d, i) => (
-                                <td key={i} className={`text-right py-2 ${i === tableData.length - 2 ? "font-black" : ""}`}>
+                                <td key={i} className="text-right py-2">
                                     {formatCurrency(d.Charlotte + d.Houston)}
                                 </td>
                             ))}
