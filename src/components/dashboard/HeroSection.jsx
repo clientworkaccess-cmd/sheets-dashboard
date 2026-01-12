@@ -51,7 +51,7 @@ const HeroSection = () => {
                                     onSave={(val) => handleUpdate('hero.title', val)}
                                 />
                             </h2>
-                            <p className="text-gray-400 text-sm">
+                            <p className="text-white text-sm">
                                 <EditableText
                                     value={hero.subtitle}
                                     onSave={(val) => handleUpdate('hero.subtitle', val)}
@@ -59,7 +59,7 @@ const HeroSection = () => {
                             </p>
                             <div className="flex items-center gap-2 mt-1">
                                 <div className="w-2 h-2 rounded-full bg-blue-400" />
-                                <span className="text-xs text-gray-400 font-medium">
+                                <span className="text-xs text-white font-medium">
                                     {selectedMonth} {selectedYear}
                                 </span>
                             </div>
@@ -85,7 +85,7 @@ const HeroSection = () => {
                                     />
                                 </h3>
                             </div>
-                            <p className="text-gray-300 text-sm leading-relaxed">
+                            <p className="text-white text-sm leading-relaxed">
                                 <EditableText
                                     value={hero.charlotte.description}
                                     onSave={(val) => handleUpdate('hero.charlotte.description', val)}
@@ -102,7 +102,7 @@ const HeroSection = () => {
                                     />
                                 </h3>
                             </div>
-                            <p className="text-gray-300 text-sm leading-relaxed">
+                            <p className="text-white text-sm leading-relaxed">
                                 <EditableText
                                     value={hero.houston.description}
                                     onSave={(val) => handleUpdate('hero.houston.description', val)}
@@ -112,10 +112,10 @@ const HeroSection = () => {
                         </div>
                     </div>
 
-                    <div className="lg:col-span-4 flex flex-col justify-center gap-8 pl-8 lg:border-l border-white/10">
+                    <div className="lg:col-span-4 flex flex-col justify-center gap-8 pl-8 lg:border-l border-white/40">
                         {hero.metrics.map((metric, idx) => (
                             <div key={idx}>
-                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">
+                                <span className="text-[10px] font-bold text-white uppercase tracking-widest block mb-2">
                                     <EditableText
                                         value={metric.label}
                                         onSave={(val) => handleUpdate(`hero.metrics.${idx}.label`, val)}

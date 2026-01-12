@@ -32,7 +32,7 @@ const MoveInChart = ({ type = 'charlotte' }) => {
     return (
         <div className="bg-white rounded-3xl p-8 border shadow-sm h-full">
             <div className="flex justify-center mb-6">
-                <h2 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                <h2 className="text-[10px] font-bold text-black/80 uppercase tracking-widest">
                     <EditableText value={chartSection.title} onSave={handleTitleUpdate} />
                 </h2>
             </div>
