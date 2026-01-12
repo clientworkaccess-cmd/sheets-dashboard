@@ -1,8 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { supabase } from '../lib/supabase';
-
+import { findIndexByMonthYear, getLastSixMonths, getSelectedMonthRow } from '../lib/dateHelpers';
 import _ from 'lodash';
 
 const DashboardContext = createContext();
@@ -259,9 +259,13 @@ export const DashboardProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const [data, setData] = useState(INITIAL_DATA);
-    const [selectedMonth, setSelectedMonth] = useState('December'); 
+    const [selectedMonth, setSelectedMonth] = useState('December');
     const [selectedYear, setSelectedYear] = useState('2025');
     const [isLoading, setIsLoading] = useState(true);
+
+    // Raw Supabase data - stored separately for derived KPI calculations
+    const [rawCharlotteData, setRawCharlotteData] = useState([]);
+    const [rawHoustonData, setRawHoustonData] = useState([]);
 
     useEffect(() => {
         const savedLogin = localStorage.getItem('isLoggedIn') === 'true';
@@ -309,6 +313,10 @@ export const DashboardProvider = ({ children }) => {
             const charlotteDataRaw = [...(h24.data || []), ...(h25.data || [])];
             const houstonDataRaw = [...(ho24.data || []), ...(ho25.data || [])];
 
+            // Store raw data for useMemo derived calculations
+            setRawCharlotteData(charlotteDataRaw);
+            setRawHoustonData(houstonDataRaw);
+
             setData(prevData => {
                 const newData = _.cloneDeep(prevData);
 
@@ -317,7 +325,7 @@ export const DashboardProvider = ({ children }) => {
                 const mainSalesData = charlotteDataRaw.map((cRow, idx) => {
                     const hRow = houstonDataRaw[idx] || {};
                     return {
-                        name: cRow.month ,
+                        name: cRow.month,
                         Charlotte: parseFloat(cRow.total_revenue) || 0,
                         Houston: parseFloat(hRow.total_revenue) || 0,
                         Forecast: parseFloat(cRow.forecast) + parseFloat(hRow.forecast) || prevData.mainSales.data[idx]?.Forecast || 0,
@@ -329,7 +337,7 @@ export const DashboardProvider = ({ children }) => {
                 const charlotteSalesData = charlotteDataRaw.map((cRow, idx) => ({
                     name: cRow.month,
                     Actuals: parseFloat(cRow.total_revenue) || 0,
-                    Forecast: parseFloat(cRow.forecast)|| prevData.charlotteSales.data[idx]?.Forecast || 0,
+                    Forecast: parseFloat(cRow.forecast) || prevData.charlotteSales.data[idx]?.Forecast || 0,
                 }));
                 if (charlotteSalesData.length > 0) newData.charlotteSales.data = charlotteSalesData;
 
@@ -337,7 +345,7 @@ export const DashboardProvider = ({ children }) => {
                 const houstonSalesData = houstonDataRaw.map((hRow, idx) => ({
                     name: hRow.month,
                     Actuals: parseFloat(hRow.total_revenue) || 0,
-                    Forecast: parseFloat(hRow.forecast)|| prevData.houstonSales.data[idx]?.Forecast || 0
+                    Forecast: parseFloat(hRow.forecast) || prevData.houstonSales.data[idx]?.Forecast || 0
                 }));
                 if (houstonSalesData.length > 0) newData.houstonSales.data = houstonSalesData;
 
@@ -444,6 +452,67 @@ export const DashboardProvider = ({ children }) => {
         }
     };
 
+    /* -------------------- DERIVED DATA (useMemo) -------------------- */
+
+    // ✅ TABLES → Rolling 6-month window based on selected month/year
+    const charlotteTableData = useMemo(
+        () => getLastSixMonths(data.charlotteSales.data, selectedMonth, selectedYear),
+        [data.charlotteSales.data, selectedMonth, selectedYear]
+    );
+
+    const houstonTableData = useMemo(
+        () => getLastSixMonths(data.houstonSales.data, selectedMonth, selectedYear),
+        [data.houstonSales.data, selectedMonth, selectedYear]
+    );
+
+    const mainSalesTableData = useMemo(
+        () => getLastSixMonths(data.mainSales.data, selectedMonth, selectedYear),
+        [data.mainSales.data, selectedMonth, selectedYear]
+    );
+
+    // ✅ KPI → Selected month data only (derives from raw Supabase data)
+    const selectedCharlotteKPI = useMemo(() => {
+        if (!rawCharlotteData.length) return data.charlotteKPI;
+
+        const monthAbbr = selectedMonth.slice(0, 3);
+        const yearAbbr = selectedYear.slice(-2);
+        const row = rawCharlotteData.find(r =>
+            r.month?.includes(monthAbbr) && r.month?.includes(yearAbbr)
+        );
+
+        if (!row) return data.charlotteKPI;
+
+        return {
+            revenue: `$${parseFloat(row.total_revenue || 0).toLocaleString()}`,
+            units: `${row.total_units_rented || 0}/${row.total_units_available || 0}`,
+            rentSqft: `$${row.rent_per_sq_ft || 0}`,
+            rating: data.charlotteKPI.rating,       // Keep live reviews data
+            reviewsCount: data.charlotteKPI.reviewsCount
+        };
+    }, [rawCharlotteData, selectedMonth, selectedYear, data.charlotteKPI]);
+
+    const selectedHoustonKPI = useMemo(() => {
+        if (!rawHoustonData.length) return data.houstonKPI;
+
+        const monthAbbr = selectedMonth.slice(0, 3);
+        const yearAbbr = selectedYear.slice(-2);
+        const row = rawHoustonData.find(r =>
+            r.month?.includes(monthAbbr) && r.month?.includes(yearAbbr)
+        );
+
+        if (!row) return data.houstonKPI;
+
+        return {
+            revenue: `$${parseFloat(row.total_revenue || 0).toLocaleString()}`,
+            units: `${row.total_units_rented || 0}/${row.total_units_available || 0}`,
+            rentSqft: `$${row.rent_per_sq_ft || 0}`,
+            rating: data.houstonKPI.rating,         // Keep live reviews data
+            reviewsCount: data.houstonKPI.reviewsCount
+        };
+    }, [rawHoustonData, selectedMonth, selectedYear, data.houstonKPI]);
+
+    /* -------------------- PROVIDER -------------------- */
+
     return (
         <DashboardContext.Provider value={{
             isLoggedIn,
@@ -452,12 +521,24 @@ export const DashboardProvider = ({ children }) => {
             selectedYear,
             setSelectedMonth,
             setSelectedYear,
-            data,
             isLoading,
+
+            // 🔹 RAW DATA (Charts use this - never filtered)
+            data,
+            updateData,
+
+            // 🔹 TABLES (6-month rolling window)
+            charlotteTableData,
+            houstonTableData,
+            mainSalesTableData,
+
+            // 🔹 KPI (Selected month only)
+            selectedCharlotteKPI,
+            selectedHoustonKPI,
+
             login,
             logout,
-            toggleEditMode,
-            updateData
+            toggleEditMode
         }}>
             {children}
         </DashboardContext.Provider>

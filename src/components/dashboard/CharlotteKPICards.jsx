@@ -7,8 +7,9 @@ import { Star, CheckCircle2 } from "lucide-react";
 import _ from 'lodash';
 
 const CharlotteKPICards = () => {
-    const { data, updateData } = useDashboard();
-    const kpi = data.charlotteKPI;
+    const { data, updateData, selectedCharlotteKPI } = useDashboard();
+    // Use selected month KPI data (filtered by Month/Year dropdown)
+    const kpi = selectedCharlotteKPI;
 
     const handleUpdate = (field, value) => {
         const newData = _.cloneDeep(data);

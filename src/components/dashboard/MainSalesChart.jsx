@@ -18,8 +18,9 @@ import {
 } from 'recharts';
 
 const MainSalesChart = () => {
-    const { data, updateData, isEditMode } = useDashboard();
-    const chartData = data.mainSales.data;
+    const { data, updateData, isEditMode, mainSalesTableData } = useDashboard();
+    const chartData = data.mainSales.data;  // Full data for chart (never filtered)
+    const tableData = mainSalesTableData;   // 6-month window for table (filtered)
 
     const handleDataUpdate = (idx, field, value) => {
         const newData = _.cloneDeep(data);
@@ -91,7 +92,7 @@ const MainSalesChart = () => {
                     <thead>
                         <tr className="border-b border-gray-100">
                             <th className="text-left py-2">Metric</th>
-                            {chartData.slice(-6).map((d, i) => (
+                            {tableData.map((d, i) => (
                                 <th key={i} className="text-right py-2">{d.name}</th>
                             ))}
                         </tr>
@@ -101,11 +102,15 @@ const MainSalesChart = () => {
                             <td className="py-2 flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-[#3A8DDE]" /> Charlotte
                             </td>
-                            {chartData.slice(-6).map((d, i) => (
+                            {tableData.map((d, i) => (
                                 <td key={i} className={`text-right py-2`}>
                                     <EditableText
                                         value={formatCurrency(d.Charlotte)}
-                                        onSave={(val) => handleDataUpdate(chartData.length - 6 + i, 'Charlotte', val)}
+                                        onSave={(val) => {
+                                            // Find correct index in full data
+                                            const idx = chartData.findIndex(row => row.name === d.name);
+                                            if (idx !== -1) handleDataUpdate(idx, 'Charlotte', val);
+                                        }}
                                     />
                                 </td>
                             ))}
@@ -114,19 +119,22 @@ const MainSalesChart = () => {
                             <td className="py-2 flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-[#FFC557]" /> Houston
                             </td>
-                            {chartData.slice(-6).map((d, i) => (
+                            {tableData.map((d, i) => (
                                 <td key={i} className={`text-right py-2`}>
                                     <EditableText
                                         value={formatCurrency(d.Houston)}
-                                        onSave={(val) => handleDataUpdate(chartData.length - 6 + i, 'Houston', val)}
+                                        onSave={(val) => {
+                                            const idx = chartData.findIndex(row => row.name === d.name);
+                                            if (idx !== -1) handleDataUpdate(idx, 'Houston', val);
+                                        }}
                                     />
                                 </td>
                             ))}
                         </tr>
                         <tr className="border-b border-gray-100 bg-gray-50/50">
                             <td className="py-2">Total</td>
-                            {chartData.slice(-6).map((d, i) => (
-                                <td key={i} className={`text-right py-2 ${i === 4 ? "font-black" : ""}`}>
+                            {tableData.map((d, i) => (
+                                <td key={i} className={`text-right py-2 ${i === tableData.length - 2 ? "font-black" : ""}`}>
                                     {formatCurrency(d.Charlotte + d.Houston)}
                                 </td>
                             ))}
@@ -135,11 +143,14 @@ const MainSalesChart = () => {
                             <td className="py-2 flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-gray-400" /> Total Forecast
                             </td>
-                            {chartData.slice(-6).map((d, i) => (
+                            {tableData.map((d, i) => (
                                 <td key={i} className="text-right py-2">
                                     <EditableText
                                         value={formatCurrency(d.Forecast)}
-                                        onSave={(val) => handleDataUpdate(chartData.length - 6 + i, 'Forecast', val)}
+                                        onSave={(val) => {
+                                            const idx = chartData.findIndex(row => row.name === d.name);
+                                            if (idx !== -1) handleDataUpdate(idx, 'Forecast', val);
+                                        }}
                                     />
                                 </td>
                             ))}

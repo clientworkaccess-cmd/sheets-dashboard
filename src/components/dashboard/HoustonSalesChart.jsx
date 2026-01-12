@@ -18,8 +18,9 @@ import {
 } from 'recharts';
 
 const HoustonSalesChart = () => {
-    const { data, updateData } = useDashboard();
-    const chartData = data.houstonSales.data;
+    const { data, updateData, houstonTableData } = useDashboard();
+    const chartData = data.houstonSales.data;  // Full data for chart
+    const tableData = houstonTableData;         // 6-month window for table
 
     const handleUpdate = (idx, field, value) => {
         const newData = _.cloneDeep(data);
@@ -93,7 +94,7 @@ const HoustonSalesChart = () => {
                     <thead>
                         <tr className="border-b border-gray-100">
                             <th className="text-left py-2">Metric</th>
-                            {chartData.slice(-6).map((d, i) => (
+                            {tableData.map((d, i) => (
                                 <th key={i} className="text-right py-2">{d.name}</th>
                             ))}
                         </tr>
@@ -103,11 +104,14 @@ const HoustonSalesChart = () => {
                             <td className="py-2 flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-[#FFC557]" /> Actual
                             </td>
-                            {chartData.slice(-6).map((d, i) => (
+                            {tableData.map((d, i) => (
                                 <td key={i} className="text-right py-2">
                                     <EditableText
                                         value={formatCurrency(d.Actuals)}
-                                        onSave={(val) => handleUpdate(chartData.length - 6 + i, 'Actuals', val)}
+                                        onSave={(val) => {
+                                            const idx = chartData.findIndex(row => row.name === d.name);
+                                            if (idx !== -1) handleUpdate(idx, 'Actuals', val);
+                                        }}
                                     />
                                 </td>
                             ))}
@@ -116,11 +120,14 @@ const HoustonSalesChart = () => {
                             <td className="py-2 flex items-center gap-2">
                                 <div className="w-2 h-2 rounded-full bg-slate-400" /> Forecast
                             </td>
-                            {chartData.slice(-6).map((d, i) => (
+                            {tableData.map((d, i) => (
                                 <td key={i} className="text-right py-2">
                                     <EditableText
                                         value={formatCurrency(d.Forecast)}
-                                        onSave={(val) => handleUpdate(chartData.length - 6 + i, 'Forecast', val)}
+                                        onSave={(val) => {
+                                            const idx = chartData.findIndex(row => row.name === d.name);
+                                            if (idx !== -1) handleUpdate(idx, 'Forecast', val);
+                                        }}
                                     />
                                 </td>
                             ))}

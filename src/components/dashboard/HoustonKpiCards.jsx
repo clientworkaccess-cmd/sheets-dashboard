@@ -7,8 +7,9 @@ import { Star, CheckCircle2 } from "lucide-react";
 import _ from 'lodash';
 
 const HoustonKPICards = () => {
-    const { data, updateData } = useDashboard();
-    const kpi = data.houstonKPI;
+    const { data, updateData, selectedHoustonKPI } = useDashboard();
+    // Use selected month KPI data (filtered by Month/Year dropdown)
+    const kpi = selectedHoustonKPI;
 
     const handleUpdate = (field, value) => {
         const newData = _.cloneDeep(data);
@@ -46,11 +47,11 @@ const HoustonKPICards = () => {
                     </span>
                     <div className="flex gap-2 items-center text-xs text-accent-foreground/80 font-semibold">
                         <div className='flex gap-0.5'>
-                        {[1, 2, 3, 4, 5].map((s) => {
-                            const ratingNum = parseFloat(kpi.rating);
-                            const fill = s <= Math.floor(ratingNum) ? "fill-yellow-400 text-yellow-400" : s - 0.5 <= ratingNum ? "fill-yellow-400 text-yellow-400 opacity-50" : "text-gray-200";
-                            return <Star key={s} className={`w-4 h-4 ${fill}`} />
-                        })}
+                            {[1, 2, 3, 4, 5].map((s) => {
+                                const ratingNum = parseFloat(kpi.rating);
+                                const fill = s <= Math.floor(ratingNum) ? "fill-yellow-400 text-yellow-400" : s - 0.5 <= ratingNum ? "fill-yellow-400 text-yellow-400 opacity-50" : "text-gray-200";
+                                return <Star key={s} className={`w-4 h-4 ${fill}`} />
+                            })}
                         </div>
                         {kpi.reviewsCount} reviews
                     </div>
