@@ -1,6 +1,9 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
+
+import _ from 'lodash';
 
 const DashboardContext = createContext();
 
@@ -251,9 +254,6 @@ const INITIAL_DATA = {
     }
 };
 
-import { supabase } from '@/lib/supabase';
-
-import _ from 'lodash';
 
 export const DashboardProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -303,7 +303,7 @@ export const DashboardProvider = ({ children }) => {
                 supabase.from('holly_2024').select('*').order('id', { ascending: true }),
                 supabase.from('holly_2025').select('*').order('id', { ascending: true }),
                 supabase.from('houston_2024').select('*').order('id', { ascending: true }),
-                supabase.from('2025-houston').select('*').order('id', { ascending: true })
+                supabase.from('houston_2025').select('*').order('id', { ascending: true })
             ]);
 
             const charlotteDataRaw = [...(h24.data || []), ...(h25.data || [])];

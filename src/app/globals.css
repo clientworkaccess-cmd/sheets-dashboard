@@ -3,9 +3,74 @@
 
 @custom-variant dark (&:is(.dark *));
 
-body {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+@font-face {
+  font-family: 'GillSans';
+  src: url('/fonts/GillSans-01.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
 }
+
+@font-face {
+  font-family: 'GillSans';
+  src: url('/fonts/GillSans-Italic-03.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'GillSans';
+  src: url('/fonts/GillSans-Light-08.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GillSans';
+  src: url('/fonts/GillSans-LightItalic-09.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'GillSans';
+  src: url('/fonts/GillSans-SemiBold-05.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GillSans';
+  src: url('/fonts/GillSans-SemiBoldItalic-06.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'GillSans';
+  src: url('/fonts/GillSans-Bold-02.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GillSans';
+  src: url('/fonts/GillSans-BoldItalic-04.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'GillSans';
+  src: url('/fonts/GillSans-UltraBold-07.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* Set default body font */
+body {
+  font-family: 'GillSans', sans-serif;
+}
+
 
 @theme inline {
   --color-background: var(--background);

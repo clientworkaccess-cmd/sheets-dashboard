@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { useDashboard } from '@/context/DashboardContext';
+import { useDashboard } from '../../context/DashboardContext';
 import EditableText from './EditableText';
 import _ from 'lodash';
 import {
@@ -11,7 +11,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table";
+} from '../../components/ui/table';
 
 const PortfolioOverview = () => {
     const { data, updateData } = useDashboard();

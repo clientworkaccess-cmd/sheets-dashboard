@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { useDashboard } from '@/context/DashboardContext';
+import { useDashboard } from '../../context/DashboardContext';
 import EditableText from './EditableText';
 
 const FundHighlights = () => {

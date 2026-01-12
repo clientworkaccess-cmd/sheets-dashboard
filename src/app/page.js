@@ -2,22 +2,22 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import DashboardHeader from '@/components/dashboard/Header';
-import HeroSection from '@/components/dashboard/HeroSection';
-import PortfolioOverview from '@/components/dashboard/PortfolioOverview';
-import FundHighlights from '@/components/dashboard/FundHighlights';
-import MainSalesChart from '@/components/dashboard/MainSalesChart';
-import CharlotteChecklist from '@/components/dashboard/CharlotteChecklist';
-import CharlotteSalesChart from '@/components/dashboard/CharlotteSalesChart';
-import MoveInChart from '@/components/dashboard/MoveInChart';
-import ForecastFooter from '@/components/dashboard/ForecastFooter';
-import HoustonChecklist from '@/components/dashboard/HoustonChecklist';
-import HoustonSalesChart from '@/components/dashboard/HoustonSalesChart';
-import PerformanceRadar from '@/components/dashboard/PerformanceRadar';
-import MajorNews from '@/components/dashboard/MajorNews';
-import { useDashboard } from '@/context/DashboardContext';
-import CharlotteKPICards from '@/components/dashboard/CharlotteKPICards';
-import HoustonKPICards from '@/components/dashboard/HoustonKpiCards';
+import DashboardHeader from '../components/dashboard/Header';
+import HeroSection from '../components/dashboard/HeroSection';
+import PortfolioOverview from '../components/dashboard/PortfolioOverview';
+import FundHighlights from '../components/dashboard/FundHighlights';
+import MainSalesChart from '../components/dashboard/MainSalesChart';
+import CharlotteChecklist from '../components/dashboard/CharlotteChecklist';
+import CharlotteSalesChart from '../components/dashboard/CharlotteSalesChart';
+import MoveInChart from '../components/dashboard/MoveInChart';
+import ForecastFooter from '../components/dashboard/ForecastFooter';
+import HoustonChecklist from '../components/dashboard/HoustonChecklist';
+import HoustonSalesChart from '../components/dashboard/HoustonSalesChart';
+import PerformanceRadar from '../components/dashboard/PerformanceRadar';
+import MajorNews from '../components/dashboard/MajorNews';
+import { useDashboard } from '../context/DashboardContext';
+import CharlotteKPICards from '../components/dashboard/CharlotteKPICards';
+import HoustonKPICards from '../components/dashboard/HoustonKpiCards';
 
 export default function Home() {
   const { isLoading } = useDashboard();

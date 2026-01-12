@@ -1,9 +1,9 @@
 "use client";
 
 import React from 'react';
-import { useDashboard } from '@/context/DashboardContext';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { useDashboard } from '../../context/DashboardContext';
+import { Input } from '../../components/ui/input';
+import { Textarea } from '../../components/ui/textarea';
 
 const EditableText = ({ value, onSave, multiline = false, className = "", textClassName = "" , disabled = false}) => {
     const { isEditMode } = useDashboard();

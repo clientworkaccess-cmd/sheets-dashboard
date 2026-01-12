@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
-import { useDashboard } from '@/context/DashboardContext';
+import { useDashboard } from '../../context/DashboardContext';
 import EditableText from './EditableText';
 import _ from 'lodash';
 

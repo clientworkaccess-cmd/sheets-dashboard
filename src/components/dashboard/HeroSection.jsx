@@ -1,14 +1,15 @@
 "use client";
 
 import React from 'react';
-import { useDashboard } from '@/context/DashboardContext';
+import { useDashboard } from '../../context/DashboardContext';
 import EditableText from './EditableText';
 import _ from 'lodash';
+import Image from 'next/image';
 
 const backgroundImage = '/hero-bg.png';
 
 const HeroSection = () => {
-    const { data, updateData , selectedMonth , selectedYear } = useDashboard();
+    const { data, updateData, selectedMonth, selectedYear } = useDashboard();
     const hero = data.hero;
 
     const handleUpdate = (path, value) => {
@@ -34,11 +35,14 @@ const HeroSection = () => {
             <div className="relative h-full z-10 p-10 flex flex-col justify-between">
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 bg-[#0f172a]/80 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10">
-                            <div className="text-center">
-                                <div className="text-[10px] font-bold text-white leading-tight tracking-tighter uppercase">Gamma</div>
-                                <div className="text-[10px] text-gray-400 leading-tight uppercase">Income</div>
-                            </div>
+                        <div className="relative w-20 h-20 bg-black backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10">
+                            <Image
+                                src="/logo.png"
+                                alt="Gamma"
+                                fill
+                                className="object-contain p-0"
+                                priority
+                            />
                         </div>
                         <div>
                             <h2 className="text-2xl font-bold text-white">
@@ -66,12 +70,12 @@ const HeroSection = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-4">
                     <div className="lg:col-span-8 flex flex-col gap-6">
                         <div className="bg-white/5 backdrop-blur-lg p-6 rounded-3xl border border-white/10">
-                        <span className="text-[10px] font-bold text-secondary uppercase tracking-[0.2em] p-2 mb-2">
-                            <EditableText
-                                value={hero.businessPlanLabel}
-                                onSave={(val) => handleUpdate('hero.businessPlanLabel', val)}
-                            />
-                        </span>
+                            <span className="text-[10px] font-bold text-secondary uppercase tracking-[0.2em] p-2 mb-2">
+                                <EditableText
+                                    value={hero.businessPlanLabel}
+                                    onSave={(val) => handleUpdate('hero.businessPlanLabel', val)}
+                                />
+                            </span>
                             <div className="flex items-center gap-2 mb-3">
                                 <div className="w-2.5 h-2.5 rounded-full bg-pink-500 shadow-[0_0_8px_rgba(236,72,153,0.5)]" />
                                 <h3 className="text-white font-bold">

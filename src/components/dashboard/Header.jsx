@@ -1,19 +1,17 @@
 import React from 'react';
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
-import { ChevronDown } from "lucide-react";
-
-import { useDashboard } from "@/context/DashboardContext";
+} from "../ui/select";
+import { useDashboard } from "../../context/DashboardContext";
 import LoginModal from "./LoginModal";
 import { useState } from "react";
 
-import { handleExport } from "@/lib/exportHandler";
+import { handleExport } from "../../lib/exportHandler";
 
 const DashboardHeader = () => {
     const {

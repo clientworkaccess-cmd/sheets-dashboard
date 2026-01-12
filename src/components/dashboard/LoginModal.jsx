@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useDashboard } from '@/context/DashboardContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { useDashboard } from '../../context/DashboardContext';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
 import { X } from 'lucide-react';
 
 const LoginModal = ({ isOpen, onClose }) => {
