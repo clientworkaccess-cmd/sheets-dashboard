@@ -32,8 +32,8 @@ const HeroSection = () => {
             <div className="absolute inset-0 bg-black/10" />
 
             {/* Content */}
-            <div className="relative h-full z-10 p-10 flex flex-col justify-between">
-                <div className="flex justify-between items-start">
+            <div className="relative h-full z-10 p-10 flex flex-col xl:flex-row justify-between xl:items-center">
+                <div className="flex justify-between items-start lg:min-w-[20%]">
                     <div className="flex items-center gap-4">
                         <div className="relative w-20 h-20 bg-black backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10">
                             <Image
@@ -58,7 +58,7 @@ const HeroSection = () => {
                                 />
                             </p>
                             <div className="flex items-center gap-2 mt-1">
-                                <div className="w-2 h-2 rounded-full bg-blue-400" />
+                                <div className="w-2 h-2 rounded-full bg-secondary" />
                                 <span className="text-xs text-white font-medium">
                                     {selectedMonth} {selectedYear}
                                 </span>
@@ -67,8 +67,8 @@ const HeroSection = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mt-4">
-                    <div className="lg:col-span-8 flex flex-col gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-10 gap-12 mt-4">
+                    <div className="lg:col-span-7 flex flex-col gap-6">
                         <div className="bg-white/5 backdrop-blur-lg p-6 rounded-3xl border border-white/10">
                             <span className="text-[10px] font-bold text-secondary uppercase tracking-[0.2em] p-2 mb-2">
                                 <EditableText
@@ -112,10 +112,10 @@ const HeroSection = () => {
                         </div>
                     </div>
 
-                    <div className="lg:col-span-4 flex flex-col justify-center gap-8 pl-8 lg:border-l border-white/40">
+                    <div className="lg:col-span-3 flex flex-col justify-center gap-8 pl-8 lg:border-l border-white/40">
                         {hero.metrics.map((metric, idx) => (
                             <div key={idx}>
-                                <span className="text-[10px] font-bold text-white uppercase tracking-widest block mb-2">
+                                <span className="text-[10px] font-bold text-secondary uppercase tracking-widest block mb-2">
                                     <EditableText
                                         value={metric.label}
                                         onSave={(val) => handleUpdate(`hero.metrics.${idx}.label`, val)}
