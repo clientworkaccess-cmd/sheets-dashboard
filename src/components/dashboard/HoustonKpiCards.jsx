@@ -21,19 +21,19 @@ const HoustonKPICards = () => {
             <div className="grid grid-cols-3 gap-4">
                 <div className="bg-white rounded-3xl p-6 border shadow-sm flex flex-col items-center justify-center text-center">
                     <span className="text-[10px] font-bold text-[#FFC557] uppercase tracking-widest mb-2">Revenue</span>
-                    <span className="text-2xl font-black text-[#FFC557]">
+                    <span className="text-2xl font-bold text-[#FFC557]">
                         <EditableText value={kpi.revenue} onSave={(val) => handleUpdate('revenue', val)} />
                     </span>
                 </div>
                 <div className="bg-white rounded-3xl p-6 border shadow-sm flex flex-col items-center justify-center text-center">
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Units / Total</span>
-                    <span className="text-2xl font-black text-gray-800">
+                    <span className="text-2xl font-bold text-gray-800">
                         <EditableText value={kpi.units} onSave={(val) => handleUpdate('units', val)} />
                     </span>
                 </div>
                 <div className="bg-white rounded-3xl p-6 border shadow-sm flex flex-col items-center justify-center text-center">
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Rent / SQFT</span>
-                    <span className="text-2xl font-black text-gray-800">
+                    <span className="text-2xl font-bold text-gray-800">
                         <EditableText value={kpi.rentSqft} onSave={(val) => handleUpdate('rentSqft', val)} />
                     </span>
                 </div>

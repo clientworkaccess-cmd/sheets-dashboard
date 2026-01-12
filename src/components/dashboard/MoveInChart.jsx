@@ -13,6 +13,7 @@ import {
     ResponsiveContainer,
     Line,
     ComposedChart,
+    Legend,
 } from 'recharts';
 import EditableText from './EditableText';
 
@@ -64,6 +65,13 @@ const MoveInChart = ({ type = 'charlotte' }) => {
                         />
                         <Bar dataKey="moveIn" fill={chartKey === 'charlotteMoveIn' ? "#3A8DDE" : "#FFC557"} radius={[4, 4, 0, 0]} barSize={20} />
                         <Line type="monotone" dataKey="moveOut" stroke="#BADF93" strokeWidth={2} dot={{ fill: '#0d9488', r: 4 }} />
+                        <Legend
+                            verticalAlign="bottom"
+                            align="center"
+                            iconType="rect"
+                            wrapperStyle={{ paddingTop: "20px" }}
+                            formatter={(value) => <span className="text-[9px] text-black/80 uppercase font-bold tracking-widest">{value}</span>}
+                        />
                     </ComposedChart>
                 </ResponsiveContainer>
             </div>
