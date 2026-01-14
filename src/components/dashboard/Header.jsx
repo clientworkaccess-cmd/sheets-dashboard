@@ -22,7 +22,8 @@ const DashboardHeader = () => {
         selectedMonth,
         setSelectedMonth,
         selectedYear,
-        setSelectedYear
+        setSelectedYear,
+        setTabs
     } = useDashboard();
     const [isLoginOpen, setIsLoginOpen] = useState(false);
 
@@ -30,6 +31,22 @@ const DashboardHeader = () => {
         <div className="flex flex-col md:flex-row items-center justify-between p-6 bg-white rounded-3xl shadow-sm border mb-4">
             <div className="flex flex-col">
                 <h1 className="text-2xl font-bold text-[#1e293b]">Rethink Self Storage Fund</h1>
+            </div>
+            <div className="flex items-center gap-2">
+                <Button
+                    variant="outline"
+                    onClick={() => setTabs("charlotte&houston")}
+                    className="h-9 rounded-xl text-gray-400 hover:text-red-500"
+                >
+                    Charlotte & Houston
+                </Button>
+                <Button
+                    variant="outline"
+                    onClick={() => setTabs("abc&xyz")}
+                    className="h-9 rounded-xl text-gray-400 hover:text-red-500"
+                >
+                    ABC & XYZ
+                </Button>
             </div>
 
             <div className="flex items-center gap-4 mt-4 md:mt-0">
@@ -72,7 +89,7 @@ const DashboardHeader = () => {
 
                 <div className="flex items-center gap-2 mt-5">
                     <Select onValueChange={(val) => handleExport(val)}>
-                        <SelectTrigger className="rounded-xl bg-gray-50 border-gray-100 min-w-[100px]">
+                        <SelectTrigger className="rounded-xl border-gray-100 min-w-[100px]">
                             <SelectValue placeholder="Export" />
                         </SelectTrigger>
                         <SelectContent>
