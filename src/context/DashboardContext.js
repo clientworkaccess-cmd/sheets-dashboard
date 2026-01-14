@@ -255,66 +255,53 @@ const CHARLOTTE_HOUSTON_DATA = {
 };
 const ABC_XYZ_DATA = {
     hero: {
-        title: "Delta Income",
-        subtitle: "Future Self Storage Fund",
-        date: "Jan 2026",
-        businessPlanLabel: "Updated Business Plan",
-        charlotte: {
-            title: "Charlotte",
-            description: "$3.10M • 70,000 sq ft on 7 acres, Seller financing note for 5 years at 6.5% interest only. Phase 1: 130 relocatable units and 230 first floor units build out ($800K). Lease up to 92% in 1.5 years. Phase 2: Second floor build out 230 units for $450K. Lease up to 92% occupancy by year 4 ~ 550 units."
+        title: "Gamma Income",
+        subtitle: "Rethink Self Storage Fund",
+        date: "January 2026",
+        businessPlanLabel: "Original Business Plan",
+        Catawba: {
+            title: "Catawba",
+            description: "$2.38M, +35,000 sq ft on 4 acres, ~ 336 Self Storage Units. Bank financing note for 2 years interest only. Phase 1: Build 30k self storage units and fill Phase 2: Build non-climate controlled units, maxxing out the entire land parcel. - Lease up ~ 336 units."
         },
-        houston: {
-            title: "Houston",
-            description: "$1.70M • 32,000 sq ft on 4.5 acres. Bank financing note for 2 years interest only- 48% occupancy. Phase 1: Lease up climate controlled units up to 92% occupancy. Phase 2: Build new non-climate controlled units with RV and boat parking. Lease up ~ 360 units."
+        rockHill: {
+            title: "Rock Hill",
+            description: "Lease with Option to Buy at $4.0M. Phase 1: Lease Term, building and filling ~300 Self Storage Units and warehouse. Phase 2: When 80% full, purchase the builiding and additional construction loan, build and fill ~300 more. Total Price $5.42M for 225k square feet~ 600 units and 50% of space Flex/Warehouse"
         },
         metrics: [
-            { label: "Targeted Hold", value: "~ 6 Years" },
-            { label: "Targeted Rate of Return", value: "16-26% IRR (Equity Shareclasses)" }
+            { label: "Targeted Hold", value: "~ 5 Years" },
+            { label: "Targeted Rate of Return", value: "15-25% IRR (Equity Shareclasses)" }
         ]
     },
     portfolio: [
         {
-            fund: "Future Self Storage Fund",
-            property: "12345 TX-128, Hamshire, TX",
+            fund: "Rethink Self Storage Fund",
+            property: "303 Church St, Rock Hill, SC",
             assetType: "Self Storage",
-            units: 210,
-            market: "Houston, TX",
-            closingDate: "01/10/2025",
-            purchasePrice: "$1,700,000",
-            capitalInvestment: "$320,000",
-            loanAmount: "$1,500,000",
-            debtType: "Principal and Interest",
-            interestRate: "8.5%",
-            maturityDate: "1/2031",
+            units: 600,
+            market: "Charlotte, NC",
+            closingDate: "6/1/2026",
+            purchasePrice: "$4,000,000",
+            capitalInvestment: "$1,625,000",
+            loanAmount: "$0",
+            debtType: "Lease w Option to Buy",
+            interestRate: "0.00%",
+            maturityDate: "TBD",
         },
         {
-            fund: "Future Self Storage Fund",
-            property: "456 Elm St, Charlotte, NC",
+            fund: "Rethink Self Storage Fund",
+            property: "4321 Catawba River Road, Catawba, SC",
             assetType: "Self Storage",
-            units: 520,
+            units: 336,
             market: "Charlotte, NC",
-            closingDate: "02/05/2025",
-            purchasePrice: "$2,200,000",
-            capitalInvestment: "$950,000",
-            loanAmount: "$2,600,000",
-            debtType: "Interest Only",
-            interestRate: "7.5%",
-            maturityDate: "1/2030",
+            closingDate: "09/15/2025",
+            purchasePrice: "$550,000",
+            capitalInvestment: "$915,000",
+            loanAmount: "$1,785,000",
+            debtType: "Bank Loan, Interest Only 2 Years",
+            interestRate: "6%",
+            maturityDate: "3/2051",
         }
     ],
-    highlights: {
-        title: "Fund Highlights ☀️",
-        items: [
-            "1 YEAR, 12 MONTHS!",
-            "35 NEW CUSTOMERS IN CHARLOTTE AND HOUSTON!",
-            "$50,123 in total revenue vs business plan at $60,000 was generated this month across both facilities:",
-            "Charlotte contributed $30,500",
-            "Houston contributed $19,623",
-            "In Charlotte, we started construction on the 2nd floor, completing 55/185 2nd floor self storage units. We reached 240 occupied units vs 170 units 12 months ago. This month, we have 22 move ins and 12 move outs.",
-            "In Houston, we had a total of 150 occupied units vs 120 units 12 months ago. December, we saw 10 move-ins and 9 move-outs. Second highest sales month ever! 🔥 🔥 🔥",
-            "*** ~260 new units at our sites. Great value add for our property values, but we need revenue to reflect our new inventory ***"
-        ]
-    },
     mainSales: {
         title: "Future - Monthly Sales vs Forecast",
         data: [
