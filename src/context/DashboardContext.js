@@ -259,11 +259,11 @@ const ABC_XYZ_DATA = {
         subtitle: "Rethink Self Storage Fund",
         date: "January 2026",
         businessPlanLabel: "Original Business Plan",
-        Catawba: {
+        charlotte: {
             title: "Catawba",
             description: "$2.38M, +35,000 sq ft on 4 acres, ~ 336 Self Storage Units. Bank financing note for 2 years interest only. Phase 1: Build 30k self storage units and fill Phase 2: Build non-climate controlled units, maxxing out the entire land parcel. - Lease up ~ 336 units."
         },
-        rockHill: {
+        houston: {
             title: "Rock Hill",
             description: "Lease with Option to Buy at $4.0M. Phase 1: Lease Term, building and filling ~300 Self Storage Units and warehouse. Phase 2: When 80% full, purchase the builiding and additional construction loan, build and fill ~300 more. Total Price $5.42M for 225k square feet~ 600 units and 50% of space Flex/Warehouse"
         },
