@@ -38,7 +38,7 @@ const MoveInChart = ({ type = 'charlotte' }) => {
                 </h2>
             </div>
 
-            <div className="h-[200px] w-full mb-4">
+            <div className="h-[250px] w-full mb-4">
                 <ResponsiveContainer width="100%" height="100%">
                     <ComposedChart data={chartData}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
@@ -57,7 +57,7 @@ const MoveInChart = ({ type = 'charlotte' }) => {
                             fontSize={12}
                             tickLine={false}
                             axisLine={false}
-                            ticks={[7, 14, 28]}
+                            ticks={[5, 10, 15, 20, 25, 30]}
                         />
                         <Tooltip
                             cursor={{ fill: '#f8fafc' }}

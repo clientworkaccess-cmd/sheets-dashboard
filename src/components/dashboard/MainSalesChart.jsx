@@ -72,8 +72,8 @@ const MainSalesChart = () => {
                                 contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
                                 itemStyle={{ color: '#fff' }}
                             />
-                            <Bar dataKey="Charlotte" stackId="a" fill="#3A8DDE" radius={[0, 0, 0, 0]} barSize={12} />
-                            <Bar dataKey="Houston" stackId="a" fill="#FFC557" radius={[2, 2, 0, 0]} barSize={12} />
+                            <Bar dataKey="Houston" stackId="a" fill="#FFC557" radius={[0, 0, 0, 0]} barSize={12} />
+                            <Bar dataKey="Charlotte" stackId="a" fill="#3A8DDE" radius={[2, 2, 0, 0]} barSize={12} />
                             <Line dataKey="Forecast" stroke="#64748b" strokeWidth={2} dot={false} strokeDasharray="5 5" />
                             <Legend
                                 verticalAlign="bottom"

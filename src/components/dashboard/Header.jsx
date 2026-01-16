@@ -35,17 +35,17 @@ const DashboardHeader = () => {
             <div className="flex items-center gap-2">
                 <Button
                     variant="outline"
-                    onClick={() => setTabs("charlotte&houston")}
+                    onClick={() => setTabs("fund1")}
                     className="h-9 rounded-xl text-gray-400 hover:text-red-500"
                 >
-                    Charlotte & Houston
+                    Fund1
                 </Button>
                 <Button
                     variant="outline"
-                    onClick={() => setTabs("abc&xyz")}
+                    onClick={() => setTabs("fund2")}
                     className="h-9 rounded-xl text-gray-400 hover:text-red-500"
                 >
-                    ABC & XYZ
+                    Fund2
                 </Button>
             </div>
 

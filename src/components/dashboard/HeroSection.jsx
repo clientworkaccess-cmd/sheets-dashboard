@@ -115,13 +115,13 @@ const HeroSection = () => {
                     <div className="lg:col-span-3 flex flex-col justify-center gap-8 pl-8 lg:border-l border-white/40">
                         {hero.metrics.map((metric, idx) => (
                             <div key={idx}>
-                                <span className="text-[10px] font-bold text-secondary uppercase tracking-widest block mb-2">
+                                <span className="text-[9px] font-bold text-secondary uppercase tracking-widest block mb-2">
                                     <EditableText
                                         value={metric.label}
                                         onSave={(val) => handleUpdate(`hero.metrics.${idx}.label`, val)}
                                     />
                                 </span>
-                                <h4 className="text-xl text-white font-medium">
+                                <h4 className="text-sm text-white font-medium">
                                     <EditableText
                                         value={metric.value}
                                         onSave={(val) => handleUpdate(`hero.metrics.${idx}.value`, val)}

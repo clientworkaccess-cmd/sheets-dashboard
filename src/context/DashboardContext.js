@@ -268,7 +268,7 @@ const ABC_XYZ_DATA = {
             description: "Lease with Option to Buy at $4.0M. Phase 1: Lease Term, building and filling ~300 Self Storage Units and warehouse. Phase 2: When 80% full, purchase the builiding and additional construction loan, build and fill ~300 more. Total Price $5.42M for 225k square feet~ 600 units and 50% of space Flex/Warehouse"
         },
         metrics: [
-            { label: "Targeted Hold", value: "~ 5 Years" },
+            { label: "Targeted Hold", value: "~ 5 Years", },
             { label: "Targeted Rate of Return", value: "15-25% IRR (Equity Shareclasses)" }
         ]
     },
@@ -302,21 +302,46 @@ const ABC_XYZ_DATA = {
             maturityDate: "3/2051",
         }
     ],
+    highlights: {
+        title: "Fund Highlights ☀️",
+        items: [
+            "1 YEAR, 11 MONTHS!",
+            "29 NEW CUSTOMERS IN CHARLOTTE AND HOUSTON!",
+            "$44,897 in total revenue vs business plan at $54,222 was generated this month across both facilities:",
+            "Charlotte contributed $28,212",
+            "Houston contributed $16,885",
+            "In Charlotte, we started construction on the 2nd floor, completing 49/180 2nd floor self storage units. We reached 227 occupied units vs 164 units 12 months ago. This month, we have 20 move ins and 14 move outs.",
+            "In Houston, we had a total of 144 occupied units vs 117 units 12 months ago. November, we saw 9 move-ins and 8 move-outs. Second highest sales month ever! 🔥 🔥 🔥",
+            "*** ~250 new units at our sites. Great value add for our property values, but we need revenue to reflect our new inventory ***"
+        ]
+    },
     mainSales: {
         title: "Future - Monthly Sales vs Forecast",
         data: [
-            { name: "Jan'25", Charlotte: 8500, Houston: 5200, Forecast: 16000 },
-            { name: "Feb'25", Charlotte: 9200, Houston: 5800, Forecast: 17000 },
-            { name: "Mar'25", Charlotte: 10500, Houston: 6000, Forecast: 18000 },
-            { name: "Apr'25", Charlotte: 12000, Houston: 6500, Forecast: 20000 },
-            { name: "May'25", Charlotte: 12500, Houston: 7000, Forecast: 22000 },
-            { name: "Jun'25", Charlotte: 13500, Houston: 7500, Forecast: 25000 },
-            { name: "Jul'25", Charlotte: 14000, Houston: 8000, Forecast: 28000 },
-            { name: "Aug'25", Charlotte: 15000, Houston: 8500, Forecast: 30000 },
-            { name: "Sep'25", Charlotte: 13000, Houston: 8200, Forecast: 32000 },
-            { name: "Oct'25", Charlotte: 14500, Houston: 8600, Forecast: 35000 },
-            { name: "Nov'25", Charlotte: 13800, Houston: 9000, Forecast: 38000 },
-            { name: "Dec'25", Charlotte: 0, Houston: 0, Forecast: 40000 },
+            { name: "Jan'24", Charlotte: 8000, Houston: 5000, Forecast: 15000 },
+            { name: "Feb'24", Charlotte: 9000, Houston: 5500, Forecast: 16000 },
+            { name: "Mar'24", Charlotte: 10000, Houston: 6000, Forecast: 18000 },
+            { name: "Apr'24", Charlotte: 12000, Houston: 6500, Forecast: 20000 },
+            { name: "May'24", Charlotte: 13000, Houston: 7000, Forecast: 22000 },
+            { name: "Jun'24", Charlotte: 15000, Houston: 7500, Forecast: 25000 },
+            { name: "Jul'24", Charlotte: 17000, Houston: 8000, Forecast: 28000 },
+            { name: "Aug'24", Charlotte: 19000, Houston: 8500, Forecast: 30000 },
+            { name: "Sep'24", Charlotte: 21000, Houston: 9000, Forecast: 32000 },
+            { name: "Oct'24", Charlotte: 23000, Houston: 9500, Forecast: 35000 },
+            { name: "Nov'24", Charlotte: 25000, Houston: 10000, Forecast: 38000 },
+            { name: "Dec'24", Charlotte: 20000, Houston: 8000, Forecast: 40000 },
+            { name: "Jan'25", Charlotte: 26000, Houston: 10500, Forecast: 42000 },
+            { name: "Feb'25", Charlotte: 28000, Houston: 11000, Forecast: 45000 },
+            { name: "Mar'25", Charlotte: 30000, Houston: 11500, Forecast: 47000 },
+            { name: "Apr'25", Charlotte: 32000, Houston: 12000, Forecast: 50000 },
+            { name: "May'25", Charlotte: 31000, Houston: 11500, Forecast: 52000 },
+            { name: "Jun'25", Charlotte: 33000, Houston: 12000, Forecast: 54000 },
+            { name: "Jul'25", Charlotte: 31112, Houston: 15254, Forecast: 48522 },
+            { name: "Aug'25", Charlotte: 33095, Houston: 16075, Forecast: 50322 },
+            { name: "Sep'25", Charlotte: 25431, Houston: 15478, Forecast: 51622 },
+            { name: "Oct'25", Charlotte: 31395, Houston: 16030, Forecast: 52922 },
+            { name: "Nov'25", Charlotte: 28212, Houston: 16685, Forecast: 54222 },
+            { name: "Dec'25", Charlotte: 0, Houston: 0, Forecast: 55522 },
         ]
     },
     charlotteChecklist: {
@@ -390,35 +415,59 @@ const ABC_XYZ_DATA = {
     charlotteSales: {
         title: "2025 Charlotte - Monthly Sales vs Forecast",
         data: [
-            { name: "Jan'25", Actuals: 5500, Forecast: 8500 },
-            { name: "Feb'25", Actuals: 6300, Forecast: 9200 },
-            { name: "Mar'25", Actuals: 7200, Forecast: 10500 },
-            { name: "Apr'25", Actuals: 9500, Forecast: 12000 },
-            { name: "May'25", Actuals: 11500, Forecast: 12500 },
-            { name: "Jun'25", Actuals: 14000, Forecast: 13500 },
-            { name: "Jul'25", Actuals: 14000, Forecast: 14000 },
-            { name: "Aug'25", Actuals: 15000, Forecast: 15000 },
-            { name: "Sep'25", Actuals: 13000, Forecast: 13000 },
-            { name: "Oct'25", Actuals: 14500, Forecast: 14500 },
-            { name: "Nov'25", Actuals: 13800, Forecast: 13800 },
-            { name: "Dec'25", Actuals: 0, Forecast: 15000 },
+            { name: "Jan'24", Actuals: 5000, Forecast: 8000 },
+            { name: "Feb'24", Actuals: 6000, Forecast: 9000 },
+            { name: "Mar'24", Actuals: 7000, Forecast: 10000 },
+            { name: "Apr'24", Actuals: 9000, Forecast: 12000 },
+            { name: "May'24", Actuals: 11000, Forecast: 13000 },
+            { name: "Jun'24", Actuals: 14000, Forecast: 15000 },
+            { name: "Jul'24", Actuals: 16000, Forecast: 17000 },
+            { name: "Aug'24", Actuals: 18000, Forecast: 19000 },
+            { name: "Sep'24", Actuals: 20000, Forecast: 21000 },
+            { name: "Oct'24", Actuals: 22000, Forecast: 23000 },
+            { name: "Nov'24", Actuals: 24000, Forecast: 25000 },
+            { name: "Dec'24", Actuals: 21000, Forecast: 20000 },
+            { name: "Jan'25", Actuals: 25000, Forecast: 26000 },
+            { name: "Feb'25", Actuals: 27000, Forecast: 28000 },
+            { name: "Mar'25", Actuals: 29000, Forecast: 30000 },
+            { name: "Apr'25", Actuals: 31000, Forecast: 32000 },
+            { name: "May'25", Actuals: 30000, Forecast: 31000 },
+            { name: "Jun'25", Actuals: 32000, Forecast: 33000 },
+            { name: "Jul'25", Actuals: 31112, Forecast: 29740 },
+            { name: "Aug'25", Actuals: 33095, Forecast: 31540 },
+            { name: "Sep'25", Actuals: 25431, Forecast: 32840 },
+            { name: "Oct'25", Actuals: 31395, Forecast: 34140 },
+            { name: "Nov'25", Actuals: 28212, Forecast: 35440 },
+            { name: "Dec'25", Actuals: 0, Forecast: 36740 },
         ]
     },
     houstonSales: {
         title: "2025 Houston - Monthly Sales vs Forecast",
         data: [
-            { name: "Jan'25", Actuals: 5200, Forecast: 5200 },
-            { name: "Feb'25", Actuals: 5800, Forecast: 5800 },
-            { name: "Mar'25", Actuals: 6000, Forecast: 6000 },
-            { name: "Apr'25", Actuals: 6500, Forecast: 6500 },
-            { name: "May'25", Actuals: 7000, Forecast: 7000 },
-            { name: "Jun'25", Actuals: 7500, Forecast: 7500 },
-            { name: "Jul'25", Actuals: 8000, Forecast: 8000 },
-            { name: "Aug'25", Actuals: 8500, Forecast: 8500 },
-            { name: "Sep'25", Actuals: 8200, Forecast: 8200 },
-            { name: "Oct'25", Actuals: 8600, Forecast: 8600 },
-            { name: "Nov'25", Actuals: 9000, Forecast: 9000 },
-            { name: "Dec'25", Actuals: 0, Forecast: 9200 },
+            { name: "Jan'24", Actuals: 5000, Forecast: 8000 },
+            { name: "Feb'24", Actuals: 6000, Forecast: 9000 },
+            { name: "Mar'24", Actuals: 7000, Forecast: 10000 },
+            { name: "Apr'24", Actuals: 9000, Forecast: 12000 },
+            { name: "May'24", Actuals: 11000, Forecast: 13000 },
+            { name: "Jun'24", Actuals: 14000, Forecast: 15000 },
+            { name: "Jul'24", Actuals: 16000, Forecast: 17000 },
+            { name: "Aug'24", Actuals: 18000, Forecast: 19000 },
+            { name: "Sep'24", Actuals: 20000, Forecast: 21000 },
+            { name: "Oct'24", Actuals: 22000, Forecast: 23000 },
+            { name: "Nov'24", Actuals: 24000, Forecast: 25000 },
+            { name: "Dec'24", Actuals: 21000, Forecast: 20000 },
+            { name: "Jan'25", Actuals: 25000, Forecast: 26000 },
+            { name: "Feb'25", Actuals: 27000, Forecast: 28000 },
+            { name: "Mar'25", Actuals: 29000, Forecast: 30000 },
+            { name: "Apr'25", Actuals: 31000, Forecast: 32000 },
+            { name: "May'25", Actuals: 30000, Forecast: 31000 },
+            { name: "Jun'25", Actuals: 32000, Forecast: 33000 },
+            { name: "Jul'25", Actuals: 31112, Forecast: 29740 },
+            { name: "Aug'25", Actuals: 33095, Forecast: 31540 },
+            { name: "Sep'25", Actuals: 25431, Forecast: 32840 },
+            { name: "Oct'25", Actuals: 31395, Forecast: 34140 },
+            { name: "Nov'25", Actuals: 28212, Forecast: 35440 },
+            { name: "Dec'25", Actuals: 0, Forecast: 36740 },
         ]
     },
     footer: {
@@ -458,7 +507,7 @@ const ABC_XYZ_DATA = {
 export const DashboardProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
-    const [tabs, setTabs] = useState("charlotte&houston");
+    const [tabs, setTabs] = useState("fund1");
     const [data, setData] = useState(CHARLOTTE_HOUSTON_DATA);
     const [selectedMonth, setSelectedMonth] = useState('December');
     const [selectedYear, setSelectedYear] = useState('2025');
@@ -475,7 +524,7 @@ export const DashboardProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        if (tabs === "charlotte&houston") {
+        if (tabs === "fund1") {
             setData(CHARLOTTE_HOUSTON_DATA);
         } else {
             setData(ABC_XYZ_DATA);
@@ -608,10 +657,10 @@ export const DashboardProvider = ({ children }) => {
                 console.error('Error fetching from Supabase:', error);
                 const savedData = localStorage.getItem('dashboardData');
                 if (savedData) {
-                    setData(_.merge({}, tabs === "charlotte&houston" ? CHARLOTTE_HOUSTON_DATA : ABC_XYZ_DATA, JSON.parse(savedData)));
+                    setData(_.merge({}, tabs === "fund1" ? CHARLOTTE_HOUSTON_DATA : ABC_XYZ_DATA, JSON.parse(savedData)));
                 }
             } else if (dbData && dbData.content) {
-                setData(_.merge({}, tabs === "charlotte&houston" ? CHARLOTTE_HOUSTON_DATA : ABC_XYZ_DATA, dbData.content));
+                setData(_.merge({}, tabs === "fund1" ? CHARLOTTE_HOUSTON_DATA : ABC_XYZ_DATA, dbData.content));
             }
 
             // Fetch live reviews and real table data to override static content
