@@ -12,12 +12,12 @@ const PerformanceRadar = () => {
 
     // Transform data with new subject names matching screenshot
     const chartData = [
-        { subject: '# of Leads', A: 8, B: 6, C: 4, fullMark: 10 },
-        { subject: 'Client Acquisition Cost', A: 7, B: 5, C: 3, fullMark: 10 },
-        { subject: 'Customer Lifetime Value', A: 6, B: 7, C: 5, fullMark: 10 },
-        { subject: '# of Occupied Units', A: 5, B: 6, C: 4, fullMark: 10 },
-        { subject: 'Five Star Reviews', A: 4, B: 5, C: 6, fullMark: 10 },
-        { subject: 'Move in-Move out Ratio', A: 7, B: 4, C: 5, fullMark: 10 },
+        { subject: '# of Leads', A: 8, B: 6, C: 4, D: 2, E: 1, F: 0, fullMark: 10 },
+        { subject: 'Client Acquisition Cost', A: 7, B: 5, C: 3, D: 2, E: 1, F: 0, fullMark: 10 },
+        { subject: 'Customer Lifetime Value', A: 6, B: 7, C: 5, D: 4, E: 3, F: 2, fullMark: 10 },
+        { subject: '# of Occupied Units', A: 5, B: 6, C: 4, D: 2, E: 1, F: 0, fullMark: 10 },
+        { subject: 'Five Star Reviews', A: 4, B: 5, C: 6, D: 2, E: 1, F: 0, fullMark: 10 },
+        { subject: 'Move in-Move out Ratio', A: 7, B: 4, C: 5, D: 2, E: 1, F: 0, fullMark: 10 },
     ];
 
     const handleDataUpdate = (idx, field, value) => {
@@ -38,15 +38,27 @@ const PerformanceRadar = () => {
         <div className="flex items-center justify-center gap-6 mt-2">
             <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(64, 224, 208, 0.8)' }} />
-                <span className="text-xs font-medium text-gray-600">Series 1</span>
+                <span className="text-xs font-medium text-gray-600">Jul 25</span>
             </div>
             <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(0, 191, 255, 0.8)' }} />
-                <span className="text-xs font-medium text-gray-600">Series 2</span>
+                <span className="text-xs font-medium text-gray-600">Aug 25</span>
             </div>
             <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(0, 105, 148, 0.9)' }} />
-                <span className="text-xs font-medium text-gray-600">Series 3</span>
+                <span className="text-xs font-medium text-gray-600">Sep 25</span>
+            </div>
+            <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(64, 224, 208, 0.8)' }} />
+                <span className="text-xs font-medium text-gray-600">Oct 25</span>
+            </div>
+            <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(0, 191, 255, 0.8)' }} />
+                <span className="text-xs font-medium text-gray-600">Nov 25</span>
+            </div>
+            <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(0, 105, 148, 0.9)' }} />
+                <span className="text-xs font-medium text-gray-600">Dec 25</span>
             </div>
         </div>
     );
@@ -68,7 +80,7 @@ const PerformanceRadar = () => {
                     <span className="text-lg text-secondary-foreground tracking-wide">Retention</span>
                 </div>
 
-                <div className="flex-grow min-h-[350px] mt-4">
+                <div className="grow min-h-[350px] mt-4">
                     <ResponsiveContainer width="100%" height="100%">
                         <RadarChart cx="50%" cy="50%" outerRadius="70%" data={chartData}>
                             <PolarGrid
@@ -115,7 +127,7 @@ const PerformanceRadar = () => {
 
                             {/* Series 1 - Outer layer (lightest cyan/turquoise) */}
                             <Radar
-                                name="Series 1"
+                                name="Jul 25"
                                 dataKey="A"
                                 stroke="rgba(64, 224, 208, 1)"
                                 strokeWidth={2}
@@ -126,7 +138,7 @@ const PerformanceRadar = () => {
 
                             {/* Series 2 - Middle layer (medium blue) */}
                             <Radar
-                                name="Series 2"
+                                name="Aug 25"
                                 dataKey="B"
                                 stroke="rgba(0, 191, 255, 1)"
                                 strokeWidth={2}
@@ -137,8 +149,38 @@ const PerformanceRadar = () => {
 
                             {/* Series 3 - Inner layer (darkest teal) */}
                             <Radar
-                                name="Series 3"
+                                name="Sep 25"
                                 dataKey="C"
+                                stroke="rgba(0, 105, 148, 1)"
+                                strokeWidth={2}
+                                fill="rgba(0, 105, 148, 0.6)"
+                                fillOpacity={1}
+                                animationDuration={1500}
+                            />
+                            {/* Series 4 - Inner layer (darkest teal) */}
+                            <Radar
+                                name="Oct 25"
+                                dataKey="D"
+                                stroke="rgba(0, 105, 148, 1)"
+                                strokeWidth={2}
+                                fill="rgba(0, 105, 148, 0.6)"
+                                fillOpacity={1}
+                                animationDuration={1500}
+                            />
+                            {/* Series 5 - Inner layer (darkest teal) */}
+                            <Radar
+                                name="Nov 25"
+                                dataKey="E"
+                                stroke="rgba(0, 105, 148, 1)"
+                                strokeWidth={2}
+                                fill="rgba(0, 105, 148, 0.6)"
+                                fillOpacity={1}
+                                animationDuration={1500}
+                            />
+                            {/* Series 6 - Inner layer (darkest teal) */}
+                            <Radar
+                                name="Dec 25"
+                                dataKey="F"
                                 stroke="rgba(0, 105, 148, 1)"
                                 strokeWidth={2}
                                 fill="rgba(0, 105, 148, 0.6)"

@@ -18,26 +18,92 @@ const DashboardContext = createContext();
 /* -------------------- SAFE DEFAULT STATE -------------------- */
 
 const defaultDashboardData = {
-    mainSales: { data: [] },
-    charlotteSales: { data: [] },
-    houstonSales: { data: [] },
-    charlotteMoveIn: { data: [] },
-    houstonMoveIn: { data: [] },
-    charlotteKPI: {
-        revenue: "$0",
-        units: "0/0",
-        rentSqft: "$0",
-        rating: "-",
-        reviewsCount: 0
+  "hero": {
+    "date": "",
+    "title": "",
+    "houston": {
+      "title": "",
+      "description": ""
     },
-    houstonKPI: {
-        revenue: "$0",
-        units: "0/0",
-        rentSqft: "$0",
-        rating: "-",
-        reviewsCount: 0
-    }
-};
+    "metrics": [
+      {
+        "label": "",
+        "value": ""
+      }
+    ],
+    "subtitle": "",
+    "charlotte": {
+      "title": "",
+      "description": ""
+    },
+    "businessPlanLabel": ""
+  },
+  "footer": {
+    "forecastText": "",
+    "expectationHeading": "",
+    "houstonExpectation": "",
+    "revenueExpectation": "",
+    "charlotteExpectation": ""
+  },
+  "mainSales": {
+    "data": [],
+    "title": ""
+  },
+  "majorNews": {
+    "items": [],
+    "title": ""
+  },
+  "portfolio": [],
+  "highlights": {
+    "items": "",
+    "title": ""
+  },
+  "houstonKPI": {
+    "units": "",
+    "rating": "",
+    "revenue": "",
+    "rentSqft": "",
+    "reviewsCount": "",
+    "availableUnits": ""
+  },
+  "charlotteKPI": {
+    "units": "",
+    "rating": "",
+    "revenue": "",
+    "rentSqft": "",
+    "reviewsCount": "",
+    "availableUnits": ""
+  },
+  "houstonSales": {
+    "data": [],
+    "title": ""
+  },
+  "houstonMoveIn": {
+    "data": [],
+    "title": ""
+  },
+  "charlotteSales": {
+    "data": [],
+    "title": ""
+  },
+  "charlotteMoveIn": {
+    "data": [],
+    "title": ""
+  },
+  "houstonChecklist": {
+    "items": [],
+    "title": ""
+  },
+  "performanceRadar": {
+    "data": [],
+    "title": ""
+  },
+  "charlotteChecklist": {
+    "items": "",
+    "title": ""
+  }
+}
+
 
 /* -------------------- PROVIDER -------------------- */
 
@@ -69,15 +135,19 @@ export const DashboardProvider = ({ children }) => {
                 const { data: dbData, error } = await supabase
                     .from(table)
                     .select("content")
-                    .limit(1)
+                    .eq("id", selectedMonth.slice(0, 3) + " " + selectedYear)
                     .single();
 
                 if (error) throw error;
 
-                setData({
-                    ...defaultDashboardData,
-                    ...dbData.content
-                });
+                if (dbData) {
+                    setData({
+                        ...defaultDashboardData,
+                        ...dbData.content
+                    });    
+                } else {
+                    setData(defaultDashboardData);
+                }
 
                 await Promise.all([
                     fetchLiveReviews(),
@@ -91,7 +161,7 @@ export const DashboardProvider = ({ children }) => {
         };
 
         fetchDashboardData();
-    }, [tabs]);
+    }, [tabs, selectedMonth, selectedYear]);
 
     /* -------------------- AUTH -------------------- */
 
@@ -334,7 +404,6 @@ export const DashboardProvider = ({ children }) => {
 
     const updateData = async (newData) => {
         setData(newData);
-        console.log(newData);
 
         const table =
             tabs === "fund1"
@@ -345,7 +414,7 @@ export const DashboardProvider = ({ children }) => {
             .from(table)
             .upsert(
                 {
-                    id: "main-dashboard",
+                    id: selectedMonth.slice(0, 3) + " " + selectedYear,
                     content: newData,
                     updated_at: new Date().toISOString()
                 },
