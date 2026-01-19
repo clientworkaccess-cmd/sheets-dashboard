@@ -41,23 +41,21 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#f1f5f9] flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-[#f1f5f9] flex flex-col p-4 md:p-8 w-full relative">
+        {/* Top Header Section */}
+        <DashboardHeader />
+        <div className="flex flex-col items-center justify-center absolute top-0 left-0 w-full h-full">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#f1f5f9] p-4 md:p-8 font-sans transition-colors duration-500">
+    <main className="min-h-screen bg-[#f1f5f9] p-4 md:p-8 transition-colors duration-500">
       <div className="space-y-6">
         {/* Top Header Section */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={itemVariants}
-        >
-          <DashboardHeader />
-        </motion.div>
+        <DashboardHeader />
 
         {/* Main Dashboard Container */}
         <motion.div

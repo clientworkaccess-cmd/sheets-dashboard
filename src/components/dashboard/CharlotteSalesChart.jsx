@@ -18,7 +18,8 @@ import {
 } from 'recharts';
 
 const CharlotteSalesChart = () => {
-    const { data, updateData, charlotteTableData } = useDashboard();
+    const { data, updateData, charlotteTableData, tabs } = useDashboard();
+    const locationName = tabs === 'fund1' ? 'Charlotte' : 'Catawaba';
     const chartData = data.charlotteSales.data;  // Full data for chart
     const tableData = charlotteTableData;         // 6-month window for table
 
@@ -41,7 +42,13 @@ const CharlotteSalesChart = () => {
         <div className="bg-white rounded-3xl p-8 border shadow-sm h-full flex flex-col">
             <div className="flex justify-center mb-6">
                 <h2 className="text-[10px] font-bold text-gray-800 uppercase tracking-widest text-center">
-                    <EditableText value={data.charlotteSales.title} onSave={handleTitleUpdate} />
+                    <EditableText
+                        value={tabs === 'fund1'
+                            ? data.charlotteSales.title
+                            : (data.charlotteSales.title || '').replace(/Charlotte/gi, 'Catawaba')
+                        }
+                        onSave={handleTitleUpdate}
+                    />
                 </h2>
             </div>
 
@@ -88,7 +95,7 @@ const CharlotteSalesChart = () => {
             <div className="mt-8">
                 <div className="flex items-center gap-2 mb-4">
                     <div className="w-1 h-4 bg-blue-500 rounded-full" />
-                    <h3 className="text-[10px] font-bold text-gray-800 uppercase tracking-widest">Charlotte Monthly</h3>
+                    <h3 className="text-[10px] font-bold text-gray-800 uppercase tracking-widest">{locationName} Monthly</h3>
                 </div>
                 <table className="w-full text-[10px] text-gray-500 uppercase font-bold">
                     <thead>

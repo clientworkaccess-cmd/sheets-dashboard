@@ -18,9 +18,13 @@ import {
 } from 'recharts';
 
 const MainSalesChart = () => {
-    const { data, updateData, isEditMode, mainSalesTableData } = useDashboard();
+    const { data, updateData, isEditMode, mainSalesTableData, tabs } = useDashboard();
     const chartData = data.mainSales.data;  // Full data for chart (never filtered)
     const tableData = mainSalesTableData;   // 6-month window for table (filtered)
+
+    // Dynamic location names based on selected fund
+    const location1Name = tabs === 'fund1' ? 'Charlotte' : 'Catawaba';
+    const location2Name = tabs === 'fund1' ? 'Houston' : 'Rockhill';
 
     const handleDataUpdate = (idx, field, value) => {
         const newData = _.cloneDeep(data);
@@ -72,8 +76,8 @@ const MainSalesChart = () => {
                                 contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
                                 itemStyle={{ color: '#fff' }}
                             />
-                            <Bar dataKey="Houston" stackId="a" fill="#FFC557" radius={[0, 0, 0, 0]} barSize={12} />
-                            <Bar dataKey="Charlotte" stackId="a" fill="#3A8DDE" radius={[2, 2, 0, 0]} barSize={12} />
+                            <Bar dataKey="Location2" stackId="a" fill="#FFC557" radius={[0, 0, 0, 0]} barSize={12} name={location2Name} />
+                            <Bar dataKey="Location1" stackId="a" fill="#3A8DDE" radius={[2, 2, 0, 0]} barSize={12} name={location1Name} />
                             <Line dataKey="Forecast" stroke="#64748b" strokeWidth={2} dot={false} strokeDasharray="5 5" />
                             <Legend
                                 verticalAlign="bottom"
@@ -100,16 +104,16 @@ const MainSalesChart = () => {
                     <tbody className="text-gray-700">
                         <tr className="border-b border-gray-50">
                             <td className="py-2 flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-[#3A8DDE]" /> Charlotte
+                                <div className="w-2 h-2 rounded-full bg-[#3A8DDE]" /> {location1Name}
                             </td>
                             {tableData.map((d, i) => (
                                 <td key={i} className={`text-right py-2`}>
                                     <EditableText
-                                        value={formatCurrency(d.Charlotte)}
+                                        value={formatCurrency(d.Location1)}
                                         onSave={(val) => {
                                             // Find correct index in full data
                                             const idx = chartData.findIndex(row => row.name === d.name);
-                                            if (idx !== -1) handleDataUpdate(idx, 'Charlotte', val);
+                                            if (idx !== -1) handleDataUpdate(idx, 'Location1', val);
                                         }}
                                     />
                                 </td>
@@ -117,15 +121,15 @@ const MainSalesChart = () => {
                         </tr>
                         <tr className="border-b border-gray-50">
                             <td className="py-2 flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-[#FFC557]" /> Houston
+                                <div className="w-2 h-2 rounded-full bg-[#FFC557]" /> {location2Name}
                             </td>
                             {tableData.map((d, i) => (
                                 <td key={i} className={`text-right py-2`}>
                                     <EditableText
-                                        value={formatCurrency(d.Houston)}
+                                        value={formatCurrency(d.Location2)}
                                         onSave={(val) => {
                                             const idx = chartData.findIndex(row => row.name === d.name);
-                                            if (idx !== -1) handleDataUpdate(idx, 'Houston', val);
+                                            if (idx !== -1) handleDataUpdate(idx, 'Location2', val);
                                         }}
                                     />
                                 </td>
@@ -135,7 +139,7 @@ const MainSalesChart = () => {
                             <td className="py-2">Total</td>
                             {tableData.map((d, i) => (
                                 <td key={i} className="text-right py-2">
-                                    {formatCurrency(d.Charlotte + d.Houston)}
+                                    {formatCurrency(d.Location1 + d.Location2)}
                                 </td>
                             ))}
                         </tr>

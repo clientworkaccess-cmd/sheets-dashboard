@@ -18,12 +18,21 @@ import {
 import EditableText from './EditableText';
 
 const MoveInChart = ({ type = 'charlotte' }) => {
-    const { data, updateData, isEditMode } = useDashboard();
+    const { data, updateData, isEditMode, tabs } = useDashboard();
 
     // Choose data based on type
     const chartKey = type === 'charlotte' ? 'charlotteMoveIn' : 'houstonMoveIn';
     const chartSection = data[chartKey];
     const chartData = chartSection.data;
+
+    // Dynamic title based on fund
+    const getDynamicTitle = () => {
+        let title = chartSection.title || '';
+        if (tabs === 'fund2') {
+            title = title.replace(/Charlotte/gi, 'Catawaba').replace(/Houston/gi, 'Rockhill');
+        }
+        return title;
+    };
 
     const handleTitleUpdate = (value) => {
         const newData = _.cloneDeep(data);
@@ -34,7 +43,7 @@ const MoveInChart = ({ type = 'charlotte' }) => {
         <div className="bg-white rounded-3xl p-8 border shadow-sm h-full">
             <div className="flex justify-center mb-6">
                 <h2 className="text-[10px] font-bold text-black/80 uppercase tracking-widest">
-                    <EditableText value={chartSection.title} onSave={handleTitleUpdate} />
+                    <EditableText value={getDynamicTitle()} onSave={handleTitleUpdate} />
                 </h2>
             </div>
 
