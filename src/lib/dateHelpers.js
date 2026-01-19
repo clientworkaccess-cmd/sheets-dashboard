@@ -18,15 +18,15 @@ export const findIndexByMonthYear = (data, selectedMonth, selectedYear) => {
     const yearAbbr = selectedYear.slice(-2);
 
     return data.findIndex(row => {
-        const name = row.name || '';
-        return name.includes(monthAbbr) && name.includes(yearAbbr);
+        const name = row.name || row.month || '';
+        return name.toLowerCase().includes(monthAbbr.toLowerCase()) && name.includes(yearAbbr);
     });
 };
 
 /**
  * Get up to 6 months of data ending at the selected month
  * Returns selected month + previous 5 months (or fewer if at start of data)
- * @param {Array} data - Array of data objects with 'name' field
+ * @param {Array} data - Array of data objects with 'name' or 'month' field
  * @param {string} selectedMonth - Full month name
  * @param {string} selectedYear - Full year
  * @returns {Array} Array of 1-6 data objects in chronological order

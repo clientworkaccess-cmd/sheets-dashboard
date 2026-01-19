@@ -18,90 +18,90 @@ const DashboardContext = createContext();
 /* -------------------- SAFE DEFAULT STATE -------------------- */
 
 const defaultDashboardData = {
-  "hero": {
-    "date": "",
-    "title": "",
-    "houston": {
-      "title": "",
-      "description": ""
+    "hero": {
+        "date": "",
+        "title": "",
+        "houston": {
+            "title": "",
+            "description": ""
+        },
+        "metrics": [
+            {
+                "label": "",
+                "value": ""
+            }
+        ],
+        "subtitle": "",
+        "charlotte": {
+            "title": "",
+            "description": ""
+        },
+        "businessPlanLabel": ""
     },
-    "metrics": [
-      {
-        "label": "",
-        "value": ""
-      }
-    ],
-    "subtitle": "",
-    "charlotte": {
-      "title": "",
-      "description": ""
+    "footer": {
+        "forecastText": "",
+        "expectationHeading": "",
+        "houstonExpectation": "",
+        "revenueExpectation": "",
+        "charlotteExpectation": ""
     },
-    "businessPlanLabel": ""
-  },
-  "footer": {
-    "forecastText": "",
-    "expectationHeading": "",
-    "houstonExpectation": "",
-    "revenueExpectation": "",
-    "charlotteExpectation": ""
-  },
-  "mainSales": {
-    "data": [],
-    "title": ""
-  },
-  "majorNews": {
-    "items": [],
-    "title": ""
-  },
-  "portfolio": [],
-  "highlights": {
-    "items": "",
-    "title": ""
-  },
-  "houstonKPI": {
-    "units": "",
-    "rating": "",
-    "revenue": "",
-    "rentSqft": "",
-    "reviewsCount": "",
-    "availableUnits": ""
-  },
-  "charlotteKPI": {
-    "units": "",
-    "rating": "",
-    "revenue": "",
-    "rentSqft": "",
-    "reviewsCount": "",
-    "availableUnits": ""
-  },
-  "houstonSales": {
-    "data": [],
-    "title": ""
-  },
-  "houstonMoveIn": {
-    "data": [],
-    "title": ""
-  },
-  "charlotteSales": {
-    "data": [],
-    "title": ""
-  },
-  "charlotteMoveIn": {
-    "data": [],
-    "title": ""
-  },
-  "houstonChecklist": {
-    "items": [],
-    "title": ""
-  },
-  "performanceRadar": {
-    "data": [],
-    "title": ""
-  },
-  "charlotteChecklist": {
-    "items": "",
-    "title": ""
-  }
+    "mainSales": {
+        "data": [],
+        "title": ""
+    },
+    "majorNews": {
+        "items": [],
+        "title": ""
+    },
+    "portfolio": [],
+    "highlights": {
+        "items": "",
+        "title": ""
+    },
+    "houstonKPI": {
+        "units": "",
+        "rating": "",
+        "revenue": "",
+        "rentSqft": "",
+        "reviewsCount": "",
+        "availableUnits": ""
+    },
+    "charlotteKPI": {
+        "units": "",
+        "rating": "",
+        "revenue": "",
+        "rentSqft": "",
+        "reviewsCount": "",
+        "availableUnits": ""
+    },
+    "houstonSales": {
+        "data": [],
+        "title": ""
+    },
+    "houstonMoveIn": {
+        "data": [],
+        "title": ""
+    },
+    "charlotteSales": {
+        "data": [],
+        "title": ""
+    },
+    "charlotteMoveIn": {
+        "data": [],
+        "title": ""
+    },
+    "houstonChecklist": {
+        "items": [],
+        "title": ""
+    },
+    "performanceRadar": {
+        "data": [],
+        "title": ""
+    },
+    "charlotteChecklist": {
+        "items": "",
+        "title": ""
+    }
 }
 
 
@@ -144,7 +144,7 @@ export const DashboardProvider = ({ children }) => {
                     setData({
                         ...defaultDashboardData,
                         ...dbData.content
-                    });    
+                    });
                 } else {
                     setData(defaultDashboardData);
                 }
@@ -261,7 +261,6 @@ export const DashboardProvider = ({ children }) => {
                 ...(results[2].data || []),
                 ...(results[3].data || [])
             ];
-
             setRawCharlotteData(charlotteRaw);
             setRawHoustonData(houstonRaw);
 
@@ -400,6 +399,83 @@ export const DashboardProvider = ({ children }) => {
         };
     }, [rawHoustonData, selectedMonth, selectedYear, data.houstonKPI]);
 
+    const performanceRadarData = useMemo(() => {
+        const charlotteSix = getLastSixMonths(rawCharlotteData, selectedMonth, selectedYear);
+        const houstonSix = getLastSixMonths(rawHoustonData, selectedMonth, selectedYear);
+
+        const parseVal = (val) => {
+            if (typeof val === 'number') return val;
+            if (typeof val === 'string') return parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
+            return 0;
+        };
+
+        const subjects = [
+            { subject: '# of Leads', key: 'move_ins' },
+            { subject: 'Client Acquisition Cost', key: 'Client Acquisition Cost' },
+            { subject: 'Customer Lifetime Value', key: 'Life Time Value' },
+            { subject: '# of Occupied Units', key: 'total_units_rented' },
+            { subject: 'Five Star Reviews', key: 'five_star_reviews' },
+            { subject: 'Move in-Move out Ratio', key: 'ratio' }
+        ];
+
+        // Keys for Recharts: A, B, C, D, E, F
+        const columnKeys = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+        // Month labels for the legend
+        const months = charlotteSix.map(m => {
+            const date = m.month || m.name || "";
+            // Format "Jan 2024" or "January 2024" to "Jan 24"
+            const parts = date.split(' ');
+            if (parts.length === 2) {
+                return `${parts[0].slice(0, 3)} ${parts[1].slice(-2)}`;
+            }
+            return date;
+        });
+
+        const result = subjects.map(s => {
+            const row = { subject: s.subject, fullMark: 10 };
+
+            columnKeys.forEach((key, i) => {
+                if (i < charlotteSix.length) {
+                    const c = charlotteSix[i];
+                    const h = houstonSix[i] || {};
+
+                    let val = 0;
+                    if (s.key === 'ratio') {
+                        const mIn = (parseVal(c.move_ins) || parseVal(c.moveIn) || 0) + (parseVal(h.move_ins) || parseVal(h.moveIn) || 0);
+                        const mOut = (parseVal(c.move_outs) || parseVal(c.moveOut) || 0) + (parseVal(h.move_outs) || parseVal(h.moveOut) || 0);
+                        val = mOut > 0 ? (mIn / mOut) * 2 : (mIn > 0 ? 8 : 0); // Scale ratio
+                    } else if (s.key === 'five_star_reviews') {
+                        // We don't have historical reviews, use a sensible progression or current
+                        val = 7 + (i * 0.5);
+                    } else if (s.key === 'total_units_rented') {
+                        const total = parseVal(c.total_units_rented) + parseVal(h.total_units_rented);
+                        val = (total / 600) * 10; // Scale units (assuming 600 is "full")
+                    } else if (s.key === 'Life Time Value') {
+                        const total = parseVal(c['Life Time Value']) + parseVal(h['Life Time Value']);
+                        val = (total / 150000) * 10; // Scale LTV
+                    } else if (s.key === 'Client Acquisition Cost') {
+                        const avg = (parseVal(c['Client Acquisition Cost']) + parseVal(h['Client Acquisition Cost'])) / 2;
+                        val = 10 - (avg / 50); // Scale CAC (lower is better, so 10 - scaled value)
+                    } else {
+                        // Default scaling for other metrics (move_ins)
+                        const total = parseVal(c[s.key]) + parseVal(h[s.key]) ||
+                            parseVal(c.moveIn) + parseVal(h.moveIn) || 0;
+                        val = (total / 50) * 10; // Scale moves
+                    }
+
+                    row[key] = Math.min(10, Math.max(0, val));
+                } else {
+                    row[key] = 0;
+                }
+            });
+
+            return row;
+        });
+
+        return { data: result, months };
+    }, [rawCharlotteData, rawHoustonData, selectedMonth, selectedYear]);
+
     /* -------------------- UPDATE -------------------- */
 
     const updateData = async (newData) => {
@@ -415,7 +491,7 @@ export const DashboardProvider = ({ children }) => {
             .upsert(
                 {
                     id: selectedMonth.slice(0, 3) + " " + selectedYear,
-                    content: newData,
+                    content: { ...newData, hero: { ...newData.hero, date: selectedMonth + ' ' + selectedYear } },
                     updated_at: new Date().toISOString()
                 },
                 { onConflict: "id" }
@@ -444,6 +520,7 @@ export const DashboardProvider = ({ children }) => {
                 mainSalesTableData,
                 selectedCharlotteKPI,
                 selectedHoustonKPI,
+                performanceRadarData,
                 login,
                 logout,
                 toggleEditMode

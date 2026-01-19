@@ -62,10 +62,15 @@ const MoveInChart = ({ type = 'charlotte' }) => {
                             interval={0}
                         />
                         <YAxis
+                            domain={[
+                                0,
+                                (dataMax) =>
+                                    chartKey === 'charlotteMoveIn'
+                                        ? Math.max(45, Math.ceil(dataMax / 5) * 5)
+                                        : Math.ceil(dataMax / 5) * 5
+                            ]}
                             stroke="#94a3b8"
                             fontSize={12}
-                            tickLine={false}
-                            axisLine={false}
                         />
                         <Tooltip
                             cursor={{ fill: '#f8fafc' }}

@@ -60,7 +60,11 @@ const HeroSection = () => {
                             <div className="flex items-center gap-2 mt-1">
                                 <div className="w-2 h-2 rounded-full bg-secondary" />
                                 <span className="text-xs text-white font-medium">
-                                    {selectedMonth} {selectedYear}
+                                    <EditableText
+                                        value={selectedMonth + ' ' + selectedYear}
+                                        onSave={(val) => handleUpdate('hero.date', selectedMonth + ' ' + selectedYear)}
+                                        disabled
+                                    />
                                 </span>
                             </div>
                         </div>

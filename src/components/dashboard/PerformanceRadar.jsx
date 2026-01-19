@@ -7,25 +7,25 @@ import EditableText from './EditableText';
 import _ from 'lodash';
 
 const PerformanceRadar = () => {
-    const { data, updateData, isEditMode } = useDashboard();
-    const radar = data.performanceRadar;
+    const { data, updateData, isEditMode, performanceRadarData } = useDashboard();
 
-    // Transform data with new subject names matching screenshot
-    const chartData = [
-        { subject: '# of Leads', A: 8, B: 6, C: 4, D: 2, E: 1, F: 0, fullMark: 10 },
-        { subject: 'Client Acquisition Cost', A: 7, B: 5, C: 3, D: 2, E: 1, F: 0, fullMark: 10 },
-        { subject: 'Customer Lifetime Value', A: 6, B: 7, C: 5, D: 4, E: 3, F: 2, fullMark: 10 },
-        { subject: '# of Occupied Units', A: 5, B: 6, C: 4, D: 2, E: 1, F: 0, fullMark: 10 },
-        { subject: 'Five Star Reviews', A: 4, B: 5, C: 6, D: 2, E: 1, F: 0, fullMark: 10 },
-        { subject: 'Move in-Move out Ratio', A: 7, B: 4, C: 5, D: 2, E: 1, F: 0, fullMark: 10 },
+    const chartData = performanceRadarData.data;
+    const months = performanceRadarData.months;
+
+    const baseColor = "0, 98, 255"; // Vibrant Blue
+    const allColors = [
+        { stroke: `rgba(${baseColor}, 0.15)`, fill: `rgba(${baseColor}, 0.05)` }, // Most faded
+        { stroke: `rgba(${baseColor}, 0.3)`, fill: `rgba(${baseColor}, 0.08)` },
+        { stroke: `rgba(${baseColor}, 0.45)`, fill: `rgba(${baseColor}, 0.12)` },
+        { stroke: `rgba(${baseColor}, 0.65)`, fill: `rgba(${baseColor}, 0.18)` },
+        { stroke: `rgba(${baseColor}, 0.85)`, fill: `rgba(${baseColor}, 0.25)` },
+        { stroke: `rgba(${baseColor}, 1)`, fill: `rgba(${baseColor}, 0.35)` }      // Brightest
     ];
 
-    const handleDataUpdate = (idx, field, value) => {
-        const newData = _.cloneDeep(data);
-        const numVal = parseInt(value, 10);
-        newData.performanceRadar.data[idx][field] = isNaN(numVal) ? 0 : numVal;
-        updateData(newData);
-    };
+    // Map colors so the latest month always gets the brightest color
+    const colors = months.map((_, i) => allColors[5 - (months.length - 1 - i)]);
+
+    const columnKeys = ['A', 'B', 'C', 'D', 'E', 'F'];
 
     const handleTitleUpdate = (value) => {
         const newData = _.cloneDeep(data);
@@ -35,31 +35,13 @@ const PerformanceRadar = () => {
 
     // Custom legend renderer
     const renderLegend = () => (
-        <div className="flex items-center justify-center gap-6 mt-2">
-            <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(64, 224, 208, 0.8)' }} />
-                <span className="text-xs font-medium text-gray-600">Jul 25</span>
-            </div>
-            <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(0, 191, 255, 0.8)' }} />
-                <span className="text-xs font-medium text-gray-600">Aug 25</span>
-            </div>
-            <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(0, 105, 148, 0.9)' }} />
-                <span className="text-xs font-medium text-gray-600">Sep 25</span>
-            </div>
-            <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(64, 224, 208, 0.8)' }} />
-                <span className="text-xs font-medium text-gray-600">Oct 25</span>
-            </div>
-            <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(0, 191, 255, 0.8)' }} />
-                <span className="text-xs font-medium text-gray-600">Nov 25</span>
-            </div>
-            <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(0, 105, 148, 0.9)' }} />
-                <span className="text-xs font-medium text-gray-600">Dec 25</span>
-            </div>
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-2 px-4">
+            {months.map((month, i) => (
+                <div key={i} className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: colors[i].stroke }} />
+                    <span className="text-[10px] md:text-xs font-medium text-gray-600 whitespace-nowrap">{month}</span>
+                </div>
+            ))}
         </div>
     );
 
@@ -69,15 +51,15 @@ const PerformanceRadar = () => {
                 {/* Legend at top */}
                 {renderLegend()}
 
-                {/* Corner Labels */}
-                <div className="absolute lg:top-[20%] lg:right-[35%] top-[15%] right-[25%] text-right">
-                    <span className="text-lg text-secondary-foreground tracking-wide">Acquisition</span>
+                {/* Corner Labels - Adjusted for better spacing */}
+                <div className="absolute lg:top-[22%] lg:right-[32%] top-[16%] right-[22%] text-right pointer-events-none">
+                    <span className="text-secondary-foreground text-sm lg:text-lg tracking-wide font-medium opacity-60">Acquisition</span>
                 </div>
-                <div className="absolute lg:bottom-[13%] lg:right-[35%] bottom-[10%] right-[25%] text-right">
-                    <span className="text-lg text-secondary-foreground tracking-wide">Expansion</span>
+                <div className="absolute lg:bottom-[15%] lg:right-[32%] bottom-[12%] right-[22%] text-right pointer-events-none">
+                    <span className="text-secondary-foreground text-sm lg:text-lg tracking-wide font-medium opacity-60">Expansion</span>
                 </div>
-                <div className="absolute lg:top-[50%] lg:left-[30%] transform -translate-y-1/2 top-[55%] left-[15%]">
-                    <span className="text-lg text-secondary-foreground tracking-wide">Retention</span>
+                <div className="absolute lg:top-[50%] lg:left-[28%] transform -translate-y-1/2 top-[55%] left-[12%] pointer-events-none">
+                    <span className="text-secondary-foreground text-sm lg:text-lg tracking-wide font-medium opacity-60">Retention</span>
                 </div>
 
                 <div className="grow min-h-[350px] mt-4">
@@ -99,7 +81,7 @@ const PerformanceRadar = () => {
                                             textAnchor={textAnchor}
                                             fill="#292929ff"
                                             fontSize={11}
-                                            fontWeight={400}
+                                            fontWeight={500}
                                             fontStyle="italic"
                                         >
                                             {payload.value}
@@ -123,70 +105,21 @@ const PerformanceRadar = () => {
                                     fontSize: '12px',
                                     backgroundColor: 'white'
                                 }}
+                                formatter={(value, name, props) => [value.toFixed(1), months[columnKeys.indexOf(name)]]}
                             />
 
-                            {/* Series 1 - Outer layer (lightest cyan/turquoise) */}
-                            <Radar
-                                name="Jul 25"
-                                dataKey="A"
-                                stroke="rgba(64, 224, 208, 1)"
-                                strokeWidth={2}
-                                fill="rgba(64, 224, 208, 0.4)"
-                                fillOpacity={1}
-                                animationDuration={1500}
-                            />
-
-                            {/* Series 2 - Middle layer (medium blue) */}
-                            <Radar
-                                name="Aug 25"
-                                dataKey="B"
-                                stroke="rgba(0, 191, 255, 1)"
-                                strokeWidth={2}
-                                fill="rgba(0, 191, 255, 0.5)"
-                                fillOpacity={1}
-                                animationDuration={1500}
-                            />
-
-                            {/* Series 3 - Inner layer (darkest teal) */}
-                            <Radar
-                                name="Sep 25"
-                                dataKey="C"
-                                stroke="rgba(0, 105, 148, 1)"
-                                strokeWidth={2}
-                                fill="rgba(0, 105, 148, 0.6)"
-                                fillOpacity={1}
-                                animationDuration={1500}
-                            />
-                            {/* Series 4 - Inner layer (darkest teal) */}
-                            <Radar
-                                name="Oct 25"
-                                dataKey="D"
-                                stroke="rgba(0, 105, 148, 1)"
-                                strokeWidth={2}
-                                fill="rgba(0, 105, 148, 0.6)"
-                                fillOpacity={1}
-                                animationDuration={1500}
-                            />
-                            {/* Series 5 - Inner layer (darkest teal) */}
-                            <Radar
-                                name="Nov 25"
-                                dataKey="E"
-                                stroke="rgba(0, 105, 148, 1)"
-                                strokeWidth={2}
-                                fill="rgba(0, 105, 148, 0.6)"
-                                fillOpacity={1}
-                                animationDuration={1500}
-                            />
-                            {/* Series 6 - Inner layer (darkest teal) */}
-                            <Radar
-                                name="Dec 25"
-                                dataKey="F"
-                                stroke="rgba(0, 105, 148, 1)"
-                                strokeWidth={2}
-                                fill="rgba(0, 105, 148, 0.6)"
-                                fillOpacity={1}
-                                animationDuration={1500}
-                            />
+                            {months.map((month, i) => (
+                                <Radar
+                                    key={month}
+                                    name={columnKeys[i]}
+                                    dataKey={columnKeys[i]}
+                                    stroke={colors[i].stroke}
+                                    strokeWidth={2}
+                                    fill={colors[i].fill}
+                                    fillOpacity={1}
+                                    animationDuration={1500}
+                                />
+                            ))}
                         </RadarChart>
                     </ResponsiveContainer>
                 </div>
