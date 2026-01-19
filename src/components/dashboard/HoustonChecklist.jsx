@@ -3,15 +3,15 @@
 import React from 'react';
 import { useDashboard } from '../../context/DashboardContext';
 import EditableText from './EditableText';
-import { CheckCircle2 } from "lucide-react";
+import { convertToEditorHTML } from '../../lib/editorHelpers';
 
 const HoustonChecklist = () => {
-    const { data, updateData } = useDashboard();
+    const { data, updateData, tabs } = useDashboard();
     const checklist = data.houstonChecklist;
 
-    const handleUpdate = (idx, value) => {
+    const handleItemsUpdate = (value) => {
         const newData = { ...data };
-        newData.houstonChecklist.items[idx].text = value;
+        newData.houstonChecklist.items = value;
         updateData(newData);
     };
 
@@ -29,19 +29,12 @@ const HoustonChecklist = () => {
                 </h2>
             </div>
 
-            <div className="space-y-4">
-                {checklist.items.map((item, idx) => (
-                    <div key={idx} className="flex gap-4">
-                        <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                        <div className="text-[#334155] text-[13px] leading-relaxed flex-grow">
-                            <EditableText
-                                value={item.text}
-                                onSave={(val) => handleUpdate(idx, val)}
-                                multiline
-                            />
-                        </div>
-                    </div>
-                ))}
+            <div className="space-y-4 text-[#334155] text-[13px] leading-relaxed">
+                <EditableText
+                    value={convertToEditorHTML(checklist?.items)}
+                    onSave={(val) => handleItemsUpdate(val)}
+                    editor
+                />
             </div>
         </div>
     );

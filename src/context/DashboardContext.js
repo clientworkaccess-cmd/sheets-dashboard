@@ -213,8 +213,8 @@ export const DashboardProvider = ({ children }) => {
                 newData.mainSales.data = charlotteRaw.map(
                     (c, i) => ({
                         name: c.month,
-                        Location1: Number(c.total_revenue) || 0,
-                        Location2:
+                        Charlotte: Number(c.total_revenue) || 0,
+                        Houston:
                             Number(
                                 houstonRaw[i]?.total_revenue
                             ) || 0,
@@ -225,6 +225,20 @@ export const DashboardProvider = ({ children }) => {
                             ) || 0)
                     })
                 );
+
+                // Create MoveIn/MoveOut data from 24-month raw data
+                // Handles both snake_case (move_in) and camelCase (moveIn) keys
+                newData.charlotteMoveIn.data = charlotteRaw.map(r => ({
+                    name: r.month,
+                    moveIn: Number(r.move_ins || r.moveIn) || 0,
+                    moveOut: Number(r.move_outs || r.moveOut) || 0
+                }));
+
+                newData.houstonMoveIn.data = houstonRaw.map(r => ({
+                    name: r.month,
+                    moveIn: Number(r.move_ins || r.moveIn) || 0,
+                    moveOut: Number(r.move_outs || r.moveOut) || 0
+                }));
 
                 return newData;
             });
@@ -269,48 +283,58 @@ export const DashboardProvider = ({ children }) => {
         if (!rawCharlotteData.length) return data.charlotteKPI;
 
         const row = rawCharlotteData.find(r =>
-            r.month?.includes(
-                selectedMonth.slice(0, 3)
-            )
+            r.month?.toLowerCase().includes(
+                selectedMonth.slice(0, 3).toLowerCase()
+            ) && r.month?.includes(selectedYear)
         );
 
         if (!row) return data.charlotteKPI;
 
+        // Helper to parse currency/number
+        const parseVal = (val) => {
+            if (typeof val === 'number') return val;
+            if (typeof val === 'string') return parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
+            return 0;
+        };
+
         return {
             ...data.charlotteKPI,
-            revenue: `$${Number(
-                row.total_revenue || 0
-            ).toLocaleString()}`,
+            revenue: `$${parseVal(row.total_revenue).toLocaleString()}`,
             units: `${row.total_units_rented}/${row.total_units_available}`,
             rentSqft: `$${row.rent_per_sq_ft}`
         };
-    }, [rawCharlotteData, selectedMonth, data.charlotteKPI]);
+    }, [rawCharlotteData, selectedMonth, selectedYear, data.charlotteKPI]);
 
     const selectedHoustonKPI = useMemo(() => {
         if (!rawHoustonData.length) return data.houstonKPI;
 
         const row = rawHoustonData.find(r =>
-            r.month?.includes(
-                selectedMonth.slice(0, 3)
-            )
+            r.month?.toLowerCase().includes(
+                selectedMonth.slice(0, 3).toLowerCase()
+            ) && r.month?.includes(selectedYear)
         );
 
         if (!row) return data.houstonKPI;
 
+        const parseVal = (val) => {
+            if (typeof val === 'number') return val;
+            if (typeof val === 'string') return parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
+            return 0;
+        };
+
         return {
             ...data.houstonKPI,
-            revenue: `$${Number(
-                row.total_revenue || 0
-            ).toLocaleString()}`,
+            revenue: `$${parseVal(row.total_revenue).toLocaleString()}`,
             units: `${row.total_units_rented}/${row.total_units_available}`,
             rentSqft: `$${row.rent_per_sq_ft}`
         };
-    }, [rawHoustonData, selectedMonth, data.houstonKPI]);
+    }, [rawHoustonData, selectedMonth, selectedYear, data.houstonKPI]);
 
     /* -------------------- UPDATE -------------------- */
 
-    const updateData = async newData => {
+    const updateData = async (newData) => {
         setData(newData);
+        console.log(newData);
 
         const table =
             tabs === "fund1"

@@ -23,7 +23,8 @@ const DashboardHeader = () => {
         setSelectedMonth,
         selectedYear,
         setSelectedYear,
-        setTabs
+        setTabs,
+        isLoading,
     } = useDashboard();
     const [isLoginOpen, setIsLoginOpen] = useState(false);
 
@@ -38,14 +39,14 @@ const DashboardHeader = () => {
                     onClick={() => setTabs("fund1")}
                     className="h-9 rounded-xl text-gray-400 hover:text-red-500"
                 >
-                    Fund1
+                    Fund 1
                 </Button>
                 <Button
                     variant="outline"
                     onClick={() => setTabs("fund2")}
                     className="h-9 rounded-xl text-gray-400 hover:text-red-500"
                 >
-                    Fund2
+                    Fund 2
                 </Button>
             </div>
 
@@ -107,8 +108,9 @@ const DashboardHeader = () => {
                                     ? "bg-green-600 hover:bg-green-700 text-white"
                                     : "bg-[#0f172a] text-white"
                                     }`}
+                                disabled={isLoading}
                             >
-                                {isEditMode ? "Save Changes" : "Edit Dashboard"}
+                                {isLoading && isEditMode ? "Saving..." : isEditMode ? "Save Changes" : "Edit Dashboard"}
                             </Button>
                             <Button
                                 variant="ghost"

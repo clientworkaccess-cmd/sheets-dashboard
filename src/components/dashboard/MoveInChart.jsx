@@ -66,7 +66,6 @@ const MoveInChart = ({ type = 'charlotte' }) => {
                             fontSize={12}
                             tickLine={false}
                             axisLine={false}
-                            ticks={[5, 10, 15, 20, 25, 30]}
                         />
                         <Tooltip
                             cursor={{ fill: '#f8fafc' }}

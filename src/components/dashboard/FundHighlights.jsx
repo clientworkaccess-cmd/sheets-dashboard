@@ -3,14 +3,15 @@
 import React from 'react';
 import { useDashboard } from '../../context/DashboardContext';
 import EditableText from './EditableText';
+import { convertToEditorHTML } from '../../lib/editorHelpers';
 
 const FundHighlights = () => {
     const { data, updateData } = useDashboard();
     const highlights = data.highlights;
 
-    const handleUpdate = (idx, value) => {
+    const handleUpdate = (value) => {
         const newData = { ...data };
-        newData.highlights.items[idx] = value;
+        newData.highlights.items = value;
         updateData(newData);
     };
 
@@ -29,15 +30,11 @@ const FundHighlights = () => {
             </div>
 
             <div className="space-y-6 text-[#475569] text-sm font-medium leading-relaxed">
-                {highlights?.items?.map((item, idx) => (
-                    <div key={idx} className={idx < 2 ? "text-[#334155] font-bold" : (idx === 7 ? "text-[#475569]/80 italic" : "")}>
-                        <EditableText
-                            value={item}
-                            onSave={(val) => handleUpdate(idx, val)}
-                            multiline={item.length > 50}
-                        />
-                    </div>
-                ))}
+                <EditableText
+                    value={convertToEditorHTML(highlights?.items)}
+                    onSave={(val) => handleUpdate(val)}
+                    editor
+                />
             </div>
         </div>
     );

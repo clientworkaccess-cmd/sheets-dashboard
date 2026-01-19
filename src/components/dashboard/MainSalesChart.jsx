@@ -40,7 +40,10 @@ const MainSalesChart = () => {
     };
 
     // Helper for formatting currency in the table
-    const formatCurrency = (val) => `$${val.toLocaleString()}`;
+    const formatCurrency = (val) => {
+        if (val === undefined || val === null) return '$0';
+        return `$${val.toLocaleString()}`;
+    };
 
     return (
         <div className="bg-white rounded-3xl p-8 border shadow-sm h-full flex flex-col">
@@ -76,8 +79,8 @@ const MainSalesChart = () => {
                                 contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
                                 itemStyle={{ color: '#fff' }}
                             />
-                            <Bar dataKey="Location2" stackId="a" fill="#FFC557" radius={[0, 0, 0, 0]} barSize={12} name={location2Name} />
-                            <Bar dataKey="Location1" stackId="a" fill="#3A8DDE" radius={[2, 2, 0, 0]} barSize={12} name={location1Name} />
+                            <Bar dataKey="Houston" stackId="a" fill="#FFC557" radius={[0, 0, 0, 0]} barSize={12} name={location2Name} />
+                            <Bar dataKey="Charlotte" stackId="a" fill="#3A8DDE" radius={[2, 2, 0, 0]} barSize={12} name={location1Name} />
                             <Line dataKey="Forecast" stroke="#64748b" strokeWidth={2} dot={false} strokeDasharray="5 5" />
                             <Legend
                                 verticalAlign="bottom"
@@ -109,11 +112,11 @@ const MainSalesChart = () => {
                             {tableData.map((d, i) => (
                                 <td key={i} className={`text-right py-2`}>
                                     <EditableText
-                                        value={formatCurrency(d.Location1)}
+                                        value={formatCurrency(d.Charlotte)}
                                         onSave={(val) => {
                                             // Find correct index in full data
                                             const idx = chartData.findIndex(row => row.name === d.name);
-                                            if (idx !== -1) handleDataUpdate(idx, 'Location1', val);
+                                            if (idx !== -1) handleDataUpdate(idx, 'Charlotte', val);
                                         }}
                                     />
                                 </td>
@@ -126,10 +129,10 @@ const MainSalesChart = () => {
                             {tableData.map((d, i) => (
                                 <td key={i} className={`text-right py-2`}>
                                     <EditableText
-                                        value={formatCurrency(d.Location2)}
+                                        value={formatCurrency(d.Houston)}
                                         onSave={(val) => {
                                             const idx = chartData.findIndex(row => row.name === d.name);
-                                            if (idx !== -1) handleDataUpdate(idx, 'Location2', val);
+                                            if (idx !== -1) handleDataUpdate(idx, 'Houston', val);
                                         }}
                                     />
                                 </td>
@@ -139,7 +142,7 @@ const MainSalesChart = () => {
                             <td className="py-2">Total</td>
                             {tableData.map((d, i) => (
                                 <td key={i} className="text-right py-2">
-                                    {formatCurrency(d.Location1 + d.Location2)}
+                                    {formatCurrency((d.Charlotte || 0) + (d.Houston || 0))}
                                 </td>
                             ))}
                         </tr>
