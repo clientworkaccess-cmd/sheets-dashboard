@@ -150,7 +150,6 @@ export const DashboardProvider = ({ children }) => {
                 }
 
                 await Promise.all([
-                    fetchLiveReviews(),
                     fetchRealTableData()
                 ]);
             } catch (err) {
@@ -191,40 +190,6 @@ export const DashboardProvider = ({ children }) => {
 
     const toggleEditMode = () => {
         setIsEditMode(prev => !prev);
-    };
-
-    /* -------------------- LIVE REVIEWS -------------------- */
-
-    const fetchLiveReviews = async () => {
-        try {
-            const res = await fetch(
-                "https://n8n.srv927950.hstgr.cloud/webhook/de3edd1e-cf15-459f-a488-a5601a5bb1b9"
-            );
-            const result = await res.json();
-
-            if (!result?.reviews_data) return;
-
-            setData(prev => {
-                const newData = _.cloneDeep(prev);
-
-                result.reviews_data.forEach(item => {
-                    if (item.location === "Mount Holly") {
-                        newData.charlotteKPI.rating = `${item.rating}/5`;
-                        newData.charlotteKPI.reviewsCount =
-                            item.review_count;
-                    }
-                    if (item.location === "Hampshire") {
-                        newData.houstonKPI.rating = `${item.rating}/5`;
-                        newData.houstonKPI.reviewsCount =
-                            item.review_count;
-                    }
-                });
-
-                return newData;
-            });
-        } catch (err) {
-            console.error("Live reviews error:", err);
-        }
     };
 
     /* -------------------- REAL TABLE DATA -------------------- */
@@ -370,7 +335,9 @@ export const DashboardProvider = ({ children }) => {
             ...data.charlotteKPI,
             revenue: `$${parseVal(row.total_revenue).toLocaleString()}`,
             units: `${row.total_units_rented}/${row.total_units_available}`,
-            rentSqft: `$${row.rent_per_sq_ft}`
+            rentSqft: `$${row.rent_per_sq_ft}`,
+            reviewsCount: `${row.review_count ? row.review_count : 0}`,
+            rating: `${row.rating ? row.rating : 0}`
         };
     }, [rawCharlotteData, selectedMonth, selectedYear, data.charlotteKPI]);
 
@@ -395,36 +362,45 @@ export const DashboardProvider = ({ children }) => {
             ...data.houstonKPI,
             revenue: `$${parseVal(row.total_revenue).toLocaleString()}`,
             units: `${row.total_units_rented}/${row.total_units_available}`,
-            rentSqft: `$${row.rent_per_sq_ft}`
+            rentSqft: `$${row.rent_per_sq_ft}`,
+            reviewsCount: `${row.review_count ? row.review_count : 0}`,
+            rating: `${row.rating ? row.rating : 0}`
         };
     }, [rawHoustonData, selectedMonth, selectedYear, data.houstonKPI]);
 
     const performanceRadarData = useMemo(() => {
-        const charlotteSix = getLastSixMonths(rawCharlotteData, selectedMonth, selectedYear);
-        const houstonSix = getLastSixMonths(rawHoustonData, selectedMonth, selectedYear);
+        const charlotteSix = getLastSixMonths(
+            rawCharlotteData,
+            selectedMonth,
+            selectedYear
+        );
+        const houstonSix = getLastSixMonths(
+            rawHoustonData,
+            selectedMonth,
+            selectedYear
+        );
 
         const parseVal = (val) => {
             if (typeof val === 'number') return val;
-            if (typeof val === 'string') return parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
+            if (typeof val === 'string')
+                return parseFloat(val.replace(/[^0-9.-]+/g, '')) || 0;
             return 0;
         };
 
         const subjects = [
-            { subject: '# of Leads', key: 'move_ins' },
+            { subject: '# of Leads', key: 'no_of_leads' },
             { subject: 'Client Acquisition Cost', key: 'Client Acquisition Cost' },
             { subject: 'Customer Lifetime Value', key: 'Life Time Value' },
-            { subject: '# of Occupied Units', key: 'total_units_rented' },
-            { subject: 'Five Star Reviews', key: 'five_star_reviews' },
+            { subject: '# of Occupied Units', key: 'unit_rent_total' },
             { subject: 'Move in-Move out Ratio', key: 'ratio' }
         ];
 
-        // Keys for Recharts: A, B, C, D, E, F
+        // Recharts column keys
         const columnKeys = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-        // Month labels for the legend
+        // Month labels
         const months = charlotteSix.map(m => {
-            const date = m.month || m.name || "";
-            // Format "Jan 2024" or "January 2024" to "Jan 24"
+            const date = m.month || m.name || '';
             const parts = date.split(' ');
             if (parts.length === 2) {
                 return `${parts[0].slice(0, 3)} ${parts[1].slice(-2)}`;
@@ -433,38 +409,52 @@ export const DashboardProvider = ({ children }) => {
         });
 
         const result = subjects.map(s => {
-            const row = { subject: s.subject, fullMark: 10 };
+            const row = { subject: s.subject };
 
             columnKeys.forEach((key, i) => {
                 if (i < charlotteSix.length) {
-                    const c = charlotteSix[i];
+                    const c = charlotteSix[i] || {};
                     const h = houstonSix[i] || {};
 
                     let val = 0;
+
+                    // 1️⃣ Move in / Move out Ratio
                     if (s.key === 'ratio') {
-                        const mIn = (parseVal(c.move_ins) || parseVal(c.moveIn) || 0) + (parseVal(h.move_ins) || parseVal(h.moveIn) || 0);
-                        const mOut = (parseVal(c.move_outs) || parseVal(c.moveOut) || 0) + (parseVal(h.move_outs) || parseVal(h.moveOut) || 0);
-                        val = mOut > 0 ? (mIn / mOut) * 2 : (mIn > 0 ? 8 : 0); // Scale ratio
-                    } else if (s.key === 'five_star_reviews') {
-                        // We don't have historical reviews, use a sensible progression or current
-                        val = 7 + (i * 0.5);
-                    } else if (s.key === 'total_units_rented') {
-                        const total = parseVal(c.total_units_rented) + parseVal(h.total_units_rented);
-                        val = (total / 600) * 10; // Scale units (assuming 600 is "full")
-                    } else if (s.key === 'Life Time Value') {
-                        const total = parseVal(c['Life Time Value']) + parseVal(h['Life Time Value']);
-                        val = (total / 150000) * 10; // Scale LTV
-                    } else if (s.key === 'Client Acquisition Cost') {
-                        const avg = (parseVal(c['Client Acquisition Cost']) + parseVal(h['Client Acquisition Cost'])) / 2;
-                        val = 10 - (avg / 50); // Scale CAC (lower is better, so 10 - scaled value)
+                        const moveIns =
+                            parseVal(c.move_ins) + parseVal(h.move_ins);
+                        const moveOuts =
+                            parseVal(c.move_outs) + parseVal(h.move_outs);
+
+                        val = moveOuts > 0 ? moveIns / moveOuts : 0;
+
+                        // 2️⃣ AVERAGE metrics
+                    } else if (
+                        s.key === 'Client Acquisition Cost' ||
+                        s.key === 'Life Time Value'
+                    ) {
+                        const values = [
+                            parseVal(c[s.key]),
+                            parseVal(h[s.key])
+                        ].filter(v => !isNaN(v));
+
+                        const total = values.reduce((a, b) => a + b, 0);
+                        val = values.length ? total / values.length : 0;
+
+                        // 3️⃣ SUM metrics
+                    } else if (
+                        s.key === 'no_of_leads' ||
+                        s.key === 'unit_rent_total'
+                    ) {
+                        val =
+                            parseVal(c[s.key]) +
+                            parseVal(h[s.key]);
+
                     } else {
-                        // Default scaling for other metrics (move_ins)
-                        const total = parseVal(c[s.key]) + parseVal(h[s.key]) ||
-                            parseVal(c.moveIn) + parseVal(h.moveIn) || 0;
-                        val = (total / 50) * 10; // Scale moves
+                        val = 0;
                     }
 
-                    row[key] = Math.min(10, Math.max(0, val));
+                    row[`${key}_raw`] = val;
+                    row[key] = val;
                 } else {
                     row[key] = 0;
                 }
@@ -474,7 +464,12 @@ export const DashboardProvider = ({ children }) => {
         });
 
         return { data: result, months };
-    }, [rawCharlotteData, rawHoustonData, selectedMonth, selectedYear]);
+    }, [
+        rawCharlotteData,
+        rawHoustonData,
+        selectedMonth,
+        selectedYear
+    ]);
 
     /* -------------------- UPDATE -------------------- */
 

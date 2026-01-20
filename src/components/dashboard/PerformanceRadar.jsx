@@ -91,7 +91,7 @@ const PerformanceRadar = () => {
                             />
                             <PolarRadiusAxis
                                 angle={90}
-                                domain={[0, 10]}
+                                domain={["auto", "auto"]}
                                 tick={{ fill: '#9ca3af', fontSize: 10 }}
                                 tickCount={6}
                                 axisLine={false}
@@ -107,7 +107,6 @@ const PerformanceRadar = () => {
                                 }}
                                 formatter={(value, name, props) => [value.toFixed(1), months[columnKeys.indexOf(name)]]}
                             />
-
                             {months.map((month, i) => (
                                 <Radar
                                     key={month}
