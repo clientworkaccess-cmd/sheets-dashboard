@@ -25,6 +25,8 @@ const DashboardHeader = () => {
         setSelectedYear,
         setTabs,
         isLoading,
+        isSaving,
+        updateDataToSupabase
     } = useDashboard();
     const [isLoginOpen, setIsLoginOpen] = useState(false);
 
@@ -103,14 +105,14 @@ const DashboardHeader = () => {
                     {isLoggedIn ? (
                         <div className="flex gap-2">
                             <Button
-                                onClick={toggleEditMode}
+                                onClick={isEditMode ? updateDataToSupabase : toggleEditMode}
                                 className={`h-9 rounded-xl px-6 font-bold transition-all ${isEditMode
                                     ? "bg-green-600 hover:bg-green-700 text-white"
                                     : "bg-[#0f172a] text-white"
                                     }`}
-                                disabled={isLoading}
+                                disabled={isLoading || isSaving}
                             >
-                                {isLoading && isEditMode ? "Saving..." : isEditMode ? "Save Changes" : "Edit Dashboard"}
+                                {isSaving ? "Saving..." : isEditMode ? "Save Changes" : "Edit Dashboard"}
                             </Button>
                             <Button
                                 variant="ghost"

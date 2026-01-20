@@ -115,6 +115,7 @@ export const DashboardProvider = ({ children }) => {
     const [selectedMonth, setSelectedMonth] = useState("December");
     const [selectedYear, setSelectedYear] = useState("2025");
     const [isLoading, setIsLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
 
     // Raw Supabase data
     const [rawCharlotteData, setRawCharlotteData] = useState([]);
@@ -475,7 +476,10 @@ export const DashboardProvider = ({ children }) => {
 
     const updateData = async (newData) => {
         setData(newData);
+    };
 
+    const updateDataToSupabase = async () => {
+        setIsSaving(true);
         const table =
             tabs === "fund1"
                 ? "dashboards"
@@ -486,13 +490,13 @@ export const DashboardProvider = ({ children }) => {
             .upsert(
                 {
                     id: selectedMonth.slice(0, 3) + " " + selectedYear,
-                    content: { ...newData, hero: { ...newData.hero, date: selectedMonth + ' ' + selectedYear } },
+                    content: { ...data, hero: { ...data.hero, date: selectedMonth + ' ' + selectedYear } },
                     updated_at: new Date().toISOString()
                 },
                 { onConflict: "id" }
             );
+        setIsSaving(false);
     };
-
 
     /* -------------------- PROVIDER -------------------- */
 
@@ -518,7 +522,9 @@ export const DashboardProvider = ({ children }) => {
                 performanceRadarData,
                 login,
                 logout,
-                toggleEditMode
+                toggleEditMode,
+                isSaving,
+                updateDataToSupabase
             }}
         >
             {children}
