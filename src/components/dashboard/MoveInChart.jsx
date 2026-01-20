@@ -23,7 +23,7 @@ const MoveInChart = ({ type = 'charlotte' }) => {
     // Choose data based on type
     const chartKey = type === 'charlotte' ? 'charlotteMoveIn' : 'houstonMoveIn';
     const chartSection = data[chartKey];
-    const chartData = chartSection.data;
+    const chartData = chartSection.data.slice(0, 24);
 
     // Dynamic title based on fund
     const getDynamicTitle = () => {
@@ -64,10 +64,7 @@ const MoveInChart = ({ type = 'charlotte' }) => {
                         <YAxis
                             domain={[
                                 0,
-                                (dataMax) =>
-                                    chartKey === 'charlotteMoveIn'
-                                        ? Math.max(45, Math.ceil(dataMax / 5) * 5)
-                                        : Math.ceil(dataMax / 5) * 5
+                                (dataMax) => Math.max(20, Math.ceil(dataMax / 5) * 5)
                             ]}
                             stroke="#94a3b8"
                             fontSize={12}

@@ -12,14 +12,14 @@ const PerformanceRadar = () => {
     const chartData = performanceRadarData.data;
     const months = performanceRadarData.months;
 
-    const baseColor = "0, 98, 255"; // Vibrant Blue
+    const baseColor = "58, 141, 222"; // Vibrant Blue
     const allColors = [
-        { stroke: `rgba(${baseColor}, 0.15)`, fill: `rgba(${baseColor}, 0.05)` }, // Most faded
-        { stroke: `rgba(${baseColor}, 0.3)`, fill: `rgba(${baseColor}, 0.08)` },
-        { stroke: `rgba(${baseColor}, 0.45)`, fill: `rgba(${baseColor}, 0.12)` },
-        { stroke: `rgba(${baseColor}, 0.65)`, fill: `rgba(${baseColor}, 0.18)` },
-        { stroke: `rgba(${baseColor}, 0.85)`, fill: `rgba(${baseColor}, 0.25)` },
-        { stroke: `rgba(${baseColor}, 1)`, fill: `rgba(${baseColor}, 0.35)` }      // Brightest
+        { stroke: `rgba(${baseColor}, 0.30)`, fill: `rgba(${baseColor}, 0.12)` }, // Most faded
+        { stroke: `rgba(${baseColor}, 0.50)`, fill: `rgba(${baseColor}, 0.18)` },
+        { stroke: `rgba(${baseColor}, 0.65)`, fill: `rgba(${baseColor}, 0.22)` },
+        { stroke: `rgba(${baseColor}, 0.70)`, fill: `rgba(${baseColor}, 0.28)` },
+        { stroke: `rgba(${baseColor}, 0.85)`, fill: `rgba(${baseColor}, 0.32)` },
+        { stroke: `rgba(${baseColor}, 1)`, fill: `rgba(${baseColor}, 0.40)` }      // Brightest
     ];
 
     // Map colors so the latest month always gets the brightest color
