@@ -392,7 +392,7 @@ export const DashboardProvider = ({ children }) => {
             { subject: '# of Leads', key: 'no_of_leads' },
             { subject: 'Client Acquisition Cost', key: 'Client Acquisition Cost' },
             { subject: 'Customer Lifetime Value', key: 'Life Time Value' },
-            { subject: '# of Occupied Units', key: 'unit_rent_total' },
+            { subject: '# of Occupied Units', key: 'total_units_rented' },
             { subject: 'Move in-Move out Ratio', key: 'ratio' }
         ];
 
@@ -430,7 +430,18 @@ export const DashboardProvider = ({ children }) => {
 
                         // 2️⃣ AVERAGE metrics
                     } else if (
-                        s.key === 'Client Acquisition Cost' ||
+                        s.key === 'Client Acquisition Cost'
+                    ) {
+                        const values = [
+                            parseVal(c[s.key]),
+                            parseVal(h[s.key])
+                        ].filter(v => !isNaN(v));
+
+                        const total = values.reduce((a, b) => a + b, 0);
+                        val = values.length ? total / values.length : 0;
+
+                        // 3️⃣ SUM metrics
+                    } else if (
                         s.key === 'Life Time Value'
                     ) {
                         const values = [
@@ -443,8 +454,14 @@ export const DashboardProvider = ({ children }) => {
 
                         // 3️⃣ SUM metrics
                     } else if (
-                        s.key === 'no_of_leads' ||
-                        s.key === 'unit_rent_total'
+                        s.key === 'no_of_leads'
+                    ) {
+                        val =
+                            parseVal(c[s.key]) +
+                            parseVal(h[s.key]);
+
+                    } else if (
+                        s.key === 'total_units_rented'
                     ) {
                         val =
                             parseVal(c[s.key]) +
