@@ -114,8 +114,15 @@ const DashboardHeader = () => {
                             >
                                 {isSaving ? "Saving..." : isEditMode ? "Save Changes" : "Edit Dashboard"}
                             </Button>
-                            <Button
+                            {isEditMode && <Button
                                 variant="ghost"
+                                onClick={toggleEditMode}
+                                className="h-9 rounded-xl text-gray-400 hover:text-red-500"
+                            >
+                                Cancel
+                            </Button>}
+                            <Button
+                                variant="outline"
                                 onClick={logout}
                                 className="h-9 rounded-xl text-gray-400 hover:text-red-500"
                             >
