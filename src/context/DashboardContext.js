@@ -104,6 +104,19 @@ const defaultDashboardData = {
     }
 }
 
+const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
+
+const today = new Date();
+
+// 1 month pehle ki date
+const previousMonthDate = new Date(
+    today.getFullYear(),
+    today.getMonth() - 1,
+    1
+);
 
 /* -------------------- PROVIDER -------------------- */
 
@@ -112,8 +125,8 @@ export const DashboardProvider = ({ children }) => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [tabs, setTabs] = useState("fund1");
     const [data, setData] = useState(defaultDashboardData);
-    const [selectedMonth, setSelectedMonth] = useState("December");
-    const [selectedYear, setSelectedYear] = useState("2025");
+    const [selectedMonth, setSelectedMonth] = useState(months[previousMonthDate.getMonth()]);
+    const [selectedYear, setSelectedYear] = useState(previousMonthDate.getFullYear().toString());
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     const [isExporting, setIsExporting] = useState(false);

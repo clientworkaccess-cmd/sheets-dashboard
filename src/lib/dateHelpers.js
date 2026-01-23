@@ -89,8 +89,7 @@ export const getLast24Months = (data, selectedMonth, selectedYear) => {
         return data.slice(-24);
     }
 
-    const startIdx = Math.max(0, idx - 23);
-    return data.slice(startIdx, idx + 1);
+    return data.slice(0, idx + 1);
 };
 
 export const getLast27Months = (data, selectedMonth, selectedYear) => {
@@ -107,8 +106,7 @@ export const getLast27Months = (data, selectedMonth, selectedYear) => {
 
     if (idx === -1) return data.slice(-27);
 
-    const startIdx = Math.max(0, idx - 26); // last 27 months including target
-    return data.slice(startIdx, idx + 1);
+    return data.slice(0, idx + 1);
 };
 
 /**
