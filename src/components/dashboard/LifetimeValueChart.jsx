@@ -20,7 +20,8 @@ const LifetimeValueChart = () => {
             </div>
             <div className="grow w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={performanceMetricsData} margin={{ top: 10, right: 30, left: 20, bottom: 0 }}>
+                    <AreaChart data={performanceMetricsData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+                    <CartesianGrid stroke="#f0f0f0" vertical={false} strokeDasharray="3 3"/>
                         <defs>
                             <linearGradient id="colorLtv" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.2} />
@@ -34,14 +35,14 @@ const LifetimeValueChart = () => {
                             tickLine={false}
                             tick={{ fill: '#8e9aaf', fontSize: 9, angle: -45, textAnchor: 'end' }}
                             interval={0}
-                            height={60}
+                            height={40}
                         />
                         <YAxis
                             axisLine={false}
                             tickLine={false}
                             tick={{ fill: '#8e9aaf', fontSize: 10 }}
                             tickFormatter={formatYAxis}
-                            width={60}
+                            width={30}
                         />
                         <Tooltip
                             contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}

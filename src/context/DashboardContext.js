@@ -116,6 +116,7 @@ export const DashboardProvider = ({ children }) => {
     const [selectedYear, setSelectedYear] = useState("2025");
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
+    const [isExporting, setIsExporting] = useState(false);
 
     // Raw Supabase data
     const [rawCharlotteData, setRawCharlotteData] = useState([]);
@@ -614,6 +615,8 @@ export const DashboardProvider = ({ children }) => {
                 logout,
                 toggleEditMode,
                 isSaving,
+                isExporting,
+                setIsExporting,
                 updateDataToSupabase
             }}
         >

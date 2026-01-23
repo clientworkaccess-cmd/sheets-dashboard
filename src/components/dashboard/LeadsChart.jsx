@@ -16,7 +16,8 @@ const LeadsChart = () => {
             </div>
             <div className="grow w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                    <ScatterChart margin={{ top: 10, right: 30, left: 10, bottom: 0 }}>
+                    <ScatterChart margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+                        <CartesianGrid stroke="#f0f0f0" vertical={false} strokeDasharray="3 3"/>
                         <XAxis
                             dataKey="month"
                             type="category"
@@ -24,7 +25,7 @@ const LeadsChart = () => {
                             tickLine={false}
                             tick={{ fill: '#8e9aaf', fontSize: 9, angle: -45, textAnchor: 'end' }}
                             interval={0}
-                            height={60}
+                            height={40}
                         />
                         <YAxis
                             dataKey="leads"
@@ -32,7 +33,7 @@ const LeadsChart = () => {
                             tickLine={false}
                             tick={{ fill: '#8e9aaf', fontSize: 10 }}
                             domain={[0, 'auto']}
-                            width={40}
+                            width={30}
                         />
                         <Tooltip
                             cursor={{ strokeDasharray: '3 3' }}

@@ -27,7 +27,9 @@ export const handleExport = async (format) => {
             pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
             pdf.save('dashboard-export.pdf');
         }
+        return true;
     } catch (error) {
         console.error('Export failed:', error);
+        throw error;
     }
 };
