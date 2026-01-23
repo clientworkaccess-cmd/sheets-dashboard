@@ -53,27 +53,27 @@ const DashboardHeader = () => {
                 </div>
             )}
             <div className="flex flex-col md:flex-row items-center justify-between p-6 bg-white rounded-3xl shadow-sm border mb-4">
-                <div className="flex flex-col">
+                <div className="flex flex-col lg:flex-row gap-4 justify-between w-2/4">
                     <h1 className="text-2xl font-bold text-[#1e293b]">Rethink Self Storage Fund</h1>
-                </div>
-                <div className="flex items-center gap-2">
-                    <Button
-                        variant="outline"
-                        onClick={() => setTabs("fund1")}
-                        className="h-9 rounded-xl text-gray-400 hover:text-red-500"
-                    >
-                        Fund 1
-                    </Button>
-                    <Button
-                        variant="outline"
-                        onClick={() => setTabs("fund2")}
-                        className="h-9 rounded-xl text-gray-400 hover:text-red-500"
-                    >
-                        Fund 2
-                    </Button>
+                    <div className="flex items-center gap-2">
+                        <Button
+                            variant="outline"
+                            onClick={() => setTabs("fund1")}
+                            className="h-9 rounded-xl text-gray-400 hover:text-red-500"
+                        >
+                            Fund 1
+                        </Button>
+                        <Button
+                            variant="outline"
+                            onClick={() => setTabs("fund2")}
+                            className="h-9 rounded-xl text-gray-400 hover:text-red-500"
+                        >
+                            Fund 2
+                        </Button>
+                    </div>
                 </div>
 
-                <div className="flex items-center gap-4 mt-4 md:mt-0">
+                <div className="flex items-center justify-end gap-4 mt-4 md:mt-0 w-2/4">
                     <div className="flex flex-col">
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Year</span>
                         <Select value={selectedYear} onValueChange={setSelectedYear}>

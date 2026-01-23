@@ -91,10 +91,10 @@ export default function Home() {
 
           {/* Bottom Section: Charlotte Specifics */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8">
-            <motion.div variants={itemVariants} className="lg:col-span-6">
+            <motion.div variants={itemVariants} className="lg:col-span-5">
               <CharlotteChecklist />
             </motion.div>
-            <motion.div variants={itemVariants} className="lg:col-span-6">
+            <motion.div variants={itemVariants} className="lg:col-span-7">
               <CharlotteSalesChart />
             </motion.div>
           </div>
@@ -110,10 +110,10 @@ export default function Home() {
           </div>
           {/* Bottom Section: Houston Specifics */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8 ">
-            <motion.div variants={itemVariants} className="lg:col-span-6">
+            <motion.div variants={itemVariants} className="lg:col-span-5">
               <HoustonChecklist />
             </motion.div>
-            <motion.div variants={itemVariants} className="lg:col-span-6">
+            <motion.div variants={itemVariants} className="lg:col-span-7">
               <HoustonSalesChart />
             </motion.div>
           </div>
