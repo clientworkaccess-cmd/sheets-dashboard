@@ -8,7 +8,7 @@ import React, {
     useMemo
 } from "react";
 import { supabase } from "../lib/supabase";
-import { getLastSixMonths } from "../lib/dateHelpers";
+import { getLastSixMonths, getLast24Months } from "../lib/dateHelpers";
 import _ from "lodash";
 
 /* -------------------- CONTEXT -------------------- */
@@ -489,6 +489,77 @@ export const DashboardProvider = ({ children }) => {
         selectedYear
     ]);
 
+    const performanceMetricsData = useMemo(() => {
+        const charlotte24Months = getLast24Months(
+            rawCharlotteData,
+            selectedMonth,
+            selectedYear
+        );
+        const houston24Months = getLast24Months(
+            rawHoustonData,
+            selectedMonth,
+            selectedYear
+        );
+
+        const parseVal = (val) => {
+            if (typeof val === 'number') return val;
+            if (typeof val === 'string')
+                return parseFloat(val.replace(/[^0-9.-]+/g, '')) || 0;
+            return 0;
+        };
+
+        return charlotte24Months.map((c, i) => {
+            const h = houston24Months[i] || {};
+            const name = c.month || c.name || '';
+
+            // Format name to "Jan 24"
+            let formattedName = name;
+            const parts = name.split(' ');
+            if (parts.length === 2) {
+                formattedName = `${parts[0].slice(0, 3)} ${parts[1].slice(-2)}`;
+            }
+
+            return {
+                month: formattedName,
+                leads: parseVal(c.no_of_leads) + parseVal(h.no_of_leads),
+                occupiedUnits: parseVal(c.total_units_rented) + parseVal(h.total_units_rented),
+                cac: (parseVal(c['Client Acquisition Cost']) + parseVal(h['Client Acquisition Cost'])) / 2,
+                ltv: (parseVal(c['Life Time Value']) + parseVal(h['Life Time Value'])) / 2
+            };
+        });
+    }, [rawCharlotteData, rawHoustonData, selectedMonth, selectedYear]);
+
+    const retentionMetrics = useMemo(() => {
+        const c = selectedCharlotteKPI;
+        const h = selectedHoustonKPI;
+
+        const parseVal = (val) => {
+            if (typeof val === 'number') return val;
+            if (typeof val === 'string') return parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
+            return 0;
+        };
+
+        const totalReviews = parseVal(c.reviewsCount) + parseVal(h.reviewsCount);
+
+        const charlotteRow = rawCharlotteData.find(r =>
+            r.month?.toLowerCase().includes(selectedMonth.slice(0, 3).toLowerCase()) && r.month?.includes(selectedYear)
+        ) || {};
+
+        const houstonRow = rawHoustonData.find(r =>
+            r.month?.toLowerCase().includes(selectedMonth.slice(0, 3).toLowerCase()) && r.month?.includes(selectedYear)
+        ) || {};
+
+        const moveIns = parseVal(charlotteRow.move_ins || charlotteRow.moveIn) + parseVal(houstonRow.move_ins || houstonRow.moveIn);
+        const moveOuts = parseVal(charlotteRow.move_outs || charlotteRow.moveOut) + parseVal(houstonRow.move_outs || houstonRow.moveOut);
+
+        const ratio = moveOuts > 0 ? (moveIns / moveOuts).toFixed(1) : (moveIns > 0 ? moveIns.toFixed(1) : "0.0");
+
+        return {
+            totalReviews,
+            ratio
+        };
+    }, [selectedCharlotteKPI, selectedHoustonKPI, rawCharlotteData, rawHoustonData, selectedMonth, selectedYear]);
+
     /* -------------------- UPDATE -------------------- */
 
     const updateData = async (newData) => {
@@ -537,6 +608,8 @@ export const DashboardProvider = ({ children }) => {
                 selectedCharlotteKPI,
                 selectedHoustonKPI,
                 performanceRadarData,
+                performanceMetricsData,
+                retentionMetrics,
                 login,
                 logout,
                 toggleEditMode,

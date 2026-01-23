@@ -16,11 +16,12 @@ import {
     Line,
     ComposedChart,
 } from 'recharts';
+import { getLast27Months } from '../../lib/dateHelpers';
 
 const CharlotteSalesChart = () => {
-    const { data, updateData, charlotteTableData, tabs } = useDashboard();
+    const { data, updateData, charlotteTableData, tabs, selectedMonth, selectedYear } = useDashboard();
     const locationName = tabs === 'fund1' ? 'Charlotte' : 'Catawaba';
-    const chartData = data.charlotteSales.data;  // Full data for chart
+    const chartData = getLast27Months(data.charlotteSales.data, selectedMonth, selectedYear);  // Full data for chart
     const tableData = charlotteTableData;         // 6-month window for table
 
     const handleUpdate = (idx, field, value) => {

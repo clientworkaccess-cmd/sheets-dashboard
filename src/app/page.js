@@ -13,7 +13,11 @@ import MoveInChart from '../components/dashboard/MoveInChart';
 import ForecastFooter from '../components/dashboard/ForecastFooter';
 import HoustonChecklist from '../components/dashboard/HoustonChecklist';
 import HoustonSalesChart from '../components/dashboard/HoustonSalesChart';
-import PerformanceRadar from '../components/dashboard/PerformanceRadar';
+import LeadsChart from '../components/dashboard/LeadsChart';
+import OccupiedUnitsChart from '../components/dashboard/OccupiedUnitsChart';
+import AcquisitionCostChart from '../components/dashboard/AcquisitionCostChart';
+import LifetimeValueChart from '../components/dashboard/LifetimeValueChart';
+import RetentionCards from '../components/dashboard/RetentionCards';
 import MajorNews from '../components/dashboard/MajorNews';
 import { useDashboard } from '../context/DashboardContext';
 import CharlotteKPICards from '../components/dashboard/CharlotteKPICards';
@@ -134,10 +138,30 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
-            <motion.div variants={itemVariants} className="lg:col-span-12">
-              <PerformanceRadar />
-            </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12 pb-12">
+            {/* Acquisition Column */}
+            <div className="space-y-6">
+              <h2 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-[0.2em] ml-2">Acquisition</h2>
+              <div className="space-y-6">
+                <LeadsChart />
+                <AcquisitionCostChart />
+              </div>
+            </div>
+
+            {/* Expansion Column */}
+            <div className="space-y-6">
+              <h2 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-[0.2em] ml-2">Expansion</h2>
+              <div className="space-y-6">
+                <OccupiedUnitsChart />
+                <LifetimeValueChart />
+              </div>
+            </div>
+
+            {/* Retention Column */}
+            <div className="space-y-6">
+              <h2 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-[0.2em] ml-2">Retention</h2>
+              <RetentionCards />
+            </div>
           </div>
         </motion.div>
         {/* Bottom Credits / Copyright */}

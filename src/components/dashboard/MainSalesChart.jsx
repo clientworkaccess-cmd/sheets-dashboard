@@ -16,10 +16,11 @@ import {
     Line,
     ComposedChart,
 } from 'recharts';
+import { getLast27Months } from '../../lib/dateHelpers';
 
 const MainSalesChart = () => {
-    const { data, updateData, isEditMode, mainSalesTableData, tabs } = useDashboard();
-    const chartData = data.mainSales.data;  // Full data for chart (never filtered)
+    const { data, updateData, isEditMode, mainSalesTableData, tabs, selectedMonth, selectedYear } = useDashboard();
+    const chartData = getLast27Months(data.mainSales.data, selectedMonth, selectedYear);  // Full data for chart (never filtered)
     const tableData = mainSalesTableData;   // 6-month window for table (filtered)
 
     // Dynamic location names based on selected fund

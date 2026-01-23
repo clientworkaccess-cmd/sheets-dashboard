@@ -16,14 +16,15 @@ import {
     Legend,
 } from 'recharts';
 import EditableText from './EditableText';
+import { getLast24Months } from '../../lib/dateHelpers';
 
 const MoveInChart = ({ type = 'charlotte' }) => {
-    const { data, updateData, isEditMode, tabs } = useDashboard();
+    const { data, updateData, isEditMode, tabs, selectedMonth, selectedYear } = useDashboard();
 
     // Choose data based on type
     const chartKey = type === 'charlotte' ? 'charlotteMoveIn' : 'houstonMoveIn';
     const chartSection = data[chartKey];
-    const chartData = chartSection.data.slice(0, 24);
+    const chartData = getLast24Months(chartSection.data, selectedMonth, selectedYear);
 
     // Dynamic title based on fund
     const getDynamicTitle = () => {
