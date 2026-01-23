@@ -138,7 +138,7 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12 pb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12 pb-12">
             {/* Acquisition Column */}
             <div className="space-y-6">
               <h2 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-[0.2em] ml-2">Acquisition</h2>
