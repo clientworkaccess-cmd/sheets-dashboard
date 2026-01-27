@@ -20,7 +20,7 @@ import { getLast27Months } from '../../lib/dateHelpers';
 
 const CharlotteSalesChart = () => {
     const { data, updateData, charlotteTableData, tabs, selectedMonth, selectedYear } = useDashboard();
-    const locationName = tabs === 'fund1' ? 'Charlotte' : 'Catawaba';
+    const locationName = tabs === 'fund1' ? 'Charlotte' : 'Catawba';
     const chartData = getLast27Months(data.charlotteSales.data, selectedMonth, selectedYear);  // Full data for chart
     const tableData = charlotteTableData;         // 6-month window for table
 

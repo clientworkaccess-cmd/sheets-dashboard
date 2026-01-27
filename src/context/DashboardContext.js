@@ -383,125 +383,125 @@ export const DashboardProvider = ({ children }) => {
         };
     }, [rawHoustonData, selectedMonth, selectedYear, data.houstonKPI]);
 
-    const performanceRadarData = useMemo(() => {
-        const charlotteSix = getLastSixMonths(
-            rawCharlotteData,
-            selectedMonth,
-            selectedYear
-        );
-        const houstonSix = getLastSixMonths(
-            rawHoustonData,
-            selectedMonth,
-            selectedYear
-        );
+    // const performanceRadarData = useMemo(() => {
+    //     const charlotteSix = getLastSixMonths(
+    //         rawCharlotteData,
+    //         selectedMonth,
+    //         selectedYear
+    //     );
+    //     const houstonSix = getLastSixMonths(
+    //         rawHoustonData,
+    //         selectedMonth,
+    //         selectedYear
+    //     );
 
-        const parseVal = (val) => {
-            if (typeof val === 'number') return val;
-            if (typeof val === 'string')
-                return parseFloat(val.replace(/[^0-9.-]+/g, '')) || 0;
-            return 0;
-        };
+    //     const parseVal = (val) => {
+    //         if (typeof val === 'number') return val;
+    //         if (typeof val === 'string')
+    //             return parseFloat(val.replace(/[^0-9.-]+/g, '')) || 0;
+    //         return 0;
+    //     };
 
-        const subjects = [
-            { subject: '# of Leads', key: 'no_of_leads' },
-            { subject: 'Client Acquisition Cost', key: 'Client Acquisition Cost' },
-            { subject: 'Customer Lifetime Value', key: 'Life Time Value' },
-            { subject: '# of Occupied Units', key: 'total_units_rented' },
-            { subject: 'Move in-Move out Ratio', key: 'ratio' }
-        ];
+    //     const subjects = [
+    //         { subject: '# of Leads', key: 'no_of_leads' },
+    //         { subject: 'Client Acquisition Cost', key: 'Client Acquisition Cost' },
+    //         { subject: 'Customer Lifetime Value', key: 'Life Time Value' },
+    //         { subject: '# of Occupied Units', key: 'total_units_rented' },
+    //         { subject: 'Move in-Move out Ratio', key: 'ratio' }
+    //     ];
 
-        // Recharts column keys
-        const columnKeys = ['A', 'B', 'C', 'D', 'E', 'F'];
+    //     // Recharts column keys
+    //     const columnKeys = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-        // Month labels
-        const months = charlotteSix.map(m => {
-            const date = m.month || m.name || '';
-            const parts = date.split(' ');
-            if (parts.length === 2) {
-                return `${parts[0].slice(0, 3)} ${parts[1].slice(-2)}`;
-            }
-            return date;
-        });
+    //     // Month labels
+    //     const months = charlotteSix.map(m => {
+    //         const date = m.month || m.name || '';
+    //         const parts = date.split(' ');
+    //         if (parts.length === 2) {
+    //             return `${parts[0].slice(0, 3)} ${parts[1].slice(-2)}`;
+    //         }
+    //         return date;
+    //     });
 
-        const result = subjects.map(s => {
-            const row = { subject: s.subject };
+    //     const result = subjects.map(s => {
+    //         const row = { subject: s.subject };
 
-            columnKeys.forEach((key, i) => {
-                if (i < charlotteSix.length) {
-                    const c = charlotteSix[i] || {};
-                    const h = houstonSix[i] || {};
+    //         columnKeys.forEach((key, i) => {
+    //             if (i < charlotteSix.length) {
+    //                 const c = charlotteSix[i] || {};
+    //                 const h = houstonSix[i] || {};
 
-                    let val = 0;
+    //                 let val = 0;
 
-                    // 1️⃣ Move in / Move out Ratio
-                    if (s.key === 'ratio') {
-                        const moveIns =
-                            parseVal(c.move_ins) + parseVal(h.move_ins);
-                        const moveOuts =
-                            parseVal(c.move_outs) + parseVal(h.move_outs);
+    //                 // 1️⃣ Move in / Move out Ratio
+    //                 if (s.key === 'ratio') {
+    //                     const moveIns =
+    //                         parseVal(c.move_ins) + parseVal(h.move_ins);
+    //                     const moveOuts =
+    //                         parseVal(c.move_outs) + parseVal(h.move_outs);
 
-                        val = moveOuts > 0 ? moveIns / moveOuts : 0;
+    //                     val = moveOuts > 0 ? moveIns / moveOuts : 0;
 
-                        // 2️⃣ AVERAGE metrics
-                    } else if (
-                        s.key === 'Client Acquisition Cost'
-                    ) {
-                        const values = [
-                            parseVal(c[s.key]),
-                            parseVal(h[s.key])
-                        ].filter(v => !isNaN(v));
+    //                     // 2️⃣ AVERAGE metrics
+    //                 } else if (
+    //                     s.key === 'Client Acquisition Cost'
+    //                 ) {
+    //                     const values = [
+    //                         parseVal(c[s.key]),
+    //                         parseVal(h[s.key])
+    //                     ].filter(v => !isNaN(v));
 
-                        const total = values.reduce((a, b) => a + b, 0);
-                        val = values.length ? total / values.length : 0;
+    //                     const total = values.reduce((a, b) => a + b, 0);
+    //                     val = values.length ? total / values.length : 0;
 
-                        // 3️⃣ SUM metrics
-                    } else if (
-                        s.key === 'Life Time Value'
-                    ) {
-                        const values = [
-                            parseVal(c[s.key]),
-                            parseVal(h[s.key])
-                        ].filter(v => !isNaN(v));
+    //                     // 3️⃣ SUM metrics
+    //                 } else if (
+    //                     s.key === 'Life Time Value'
+    //                 ) {
+    //                     const values = [
+    //                         parseVal(c[s.key]),
+    //                         parseVal(h[s.key])
+    //                     ].filter(v => !isNaN(v));
 
-                        const total = values.reduce((a, b) => a + b, 0);
-                        val = values.length ? total / values.length : 0;
+    //                     const total = values.reduce((a, b) => a + b, 0);
+    //                     val = values.length ? total / values.length : 0;
 
-                        // 3️⃣ SUM metrics
-                    } else if (
-                        s.key === 'no_of_leads'
-                    ) {
-                        val =
-                            parseVal(c[s.key]) +
-                            parseVal(h[s.key]);
+    //                     // 3️⃣ SUM metrics
+    //                 } else if (
+    //                     s.key === 'no_of_leads'
+    //                 ) {
+    //                     val =
+    //                         parseVal(c[s.key]) +
+    //                         parseVal(h[s.key]);
 
-                    } else if (
-                        s.key === 'total_units_rented'
-                    ) {
-                        val =
-                            parseVal(c[s.key]) +
-                            parseVal(h[s.key]);
+    //                 } else if (
+    //                     s.key === 'total_units_rented'
+    //                 ) {
+    //                     val =
+    //                         parseVal(c[s.key]) +
+    //                         parseVal(h[s.key]);
 
-                    } else {
-                        val = 0;
-                    }
+    //                 } else {
+    //                     val = 0;
+    //                 }
 
-                    row[`${key}_raw`] = val;
-                    row[key] = val;
-                } else {
-                    row[key] = 0;
-                }
-            });
+    //                 row[`${key}_raw`] = val;
+    //                 row[key] = val;
+    //             } else {
+    //                 row[key] = 0;
+    //             }
+    //         });
 
-            return row;
-        });
+    //         return row;
+    //     });
 
-        return { data: result, months };
-    }, [
-        rawCharlotteData,
-        rawHoustonData,
-        selectedMonth,
-        selectedYear
-    ]);
+    //     return { data: result, months };
+    // }, [
+    //     rawCharlotteData,
+    //     rawHoustonData,
+    //     selectedMonth,
+    //     selectedYear
+    // ]);
 
     const performanceMetricsData = useMemo(() => {
         const charlotte24Months = getLast24Months(
@@ -532,47 +532,50 @@ export const DashboardProvider = ({ children }) => {
             if (parts.length === 2) {
                 formattedName = `${parts[0].slice(0, 3)} ${parts[1].slice(-2)}`;
             }
+            console.log((parseVal(c.move_ins) + parseVal(h.move_ins)) / (parseVal(c.move_outs) + parseVal(h.move_outs)));
 
             return {
                 month: formattedName,
                 leads: parseVal(c.no_of_leads) + parseVal(h.no_of_leads),
                 occupiedUnits: parseVal(c.total_units_rented) + parseVal(h.total_units_rented),
                 cac: (parseVal(c['Client Acquisition Cost']) + parseVal(h['Client Acquisition Cost'])) / 2,
-                ltv: (parseVal(c['Life Time Value']) + parseVal(h['Life Time Value'])) / 2
+                ltv: (parseVal(c['Life Time Value']) + parseVal(h['Life Time Value'])),
+                ratio: (parseVal(c.move_ins) + parseVal(h.move_ins)) / (parseVal(c.move_outs) + parseVal(h.move_outs)),
+                reviews: parseVal(c.reviewsCount) + parseVal(h.reviewsCount),
             };
         });
     }, [rawCharlotteData, rawHoustonData, selectedMonth, selectedYear]);
 
-    const retentionMetrics = useMemo(() => {
-        const c = selectedCharlotteKPI;
-        const h = selectedHoustonKPI;
+    // const retentionMetrics = useMemo(() => {
+    //     const c = selectedCharlotteKPI;
+    //     const h = selectedHoustonKPI;
 
-        const parseVal = (val) => {
-            if (typeof val === 'number') return val;
-            if (typeof val === 'string') return parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
-            return 0;
-        };
+    //     const parseVal = (val) => {
+    //         if (typeof val === 'number') return val;
+    //         if (typeof val === 'string') return parseFloat(val.replace(/[^0-9.-]+/g, "")) || 0;
+    //         return 0;
+    //     };
 
-        const totalReviews = parseVal(c.reviewsCount) + parseVal(h.reviewsCount);
+    //     const totalReviews = parseVal(c.reviewsCount) + parseVal(h.reviewsCount);
 
-        const charlotteRow = rawCharlotteData.find(r =>
-            r.month?.toLowerCase().includes(selectedMonth.slice(0, 3).toLowerCase()) && r.month?.includes(selectedYear)
-        ) || {};
+    //     const charlotteRow = rawCharlotteData.find(r =>
+    //         r.month?.toLowerCase().includes(selectedMonth.slice(0, 3).toLowerCase()) && r.month?.includes(selectedYear)
+    //     ) || {};
 
-        const houstonRow = rawHoustonData.find(r =>
-            r.month?.toLowerCase().includes(selectedMonth.slice(0, 3).toLowerCase()) && r.month?.includes(selectedYear)
-        ) || {};
+    //     const houstonRow = rawHoustonData.find(r =>
+    //         r.month?.toLowerCase().includes(selectedMonth.slice(0, 3).toLowerCase()) && r.month?.includes(selectedYear)
+    //     ) || {};
 
-        const moveIns = parseVal(charlotteRow.move_ins || charlotteRow.moveIn) + parseVal(houstonRow.move_ins || houstonRow.moveIn);
-        const moveOuts = parseVal(charlotteRow.move_outs || charlotteRow.moveOut) + parseVal(houstonRow.move_outs || houstonRow.moveOut);
+    //     const moveIns = parseVal(charlotteRow.move_ins || charlotteRow.moveIn) + parseVal(houstonRow.move_ins || houstonRow.moveIn);
+    //     const moveOuts = parseVal(charlotteRow.move_outs || charlotteRow.moveOut) + parseVal(houstonRow.move_outs || houstonRow.moveOut);
 
-        const ratio = moveOuts > 0 ? (moveIns / moveOuts).toFixed(1) : (moveIns > 0 ? moveIns.toFixed(1) : "0.0");
+    //     const ratio = moveOuts > 0 ? (moveIns / moveOuts).toFixed(1) : (moveIns > 0 ? moveIns.toFixed(1) : "0.0");
 
-        return {
-            totalReviews,
-            ratio
-        };
-    }, [selectedCharlotteKPI, selectedHoustonKPI, rawCharlotteData, rawHoustonData, selectedMonth, selectedYear]);
+    //     return {
+    //         totalReviews,
+    //         ratio
+    //     };
+    // }, [selectedCharlotteKPI, selectedHoustonKPI, rawCharlotteData, rawHoustonData, selectedMonth, selectedYear]);
 
     /* -------------------- UPDATE -------------------- */
 
@@ -621,9 +624,7 @@ export const DashboardProvider = ({ children }) => {
                 mainSalesTableData,
                 selectedCharlotteKPI,
                 selectedHoustonKPI,
-                performanceRadarData,
                 performanceMetricsData,
-                retentionMetrics,
                 login,
                 logout,
                 toggleEditMode,

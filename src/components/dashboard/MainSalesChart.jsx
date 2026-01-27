@@ -24,7 +24,7 @@ const MainSalesChart = () => {
     const tableData = mainSalesTableData;   // 6-month window for table (filtered)
 
     // Dynamic location names based on selected fund
-    const location1Name = tabs === 'fund1' ? 'Charlotte' : 'Catawaba';
+    const location1Name = tabs === 'fund1' ? 'Charlotte' : 'Catawba';
     const location2Name = tabs === 'fund1' ? 'Houston' : 'Rockhill';
 
     const handleDataUpdate = (idx, field, value) => {
