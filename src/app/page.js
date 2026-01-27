@@ -137,8 +137,17 @@ export default function Home() {
               <MajorNews />
             </motion.div>
           </div>
+        </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12 pb-12">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          id="dashboard-content"
+          className="bg-white rounded-[60px] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100"
+        >
+          <h1 className="text-2xl font-bold text-[#1e293b] mb-12">Rethink Self Storage Fund - KPI Overview</h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12 pb-12 ">
             {/* Acquisition Column */}
             <div className="space-y-6">
               <h2 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-[0.2em] ml-2">Acquisition</h2>
