@@ -532,7 +532,6 @@ export const DashboardProvider = ({ children }) => {
             if (parts.length === 2) {
                 formattedName = `${parts[0].slice(0, 3)} ${parts[1].slice(-2)}`;
             }
-            console.log((parseVal(c.move_ins) + parseVal(h.move_ins)) / (parseVal(c.move_outs) + parseVal(h.move_outs)));
 
             return {
                 month: formattedName,
@@ -541,7 +540,7 @@ export const DashboardProvider = ({ children }) => {
                 cac: (parseVal(c['Client Acquisition Cost']) + parseVal(h['Client Acquisition Cost'])) / 2,
                 ltv: (parseVal(c['Life Time Value']) + parseVal(h['Life Time Value'])),
                 ratio: (parseVal(c.move_ins) + parseVal(h.move_ins)) / (parseVal(c.move_outs) + parseVal(h.move_outs)),
-                reviews: parseVal(c.reviewsCount) + parseVal(h.reviewsCount),
+                reviews: parseVal(c.review_count) + parseVal(h.review_count),
             };
         });
     }, [rawCharlotteData, rawHoustonData, selectedMonth, selectedYear]);

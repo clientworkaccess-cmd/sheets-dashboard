@@ -86,7 +86,7 @@ export const getLast24Months = (data, selectedMonth, selectedYear) => {
     const idx = findIndexByMonthYear(data, selectedMonth, selectedYear);
 
     if (idx === -1) {
-        return data.slice(-24);
+        return data;
     }
 
     return data.slice(0, idx + 1);
@@ -104,7 +104,7 @@ export const getLast27Months = (data, selectedMonth, selectedYear) => {
         return name.toLowerCase() === targetMonthYear.toLowerCase();
     });
 
-    if (idx === -1) return data.slice(-27);
+    if (idx === -1) return data;
 
     return data.slice(0, idx + 1);
 };
