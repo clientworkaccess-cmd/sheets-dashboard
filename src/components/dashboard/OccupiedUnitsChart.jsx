@@ -13,6 +13,10 @@ const OccupiedUnitsChart = () => {
         <div className="bg-white rounded-[32px] p-6 shadow-sm border border-gray-100 flex flex-col h-[300px]">
             <div className="flex justify-between items-center mb-4">
                 <h3 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-wider"># of Occupied Units</h3>
+                <div className="text-xs text-[#8e9aaf] ">
+                    <p>{performanceMetricsData?.slice(-1)[0].month || 'N/A'}</p>
+                    <p>{performanceMetricsData?.slice(-1)[0].occupiedUnits || '0'}</p>
+                </div>
             </div>
             <div className="grow w-full">
                 <ResponsiveContainer width="100%" height="100%">

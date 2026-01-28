@@ -4,7 +4,6 @@ import React from 'react';
 import { useDashboard } from '../../context/DashboardContext';
 import EditableText from './EditableText';
 import _ from 'lodash';
-import Image from 'next/image';
 
 const backgroundImage = '/hero-bg.png';
 
@@ -36,12 +35,11 @@ const HeroSection = () => {
                 <div className="flex justify-between items-start lg:min-w-[20%]">
                     <div className="flex items-center gap-4">
                         <div className="relative w-20 h-20 bg-black backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10">
-                            <Image
+                            <img
                                 src="/logo.png"
                                 alt="Gamma"
                                 fill
                                 className="object-contain p-0"
-                                priority
                             />
                         </div>
                         <div>

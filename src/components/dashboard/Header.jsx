@@ -42,6 +42,14 @@ const DashboardHeader = () => {
             setIsExporting(false);
         }
     };
+const startYear = 2024;
+const currentYear = new Date().getFullYear();
+
+const years = Array.from(
+  { length: currentYear - startYear + 1 },
+  (_, i) => startYear + i
+);
+
 
     return (
         <div className="relative">
@@ -80,10 +88,13 @@ const DashboardHeader = () => {
                             <SelectTrigger className="rounded-xl bg-gray-50 border-gray-100">
                                 <SelectValue placeholder="Year" />
                             </SelectTrigger>
+
                             <SelectContent>
-                                <SelectItem value="2024">2024</SelectItem>
-                                <SelectItem value="2025">2025</SelectItem>
-                                <SelectItem value="2026">2026</SelectItem>
+                                {years.map((year) => (
+                                    <SelectItem key={year} value={String(year)}>
+                                        {year}
+                                    </SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                     </div>
