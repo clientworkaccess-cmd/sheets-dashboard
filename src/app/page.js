@@ -67,109 +67,105 @@ export default function Home() {
           animate="visible"
           variants={containerVariants}
           id="dashboard-content"
-          className="bg-white rounded-[60px] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100"
+          className="space-y-8"
         >
-          {/* Hero Banner */}
-          <motion.div variants={itemVariants}>
-            <HeroSection />
-          </motion.div>
+          <div className="bg-white rounded-[60px] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100">
+            {/* Hero Banner */}
+            <motion.div variants={itemVariants}>
+              <HeroSection />
+            </motion.div>
 
-          {/* Portfolio Table */}
-          <motion.div variants={itemVariants}>
-            <PortfolioOverview />
-          </motion.div>
+            {/* Portfolio Table */}
+            <motion.div variants={itemVariants}>
+              <PortfolioOverview />
+            </motion.div>
 
-          {/* Middle Section: Highlights & Chart */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8">
-            <motion.div variants={itemVariants} className="lg:col-span-5">
-              <FundHighlights />
-            </motion.div>
-            <motion.div variants={itemVariants} className="lg:col-span-7">
-              <MainSalesChart />
-            </motion.div>
-          </div>
-
-          {/* Bottom Section: Charlotte Specifics */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8">
-            <motion.div variants={itemVariants} className="lg:col-span-5">
-              <CharlotteChecklist />
-            </motion.div>
-            <motion.div variants={itemVariants} className="lg:col-span-7">
-              <CharlotteSalesChart />
-            </motion.div>
-          </div>
-
-          {/* KPI and Move In/Out Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
-            <motion.div variants={itemVariants} className="lg:col-span-5">
-              <CharlotteKPICards />
-            </motion.div>
-            <motion.div variants={itemVariants} className="lg:col-span-7">
-              <MoveInChart type="charlotte" />
-            </motion.div>
-          </div>
-          {/* Bottom Section: Houston Specifics */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8 ">
-            <motion.div variants={itemVariants} className="lg:col-span-5">
-              <HoustonChecklist />
-            </motion.div>
-            <motion.div variants={itemVariants} className="lg:col-span-7">
-              <HoustonSalesChart />
-            </motion.div>
-          </div>
-
-          {/* KPI and Move In/Out Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 ">
-            <motion.div variants={itemVariants} className="lg:col-span-5">
-              <HoustonKPICards />
-            </motion.div>
-            <motion.div variants={itemVariants} className="lg:col-span-7">
-              <MoveInChart type="houston" />
-            </motion.div>
-          </div>
-
-          {/* Forecast Footer */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-8">
-            <motion.div variants={itemVariants} className="lg:col-span-7 ">
-              <ForecastFooter />
-            </motion.div>
-            <motion.div variants={itemVariants} className="lg:col-span-5">
-              <MajorNews />
-            </motion.div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-          id="dashboard-content"
-          className="bg-white rounded-[60px] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100"
-        >
-          <h1 className="text-2xl font-bold text-[#1e293b] mb-12">Rethink Self Storage Fund - KPI Overview</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12 pb-12 ">
-            {/* Acquisition Column */}
-            <div className="space-y-6">
-              <h2 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-[0.2em] ml-2">Acquisition</h2>
-              <div className="space-y-6">
-                <LeadsChart />
-                <AcquisitionCostChart />
-              </div>
+            {/* Middle Section: Highlights & Chart */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8">
+              <motion.div variants={itemVariants} className="lg:col-span-5">
+                <FundHighlights />
+              </motion.div>
+              <motion.div variants={itemVariants} className="lg:col-span-7">
+                <MainSalesChart />
+              </motion.div>
             </div>
 
-            {/* Expansion Column */}
-            <div className="space-y-6">
-              <h2 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-[0.2em] ml-2">Expansion</h2>
-              <div className="space-y-6">
-                <OccupiedUnitsChart />
-                <LifetimeValueChart />
-              </div>
+            {/* Bottom Section: Charlotte Specifics */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8">
+              <motion.div variants={itemVariants} className="lg:col-span-5">
+                <CharlotteChecklist />
+              </motion.div>
+              <motion.div variants={itemVariants} className="lg:col-span-7">
+                <CharlotteSalesChart />
+              </motion.div>
             </div>
 
-            {/* Retention Column */}
-            <div className="space-y-6">
-              <h2 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-[0.2em] ml-2">Retention</h2>
-              <RetentionCards />
+            {/* KPI and Move In/Out Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+              <motion.div variants={itemVariants} className="lg:col-span-5">
+                <CharlotteKPICards />
+              </motion.div>
+              <motion.div variants={itemVariants} className="lg:col-span-7">
+                <MoveInChart type="charlotte" />
+              </motion.div>
+            </div>
+            {/* Bottom Section: Houston Specifics */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8 ">
+              <motion.div variants={itemVariants} className="lg:col-span-5">
+                <HoustonChecklist />
+              </motion.div>
+              <motion.div variants={itemVariants} className="lg:col-span-7">
+                <HoustonSalesChart />
+              </motion.div>
+            </div>
+
+            {/* KPI and Move In/Out Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 ">
+              <motion.div variants={itemVariants} className="lg:col-span-5">
+                <HoustonKPICards />
+              </motion.div>
+              <motion.div variants={itemVariants} className="lg:col-span-7">
+                <MoveInChart type="houston" />
+              </motion.div>
+            </div>
+
+            {/* Forecast Footer */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-8">
+              <motion.div variants={itemVariants} className="lg:col-span-7 ">
+                <ForecastFooter />
+              </motion.div>
+              <motion.div variants={itemVariants} className="lg:col-span-5">
+                <MajorNews />
+              </motion.div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-[60px] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100">
+            <h1 className="text-2xl font-bold text-[#1e293b] mb-12">Rethink Self Storage Fund - KPI Overview</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12 pb-12 ">
+              {/* Acquisition Column */}
+              <div className="space-y-6">
+                <h2 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-[0.2em] ml-2">Acquisition</h2>
+                <div className="space-y-6">
+                  <LeadsChart />
+                  <AcquisitionCostChart />
+                </div>
+              </div>
+
+              {/* Expansion Column */}
+              <div className="space-y-6">
+                <h2 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-[0.2em] ml-2">Expansion</h2>
+                <div className="space-y-6">
+                  <OccupiedUnitsChart />
+                  <LifetimeValueChart />
+                </div>
+              </div>
+
+              {/* Retention Column */}
+              <div className="space-y-6">
+                <h2 className="text-[#8e9aaf] text-xs font-bold uppercase tracking-[0.2em] ml-2">Retention</h2>
+                <RetentionCards />
+              </div>
             </div>
           </div>
         </motion.div>
