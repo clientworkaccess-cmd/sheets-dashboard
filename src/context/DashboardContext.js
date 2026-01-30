@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { supabase } from "../lib/supabase";
 import { getLastSixMonths, getLast24Months } from "../lib/dateHelpers";
-import _ from "lodash";
+import _, { update } from "lodash";
 
 /* -------------------- CONTEXT -------------------- */
 
@@ -295,6 +295,62 @@ export const DashboardProvider = ({ children }) => {
             console.error("Table data error:", err);
         }
     };
+
+    /* -------------------- UPDATE REAL TABLE DATA -------------------- */
+
+const updateRealTableData = async (rowName, field, value , type) => {
+    try {
+        // Determine which table and column to update
+        let table = "";
+        let column = "";
+        const numVal = parseFloat(value.replace(/[^0-9.-]+/g, "")) || 0;
+
+        if (field === "Charlotte") {
+            table =
+                tabs === "fund1" ? `holly_${selectedYear}` : `catawaba_${selectedYear}`; 
+            column = "total_revenue";
+        } else if (field === "Houston") {
+            table =
+                tabs === "fund1" ? `houston_${selectedYear}` : `rockhill_${selectedYear}`; 
+            column = "total_revenue";
+        } else if (field === "Forecast") {
+            // For Forecast, update both Charlotte & Houston Forecast if needed
+            const charTable =
+                tabs === "fund1" ? `holly_${selectedYear}` : `catawaba_${selectedYear}`;
+            const houTable =
+                tabs === "fund1" ? `houston_${selectedYear}` : `rockhill_${selectedYear}`;
+
+
+            if (type === "Charlotte") {
+                await supabase
+                    .from(charTable)
+                    .update({ forecast: numVal }) 
+                    .eq("month", rowName);
+            }
+
+            if (type === "Houston") {
+                await supabase
+                    .from(houTable)
+                    .update({ forecast: numVal })
+                    .eq("month", rowName);
+            }
+
+            return; 
+        } else {
+            console.warn("Unknown field for Supabase update:", field);
+            return;
+        }
+
+        // Update Supabase
+        await supabase
+            .from(table)
+            .update({ [column]: numVal })
+            .eq("month", rowName);
+    } catch (err) {
+        console.error("Failed to update real table data:", err);
+    }
+};
+
 
     /* -------------------- DERIVED DATA -------------------- */
 
@@ -630,7 +686,8 @@ export const DashboardProvider = ({ children }) => {
                 isSaving,
                 isExporting,
                 setIsExporting,
-                updateDataToSupabase
+                updateDataToSupabase,
+                updateRealTableData
             }}
         >
             {children}

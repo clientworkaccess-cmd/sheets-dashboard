@@ -38,7 +38,6 @@ const HeroSection = () => {
                             <img
                                 src="/logo.png"
                                 alt="Gamma"
-                                fill
                                 className="object-contain p-0"
                             />
                         </div>

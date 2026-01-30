@@ -19,7 +19,7 @@ import {
 import { getLast27Months } from '../../lib/dateHelpers';
 
 const CharlotteSalesChart = () => {
-    const { data, updateData, charlotteTableData, tabs, selectedMonth, selectedYear } = useDashboard();
+    const { data, updateData, charlotteTableData, tabs, selectedMonth, selectedYear, updateRealTableData } = useDashboard();
     const locationName = tabs === 'fund1' ? 'Charlotte' : 'Catawba';
     const chartData = getLast27Months(data.charlotteSales.data, selectedMonth, selectedYear);  // Full data for chart
     const tableData = charlotteTableData;         // 6-month window for table
@@ -116,9 +116,12 @@ const CharlotteSalesChart = () => {
                                 <td key={i} className="text-right py-2">
                                     <EditableText
                                         value={formatCurrency(d.Actuals)}
-                                        onSave={(val) => {
+                                        onSave={async (val) => {
                                             const idx = chartData.findIndex(row => row.name === d.name);
-                                            if (idx !== -1) handleUpdate(idx, 'Actuals', val);
+                                            if (idx !== -1) {
+                                                handleUpdate(idx, 'Actuals', val)
+                                                await updateRealTableData(d.name, "Charlotte", val);
+                                            };
                                         }}
                                     />
                                 </td>
@@ -132,9 +135,12 @@ const CharlotteSalesChart = () => {
                                 <td key={i} className="text-right py-2">
                                     <EditableText
                                         value={formatCurrency(d.Forecast)}
-                                        onSave={(val) => {
+                                        onSave={async (val) => {
                                             const idx = chartData.findIndex(row => row.name === d.name);
-                                            if (idx !== -1) handleUpdate(idx, 'Forecast', val);
+                                            if (idx !== -1) {
+                                                handleUpdate(idx, 'Forecast', val);
+                                                await updateRealTableData(d.name, "Forecast", val , "Charlotte");
+                                            }
                                         }}
                                     />
                                 </td>
